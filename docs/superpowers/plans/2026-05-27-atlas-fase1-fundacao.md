@@ -133,6 +133,7 @@ Estabelece projeto Astro com toolchain completo, design system base, governance 
 **Spec ref:** Seção 6.1 (stack consolidada)
 
 **Files:**
+
 - Create: `package.json`
 - Create: `astro.config.mjs`
 - Create: `tsconfig.json`
@@ -186,6 +187,7 @@ Cria o arquivo `package.json` na raiz com conteúdo exato:
 - [ ] **Step 2: Instalar dependências**
 
 Comando:
+
 ```bash
 pnpm install
 ```
@@ -273,6 +275,7 @@ mkdir -p src/pages src/components/layout src/components/shared src/components/ui
 ```
 
 PowerShell equivalente:
+
 ```powershell
 $dirs = "src/pages","src/components/layout","src/components/shared","src/components/ui","src/content","src/lib/data","src/lib/utils","src/styles","src/types","public","scripts","tests/unit"
 $dirs | ForEach-Object { New-Item -ItemType Directory -Force -Path $_ | Out-Null }
@@ -286,6 +289,7 @@ Cria página placeholder mínima `src/pages/index.astro`:
 ---
 const title = "Atlas dos Candidatos 2026";
 ---
+
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -299,6 +303,7 @@ const title = "Atlas dos Candidatos 2026";
 ```
 
 Roda:
+
 ```bash
 pnpm dev
 ```
@@ -319,6 +324,7 @@ git commit -m "feat(setup): inicializar projeto Astro 5 com TypeScript estrito"
 **Spec ref:** Seção 16 (TEP — automação de checks)
 
 **Files:**
+
 - Create: `eslint.config.js`
 - Create: `.prettierrc.json`
 - Create: `.prettierignore`
@@ -403,9 +409,7 @@ Cria `.prettierrc.json` na raiz:
   "useTabs": false,
   "endOfLine": "lf",
   "plugins": ["prettier-plugin-astro", "prettier-plugin-tailwindcss"],
-  "overrides": [
-    { "files": "*.astro", "options": { "parser": "astro" } }
-  ]
+  "overrides": [{ "files": "*.astro", "options": { "parser": "astro" } }]
 }
 ```
 
@@ -498,6 +502,7 @@ git commit -m "chore(tooling): adicionar ESLint 9, Prettier 3, Vitest 2 com conf
 **Spec ref:** Seção 6.1 (stack), Seção 8.2 (visual identity)
 
 **Files:**
+
 - Modify: `astro.config.mjs`
 - Modify: `package.json`
 - Create: `src/styles/tokens.css`
@@ -552,15 +557,15 @@ Cria `src/styles/tokens.css` com design tokens. Paleta sóbria slate/zinc + acce
 @layer base {
   :root {
     /* Espaços (8px scale) */
-    --space-1: 0.25rem;   /* 4px  */
-    --space-2: 0.5rem;    /* 8px  */
-    --space-3: 0.75rem;   /* 12px */
-    --space-4: 1rem;      /* 16px */
-    --space-5: 1.5rem;    /* 24px */
-    --space-6: 2rem;      /* 32px */
-    --space-8: 3rem;      /* 48px */
-    --space-10: 4rem;     /* 64px */
-    --space-12: 6rem;     /* 96px */
+    --space-1: 0.25rem; /* 4px  */
+    --space-2: 0.5rem; /* 8px  */
+    --space-3: 0.75rem; /* 12px */
+    --space-4: 1rem; /* 16px */
+    --space-5: 1.5rem; /* 24px */
+    --space-6: 2rem; /* 32px */
+    --space-8: 3rem; /* 48px */
+    --space-10: 4rem; /* 64px */
+    --space-12: 6rem; /* 96px */
 
     /* Tipografia (escala modular 1.250) */
     --text-xs: 0.75rem;
@@ -584,10 +589,10 @@ Cria `src/styles/tokens.css` com design tokens. Paleta sóbria slate/zinc + acce
     --weight-bold: 700;
 
     /* Cores neutras — modo claro */
-    --color-bg: oklch(98% 0.005 280);              /* near-white slate */
-    --color-bg-elevated: oklch(100% 0 0);          /* pure white */
+    --color-bg: oklch(98% 0.005 280); /* near-white slate */
+    --color-bg-elevated: oklch(100% 0 0); /* pure white */
     --color-bg-muted: oklch(96% 0.005 280);
-    --color-fg: oklch(20% 0.02 280);               /* near-black slate */
+    --color-fg: oklch(20% 0.02 280); /* near-black slate */
     --color-fg-muted: oklch(50% 0.02 280);
     --color-fg-subtle: oklch(65% 0.015 280);
     --color-border: oklch(90% 0.005 280);
@@ -599,15 +604,17 @@ Cria `src/styles/tokens.css` com design tokens. Paleta sóbria slate/zinc + acce
     --color-accent-muted: oklch(95% 0.03 70);
 
     /* Estados */
-    --color-focus: oklch(60% 0.20 250);            /* azul para foco */
+    --color-focus: oklch(60% 0.2 250); /* azul para foco */
     --color-info: oklch(60% 0.15 230);
     --color-warning: oklch(70% 0.18 60);
 
     /* Sombras (sutis, Linear-style) */
     --shadow-sm: 0 1px 2px 0 oklch(20% 0.02 280 / 0.05);
     --shadow: 0 1px 3px 0 oklch(20% 0.02 280 / 0.08), 0 1px 2px 0 oklch(20% 0.02 280 / 0.04);
-    --shadow-md: 0 4px 6px -1px oklch(20% 0.02 280 / 0.08), 0 2px 4px -2px oklch(20% 0.02 280 / 0.04);
-    --shadow-lg: 0 10px 15px -3px oklch(20% 0.02 280 / 0.08), 0 4px 6px -4px oklch(20% 0.02 280 / 0.04);
+    --shadow-md:
+      0 4px 6px -1px oklch(20% 0.02 280 / 0.08), 0 2px 4px -2px oklch(20% 0.02 280 / 0.04);
+    --shadow-lg:
+      0 10px 15px -3px oklch(20% 0.02 280 / 0.08), 0 4px 6px -4px oklch(20% 0.02 280 / 0.04);
 
     /* Raio de borda */
     --radius-sm: 0.25rem;
@@ -616,9 +623,9 @@ Cria `src/styles/tokens.css` com design tokens. Paleta sóbria slate/zinc + acce
     --radius-lg: 0.875rem;
 
     /* Larguras de container */
-    --container-narrow: 42rem;       /* 672px — leitura confortável */
-    --container-default: 64rem;      /* 1024px — listas */
-    --container-wide: 80rem;         /* 1280px — dashboards */
+    --container-narrow: 42rem; /* 672px — leitura confortável */
+    --container-default: 64rem; /* 1024px — listas */
+    --container-wide: 80rem; /* 1280px — dashboards */
 
     /* Transições */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
@@ -690,19 +697,36 @@ Cria `src/styles/tokens.css` com design tokens. Paleta sóbria slate/zinc + acce
     border-radius: var(--radius-sm);
   }
 
-  h1, h2, h3, h4, h5, h6 {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
     font-weight: var(--weight-semibold);
     line-height: 1.2;
     letter-spacing: -0.01em;
     margin: 0;
   }
 
-  h1 { font-size: var(--text-4xl); letter-spacing: -0.02em; }
-  h2 { font-size: var(--text-3xl); letter-spacing: -0.015em; }
-  h3 { font-size: var(--text-2xl); }
-  h4 { font-size: var(--text-xl); }
+  h1 {
+    font-size: var(--text-4xl);
+    letter-spacing: -0.02em;
+  }
+  h2 {
+    font-size: var(--text-3xl);
+    letter-spacing: -0.015em;
+  }
+  h3 {
+    font-size: var(--text-2xl);
+  }
+  h4 {
+    font-size: var(--text-xl);
+  }
 
-  p { margin: 0; }
+  p {
+    margin: 0;
+  }
 
   a {
     color: var(--color-fg);
@@ -716,7 +740,9 @@ Cria `src/styles/tokens.css` com design tokens. Paleta sóbria slate/zinc + acce
     color: var(--color-accent);
   }
 
-  code, pre, kbd {
+  code,
+  pre,
+  kbd {
     font-family: var(--font-mono);
     font-size: 0.92em;
   }
@@ -758,6 +784,7 @@ Atualiza `src/pages/index.astro`:
 import "@styles/global.css";
 const title = "Atlas dos Candidatos 2026";
 ---
+
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -801,6 +828,7 @@ git commit -m "feat(design): adicionar Tailwind v4 e design tokens (paleta sóbr
 **Spec ref:** Seção 6.1 (stack)
 
 **Files:**
+
 - Create: `components.json`
 - Create: `src/lib/utils/cn.ts`
 - Modify: `package.json`
@@ -872,6 +900,7 @@ import "@styles/global.css";
 import { Button } from "@/components/ui/button";
 const title = "Atlas dos Candidatos 2026";
 ---
+
 <html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
@@ -911,6 +940,7 @@ git commit -m "feat(ui): adicionar shadcn/ui com Button, Badge, Separator inicia
 **Spec ref:** Seção 8.2 (visual identity)
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `src/styles/global.css`
 
@@ -953,6 +983,7 @@ git commit -m "feat(typography): adicionar Geist Sans e Geist Mono variable font
 **Spec ref:** Seção 10.1 (licenças)
 
 **Files:**
+
 - Create: `LICENSE`
 - Create: `README.md`
 
@@ -1057,6 +1088,7 @@ git commit -m "docs: adicionar LICENSE MIT e README inicial"
 **Spec ref:** Seção 10.2 (arquivos obrigatórios)
 
 **Files:**
+
 - Create: `docs/CONTRIBUTING.md`
 - Create: `docs/CODE_OF_CONDUCT.md`
 - Create: `docs/SECURITY.md`
@@ -1064,7 +1096,7 @@ git commit -m "docs: adicionar LICENSE MIT e README inicial"
 
 - [ ] **Step 1: Criar docs/CONTRIBUTING.md**
 
-````markdown
+```markdown
 # Contribuindo com o Atlas
 
 O Atlas existe para ser **auditável e corrigível**. Toda contribuição é
@@ -1126,13 +1158,13 @@ Issues no GitHub são o canal principal. Não usamos Slack/Discord.
 ## Código de conduta
 
 Veja [`CODE_OF_CONDUCT.md`](CODE_OF_CONDUCT.md).
-````
+```
 
 - [ ] **Step 2: Criar docs/CODE_OF_CONDUCT.md**
 
 Use o [Contributor Covenant 2.1](https://www.contributor-covenant.org/version/2/1/code_of_conduct/) traduzido em PT-BR.
 
-````markdown
+```markdown
 # Código de Conduta — Pacto de Contribuidores
 
 ## Nosso compromisso
@@ -1201,11 +1233,11 @@ Este Código de Conduta é adaptado do [Contributor Covenant][homepage], versão
 disponível em https://www.contributor-covenant.org/version/2/1/code_of_conduct.html.
 
 [homepage]: https://www.contributor-covenant.org
-````
+```
 
 - [ ] **Step 3: Criar docs/SECURITY.md**
 
-````markdown
+```markdown
 # Política de Segurança
 
 ## Disclosure de vulnerabilidades
@@ -1233,11 +1265,11 @@ factual"**.
 
 Vulnerabilidades de severidade alta serão corrigidas e divulgadas
 publicamente em até 30 dias após o relato. Severidade média/baixa: 90 dias.
-````
+```
 
 - [ ] **Step 4: Criar docs/GOVERNANCE.md**
 
-````markdown
+```markdown
 # Governança do Atlas
 
 ## Decisão final
@@ -1284,7 +1316,7 @@ O Atlas **não é um fact-checker**. É uma camada de infraestrutura factual.
 Para vereditos sobre veracidade, consulte fact-checkers reconhecidos
 (Lupa, Aos Fatos, Comprova, Estadão Verifica) — linkados quando disponíveis
 em cada declaração.
-````
+```
 
 - [ ] **Step 5: Commit**
 
@@ -1300,6 +1332,7 @@ git commit -m "docs(governance): adicionar CONTRIBUTING, CODE_OF_CONDUCT, SECURI
 **Spec ref:** Seção 10.3 (issue templates)
 
 **Files:**
+
 - Create: `.github/ISSUE_TEMPLATE/bug.yml`
 - Create: `.github/ISSUE_TEMPLATE/duvida.yml`
 - Create: `.github/pull_request_template.md`
@@ -1455,6 +1488,7 @@ Estabelece sistema de layouts, header, footer, componentes shared, página 404. 
 **Spec ref:** Seção 8 (interface), Seção 8.2 (visual identity)
 
 **Files:**
+
 - Create: `src/components/layout/BaseLayout.astro`
 - Modify: `src/pages/index.astro`
 
@@ -1483,12 +1517,12 @@ const {
   noindex = false,
 } = Astro.props;
 
-const fullTitle = title === "Atlas dos Candidatos 2026"
-  ? title
-  : `${title} · Atlas dos Candidatos 2026`;
+const fullTitle =
+  title === "Atlas dos Candidatos 2026" ? title : `${title} · Atlas dos Candidatos 2026`;
 
 const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toString();
 ---
+
 <!doctype html>
 <html lang="pt-BR">
   <head>
@@ -1521,12 +1555,13 @@ const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toStri
 ---
 import BaseLayout from "@components/layout/BaseLayout.astro";
 ---
+
 <BaseLayout title="Atlas dos Candidatos 2026">
   <section class="container-narrow" style="padding-block: var(--space-10);">
     <h1>Atlas dos Candidatos 2026</h1>
     <p style="margin-top: var(--space-4); color: var(--color-fg-muted); font-size: var(--text-lg);">
-      Memória factual da eleição presidencial brasileira de 2026.
-      Declarações com fonte primária. Sem julgamento editorial.
+      Memória factual da eleição presidencial brasileira de 2026. Declarações com fonte primária.
+      Sem julgamento editorial.
     </p>
   </section>
 </BaseLayout>
@@ -1543,6 +1578,7 @@ Aguardar até Task 12 para commitar tudo junto.
 **Spec ref:** Seção 8.3 (layout home), Seção 8.2 (densidade alta + microinterações)
 
 **Files:**
+
 - Create: `src/components/layout/Header.astro`
 - Create: `src/components/layout/Footer.astro`
 
@@ -1561,10 +1597,9 @@ const navItems = [
 ];
 
 const isActive = (href: string) =>
-  href === "/"
-    ? currentPath === "/"
-    : currentPath.startsWith(href);
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
 ---
+
 <header
   role="banner"
   style="
@@ -1596,25 +1631,29 @@ const isActive = (href: string) =>
       "
       aria-label="Atlas — página inicial"
     >
-      Atlas <span style="color: var(--color-fg-muted); font-weight: var(--weight-regular);">2026</span>
+      Atlas <span style="color: var(--color-fg-muted); font-weight: var(--weight-regular);"
+        >2026</span
+      >
     </a>
 
     <nav aria-label="Navegação principal" style="display: flex; gap: var(--space-5);">
-      {navItems.map((item) => (
-        <a
-          href={item.href}
-          aria-current={isActive(item.href) ? "page" : undefined}
-          style={`
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            style={`
             font-size: var(--text-sm);
             text-decoration: none;
             color: ${isActive(item.href) ? "var(--color-fg)" : "var(--color-fg-muted)"};
             font-weight: ${isActive(item.href) ? "var(--weight-medium)" : "var(--weight-regular)"};
             transition: color var(--transition-fast);
           `}
-        >
-          {item.label}
-        </a>
-      ))}
+          >
+            {item.label}
+          </a>
+        ))
+      }
     </nav>
 
     <div style="display: flex; gap: var(--space-3); align-items: center;">
@@ -1653,6 +1692,7 @@ Nota: URL do GitHub é placeholder; ajustar na Fase 3 quando repo público for c
 ---
 const year = new Date().getFullYear();
 ---
+
 <footer
   role="contentinfo"
   style="
@@ -1671,15 +1711,23 @@ const year = new Date().getFullYear();
     "
   >
     <div>
-      <p style="font-weight: var(--weight-semibold); margin-bottom: var(--space-2);">Atlas dos Candidatos 2026</p>
+      <p style="font-weight: var(--weight-semibold); margin-bottom: var(--space-2);">
+        Atlas dos Candidatos 2026
+      </p>
       <p style="color: var(--color-fg-muted); font-size: var(--text-sm); line-height: 1.5;">
         Infraestrutura factual da eleição presidencial brasileira de 2026.
       </p>
     </div>
 
     <div>
-      <p style="font-weight: var(--weight-medium); margin-bottom: var(--space-2); font-size: var(--text-sm);">Navegar</p>
-      <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--text-sm);">
+      <p
+        style="font-weight: var(--weight-medium); margin-bottom: var(--space-2); font-size: var(--text-sm);"
+      >
+        Navegar
+      </p>
+      <ul
+        style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--text-sm);"
+      >
         <li><a href="/candidatos">Candidatos</a></li>
         <li><a href="/temas">Temas</a></li>
         <li><a href="/eventos">Eventos</a></li>
@@ -1688,8 +1736,14 @@ const year = new Date().getFullYear();
     </div>
 
     <div>
-      <p style="font-weight: var(--weight-medium); margin-bottom: var(--space-2); font-size: var(--text-sm);">Projeto</p>
-      <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--text-sm);">
+      <p
+        style="font-weight: var(--weight-medium); margin-bottom: var(--space-2); font-size: var(--text-sm);"
+      >
+        Projeto
+      </p>
+      <ul
+        style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--text-sm);"
+      >
         <li><a href="/metodologia">Metodologia</a></li>
         <li><a href="/sobre">Sobre</a></li>
         <li><a href="/contribuir">Contribuir</a></li>
@@ -1697,8 +1751,14 @@ const year = new Date().getFullYear();
     </div>
 
     <div>
-      <p style="font-weight: var(--weight-medium); margin-bottom: var(--space-2); font-size: var(--text-sm);">Open-source</p>
-      <ul style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--text-sm);">
+      <p
+        style="font-weight: var(--weight-medium); margin-bottom: var(--space-2); font-size: var(--text-sm);"
+      >
+        Open-source
+      </p>
+      <ul
+        style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-1); font-size: var(--text-sm);"
+      >
         <li><a href="https://github.com/atlas2026" rel="noopener external">GitHub</a></li>
         <li>Código MIT</li>
         <li>Dataset CC-BY 4.0</li>
@@ -1743,6 +1803,7 @@ Expected: header sticky aparece no topo, footer aparece no rodapé com 4 colunas
 **Spec ref:** Seção 13 (riscos — disclaimer prominente)
 
 **Files:**
+
 - Create: `src/components/shared/Disclaimer.astro`
 - Create: `src/components/shared/Tag.astro`
 - Create: `src/components/shared/SkipLink.astro`
@@ -1751,7 +1812,9 @@ Expected: header sticky aparece no topo, footer aparece no rodapé com 4 colunas
 
 ```astro
 ---
+
 ---
+
 <a
   href="#main-content"
   style="
@@ -1784,17 +1847,19 @@ interface Props {
 const { variant = "default" } = Astro.props;
 
 const styles = {
-  default: "padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius); background-color: var(--color-bg-muted); font-size: var(--text-sm); color: var(--color-fg-muted);",
-  prominent: "padding: var(--space-4) var(--space-5); border-left: 3px solid var(--color-accent); background-color: var(--color-accent-muted); font-size: var(--text-base);",
+  default:
+    "padding: var(--space-3) var(--space-4); border: 1px solid var(--color-border); border-radius: var(--radius); background-color: var(--color-bg-muted); font-size: var(--text-sm); color: var(--color-fg-muted);",
+  prominent:
+    "padding: var(--space-4) var(--space-5); border-left: 3px solid var(--color-accent); background-color: var(--color-accent-muted); font-size: var(--text-base);",
   inline: "font-size: var(--text-xs); color: var(--color-fg-subtle);",
 };
 ---
+
 <aside role="note" aria-label="Aviso" style={styles[variant]}>
   <slot>
     <strong style="font-weight: var(--weight-medium);">Atlas não é um fact-checker.</strong>
-    O Atlas apresenta declarações com fonte primária linkada, sem emitir
-    veredito sobre veracidade. Quando há veredito de fact-checker reconhecido
-    (Lupa, Aos Fatos, Comprova, etc), apresentamos com atribuição.
+    O Atlas apresenta declarações com fonte primária linkada, sem emitir veredito sobre veracidade. Quando
+    há veredito de fact-checker reconhecido (Lupa, Aos Fatos, Comprova, etc), apresentamos com atribuição.
   </slot>
 </aside>
 ```
@@ -1822,19 +1887,24 @@ const baseStyle = `
   transition: all var(--transition-fast);
 `;
 
-const sizeStyle = size === "sm"
-  ? "padding: 2px 6px; font-size: var(--text-xs);"
-  : "padding: 4px 8px; font-size: var(--text-sm);";
+const sizeStyle =
+  size === "sm"
+    ? "padding: 2px 6px; font-size: var(--text-xs);"
+    : "padding: 4px 8px; font-size: var(--text-sm);";
 
 const variantStyle = {
-  default: "background-color: var(--color-bg-muted); color: var(--color-fg-muted); border: 1px solid var(--color-border);",
-  structural: "background-color: var(--color-accent-muted); color: var(--color-accent-fg); border: 1px solid var(--color-accent);",
-  neutral: "background-color: transparent; color: var(--color-fg-subtle); border: 1px solid var(--color-border);",
+  default:
+    "background-color: var(--color-bg-muted); color: var(--color-fg-muted); border: 1px solid var(--color-border);",
+  structural:
+    "background-color: var(--color-accent-muted); color: var(--color-accent-fg); border: 1px solid var(--color-accent);",
+  neutral:
+    "background-color: transparent; color: var(--color-fg-subtle); border: 1px solid var(--color-border);",
 }[variant];
 
 const fullStyle = `${baseStyle} ${sizeStyle} ${variantStyle}`;
 const Tag = href ? "a" : "span";
 ---
+
 <Tag href={href} style={fullStyle}>
   <slot />
 </Tag>
@@ -1850,12 +1920,15 @@ import BaseLayout from "@components/layout/BaseLayout.astro";
 import Disclaimer from "@components/shared/Disclaimer.astro";
 import Tag from "@components/shared/Tag.astro";
 ---
+
 <BaseLayout title="Atlas dos Candidatos 2026">
   <section class="container-narrow" style="padding-block: var(--space-10);">
     <h1>Atlas dos Candidatos 2026</h1>
-    <p style="margin-top: var(--space-4); color: var(--color-fg-muted); font-size: var(--text-lg); max-width: 60ch;">
-      Memória factual da eleição presidencial brasileira de 2026.
-      Declarações com fonte primária. Sem julgamento editorial.
+    <p
+      style="margin-top: var(--space-4); color: var(--color-fg-muted); font-size: var(--text-lg); max-width: 60ch;"
+    >
+      Memória factual da eleição presidencial brasileira de 2026. Declarações com fonte primária.
+      Sem julgamento editorial.
     </p>
 
     <div style="margin-top: var(--space-6); display: flex; gap: var(--space-2); flex-wrap: wrap;">
@@ -1889,6 +1962,7 @@ Aguardar Task 12.
 **Spec ref:** Princípio 5 (URLs nunca quebram)
 
 **Files:**
+
 - Create: `src/pages/404.astro`
 
 - [ ] **Step 1: Criar 404.astro**
@@ -1897,11 +1971,9 @@ Aguardar Task 12.
 ---
 import BaseLayout from "@components/layout/BaseLayout.astro";
 ---
+
 <BaseLayout title="Página não encontrada" noindex>
-  <section
-    class="container-narrow"
-    style="padding-block: var(--space-12); text-align: center;"
-  >
+  <section class="container-narrow" style="padding-block: var(--space-12); text-align: center;">
     <p
       style="
         font-family: var(--font-mono);
@@ -1966,6 +2038,7 @@ git commit -m "feat(layout): adicionar BaseLayout, Header, Footer, Disclaimer, T
 **Spec ref:** Seção 8.2 (microinterações)
 
 **Files:**
+
 - Modify: `src/components/layout/BaseLayout.astro`
 - Create: `public/favicon.svg`
 - Create: `public/humans.txt`
@@ -1996,12 +2069,12 @@ const {
   noindex = false,
 } = Astro.props;
 
-const fullTitle = title === "Atlas dos Candidatos 2026"
-  ? title
-  : `${title} · Atlas dos Candidatos 2026`;
+const fullTitle =
+  title === "Atlas dos Candidatos 2026" ? title : `${title} · Atlas dos Candidatos 2026`;
 
 const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toString();
 ---
+
 <!doctype html>
 <html lang="pt-BR">
   <head>
@@ -2085,6 +2158,7 @@ Estabelece schemas Zod, Astro Content Collections, geração de JSON Schemas, sc
 **Spec ref:** Seção 16 (TEP)
 
 **Files:**
+
 - Create: `src/lib/utils/slugify.ts`
 - Create: `src/lib/utils/format-date.ts`
 - Create: `src/lib/utils/truncate.ts`
@@ -2325,6 +2399,7 @@ git commit -m "feat(utils): adicionar slugify, format-date, truncate com testes 
 **Spec ref:** Seção 5 (modelo de dados completo)
 
 **Files:**
+
 - Create: `src/content/config.ts`
 - Create: `src/types/index.ts`
 
@@ -2432,9 +2507,7 @@ const eventos = defineCollection({
     fonte_primaria_url: z.string().url(),
     fonte_primaria_tipo: fonteTipoEnum,
     archive_url: z.string().url(),
-    candidatos_envolvidos: z.array(
-      z.object({ candidato_id: z.string().min(1) }),
-    ).min(1),
+    candidatos_envolvidos: z.array(z.object({ candidato_id: z.string().min(1) })).min(1),
     descricao: z.string().min(10),
     criado_em: z.string().datetime(),
     atualizado_em: z.string().datetime(),
@@ -2450,7 +2523,10 @@ const declaracoes = defineCollection({
     evento_id: z.string().min(1),
 
     texto: z.string().min(1),
-    timestamp_no_evento: z.string().regex(/^\d{2}:\d{2}:\d{2}$/).nullable(),
+    timestamp_no_evento: z
+      .string()
+      .regex(/^\d{2}:\d{2}:\d{2}$/)
+      .nullable(),
     contexto: z.string().min(10).max(500),
 
     tema_principal: z.string().min(1),
@@ -2463,26 +2539,33 @@ const declaracoes = defineCollection({
     archive_url: z.string().url(),
     snapshot_interno_path: z.string().nullable().optional(),
 
-    contexto_adicional: z.object({
-      texto: z.string().min(10),
-      fontes: z.array(
+    contexto_adicional: z
+      .object({
+        texto: z.string().min(10),
+        fontes: z
+          .array(
+            z.object({
+              tipo: z.string().min(1),
+              url: z.string().url(),
+              data: z.string().datetime(),
+            }),
+          )
+          .min(1),
+      })
+      .nullable()
+      .optional(),
+
+    vereditos_externos: z
+      .array(
         z.object({
-          tipo: z.string().min(1),
+          veiculo: veiculoVeredito,
+          classificacao: z.string().min(1),
           url: z.string().url(),
           data: z.string().datetime(),
+          citacao_curta: z.string().min(1).max(300),
         }),
-      ).min(1),
-    }).nullable().optional(),
-
-    vereditos_externos: z.array(
-      z.object({
-        veiculo: veiculoVeredito,
-        classificacao: z.string().min(1),
-        url: z.string().url(),
-        data: z.string().datetime(),
-        citacao_curta: z.string().min(1).max(300),
-      }),
-    ).default([]),
+      )
+      .default([]),
 
     versao: z.number().int().positive(),
     criado_em: z.string().datetime(),
@@ -2563,6 +2646,7 @@ git commit -m "feat(data): adicionar schemas Zod para Candidato, Tema, Evento, D
 **Spec ref:** Seção 5.4 (modelo Tema)
 
 **Files:**
+
 - Create: `data/temas/economia.yaml`
 - Create: `data/temas/saude.yaml`
 - Create: `data/temas/seguranca-publica.yaml`
@@ -2575,6 +2659,7 @@ git commit -m "feat(data): adicionar schemas Zod para Candidato, Tema, Evento, D
 Para cada arquivo abaixo, o nome do arquivo deve coincidir com o `slug`.
 
 `data/temas/economia.yaml`:
+
 ```yaml
 id: TEMA_ECONOMIA
 slug: economia
@@ -2585,6 +2670,7 @@ tema_pai_id: null
 ```
 
 `data/temas/saude.yaml`:
+
 ```yaml
 id: TEMA_SAUDE
 slug: saude
@@ -2595,6 +2681,7 @@ tema_pai_id: null
 ```
 
 `data/temas/seguranca-publica.yaml`:
+
 ```yaml
 id: TEMA_SEGURANCA_PUBLICA
 slug: seguranca-publica
@@ -2605,6 +2692,7 @@ tema_pai_id: null
 ```
 
 `data/temas/educacao.yaml`:
+
 ```yaml
 id: TEMA_EDUCACAO
 slug: educacao
@@ -2615,6 +2703,7 @@ tema_pai_id: null
 ```
 
 `data/temas/meio-ambiente.yaml`:
+
 ```yaml
 id: TEMA_MEIO_AMBIENTE
 slug: meio-ambiente
@@ -2625,6 +2714,7 @@ tema_pai_id: null
 ```
 
 `data/temas/politica-externa.yaml`:
+
 ```yaml
 id: TEMA_POLITICA_EXTERNA
 slug: politica-externa
@@ -2662,6 +2752,7 @@ git commit -m "data(temas): adicionar 6 temas primários (economia, saúde, segu
 **Spec ref:** Seção 5 (modelo de dados), Seção 6.3 (arquitetura em camadas)
 
 **Files:**
+
 - Create: `src/lib/data/candidatos.ts`
 - Create: `src/lib/data/temas.ts`
 - Create: `src/lib/data/eventos.ts`
@@ -2721,9 +2812,7 @@ import type { Tema } from "@types";
 
 export async function getAllTemas(): Promise<Tema[]> {
   const temas = await getCollection("temas");
-  return temas.sort((a, b) =>
-    a.data.nome.localeCompare(b.data.nome, "pt-BR"),
-  );
+  return temas.sort((a, b) => a.data.nome.localeCompare(b.data.nome, "pt-BR"));
 }
 
 export async function getTemaBySlug(slug: string): Promise<Tema | undefined> {
@@ -2746,24 +2835,15 @@ import type { Candidato } from "@types";
 
 export async function getAllCandidatos(): Promise<Candidato[]> {
   const candidatos = await getCollection("candidatos");
-  return candidatos.sort((a, b) =>
-    a.data.nome.localeCompare(b.data.nome, "pt-BR"),
-  );
+  return candidatos.sort((a, b) => a.data.nome.localeCompare(b.data.nome, "pt-BR"));
 }
 
-export async function getCandidatoBySlug(
-  slug: string,
-): Promise<Candidato | undefined> {
-  const candidatos = await getCollection(
-    "candidatos",
-    ({ data }) => data.slug === slug,
-  );
+export async function getCandidatoBySlug(slug: string): Promise<Candidato | undefined> {
+  const candidatos = await getCollection("candidatos", ({ data }) => data.slug === slug);
   return candidatos[0];
 }
 
-export async function getCandidatoById(
-  id: string,
-): Promise<Candidato | undefined> {
+export async function getCandidatoById(id: string): Promise<Candidato | undefined> {
   return await getEntry("candidatos", id);
 }
 ```
@@ -2778,26 +2858,18 @@ import type { Evento } from "@types";
 
 export async function getAllEventos(): Promise<Evento[]> {
   const eventos = await getCollection("eventos");
-  return eventos.sort(
-    (a, b) => new Date(b.data.data).getTime() - new Date(a.data.data).getTime(),
-  );
+  return eventos.sort((a, b) => new Date(b.data.data).getTime() - new Date(a.data.data).getTime());
 }
 
-export async function getEventoById(
-  id: string,
-): Promise<Evento | undefined> {
+export async function getEventoById(id: string): Promise<Evento | undefined> {
   return await getEntry("eventos", id);
 }
 
-export async function getEventosByCandidato(
-  candidatoId: string,
-): Promise<Evento[]> {
+export async function getEventosByCandidato(candidatoId: string): Promise<Evento[]> {
   const eventos = await getCollection("eventos", ({ data }) =>
     data.candidatos_envolvidos.some((c) => c.candidato_id === candidatoId),
   );
-  return eventos.sort(
-    (a, b) => new Date(b.data.data).getTime() - new Date(a.data.data).getTime(),
-  );
+  return eventos.sort((a, b) => new Date(b.data.data).getTime() - new Date(a.data.data).getTime());
 }
 ```
 
@@ -2812,60 +2884,39 @@ import type { Declaracao } from "@types";
 export async function getAllDeclaracoes(): Promise<Declaracao[]> {
   const declaracoes = await getCollection("declaracoes");
   return declaracoes.sort(
-    (a, b) =>
-      new Date(b.data.criado_em).getTime() -
-      new Date(a.data.criado_em).getTime(),
+    (a, b) => new Date(b.data.criado_em).getTime() - new Date(a.data.criado_em).getTime(),
   );
 }
 
-export async function getDeclaracaoById(
-  id: string,
-): Promise<Declaracao | undefined> {
+export async function getDeclaracaoById(id: string): Promise<Declaracao | undefined> {
   return await getEntry("declaracoes", id);
 }
 
-export async function getDeclaracoesByCandidato(
-  candidatoId: string,
-): Promise<Declaracao[]> {
+export async function getDeclaracoesByCandidato(candidatoId: string): Promise<Declaracao[]> {
   const declaracoes = await getCollection(
     "declaracoes",
     ({ data }) => data.candidato_id === candidatoId,
   );
   return declaracoes.sort(
-    (a, b) =>
-      new Date(b.data.criado_em).getTime() -
-      new Date(a.data.criado_em).getTime(),
+    (a, b) => new Date(b.data.criado_em).getTime() - new Date(a.data.criado_em).getTime(),
   );
 }
 
-export async function getDeclaracoesByTema(
-  temaSlug: string,
-): Promise<Declaracao[]> {
+export async function getDeclaracoesByTema(temaSlug: string): Promise<Declaracao[]> {
   const declaracoes = await getCollection(
     "declaracoes",
-    ({ data }) =>
-      data.tema_principal === temaSlug ||
-      data.temas_secundarios.includes(temaSlug),
+    ({ data }) => data.tema_principal === temaSlug || data.temas_secundarios.includes(temaSlug),
   );
   return declaracoes.sort(
-    (a, b) =>
-      new Date(b.data.criado_em).getTime() -
-      new Date(a.data.criado_em).getTime(),
+    (a, b) => new Date(b.data.criado_em).getTime() - new Date(a.data.criado_em).getTime(),
   );
 }
 
-export async function getDeclaracoesByEvento(
-  eventoId: string,
-): Promise<Declaracao[]> {
-  const declaracoes = await getCollection(
-    "declaracoes",
-    ({ data }) => data.evento_id === eventoId,
-  );
+export async function getDeclaracoesByEvento(eventoId: string): Promise<Declaracao[]> {
+  const declaracoes = await getCollection("declaracoes", ({ data }) => data.evento_id === eventoId);
   return declaracoes.sort((a, b) => {
     if (a.data.timestamp_no_evento && b.data.timestamp_no_evento) {
-      return a.data.timestamp_no_evento.localeCompare(
-        b.data.timestamp_no_evento,
-      );
+      return a.data.timestamp_no_evento.localeCompare(b.data.timestamp_no_evento);
     }
     return 0;
   });
@@ -2894,6 +2945,7 @@ git commit -m "feat(data): adicionar loaders para candidatos, temas, eventos, de
 **Spec ref:** Seção 11 (dataset paralelo), Seção 16 (TEP)
 
 **Files:**
+
 - Create: `scripts/generate-json-schemas.ts`
 - Create: `data/schemas/.gitkeep`
 - Modify: `package.json`
@@ -2990,9 +3042,7 @@ const eventoSchema = z.object({
   fonte_primaria_url: z.string().url(),
   fonte_primaria_tipo: fonteTipoEnum,
   archive_url: z.string().url(),
-  candidatos_envolvidos: z
-    .array(z.object({ candidato_id: z.string().min(1) }))
-    .min(1),
+  candidatos_envolvidos: z.array(z.object({ candidato_id: z.string().min(1) })).min(1),
   descricao: z.string().min(10),
   criado_em: z.string().datetime(),
   atualizado_em: z.string().datetime(),
@@ -3085,6 +3135,7 @@ pnpm generate-schemas
 ```
 
 Expected output:
+
 ```
 ✓ <path>/data/schemas/candidato.schema.json
 ✓ <path>/data/schemas/tema.schema.json
@@ -3116,6 +3167,7 @@ git commit -m "feat(schemas): gerar JSON Schemas a partir de Zod (script generat
 **Spec ref:** Seção 16 (TEP — schema validation no CI)
 
 **Files:**
+
 - Create: `scripts/validate-data.ts`
 - Modify: `package.json`
 
@@ -3152,9 +3204,7 @@ const collections = [
 function loadSchema(filename: string): ValidateFunction {
   const path = join(SCHEMAS_DIR, filename);
   if (!existsSync(path)) {
-    throw new Error(
-      `Schema não encontrado: ${path}. Rode 'pnpm generate-schemas' antes.`,
-    );
+    throw new Error(`Schema não encontrado: ${path}. Rode 'pnpm generate-schemas' antes.`);
   }
   const raw = readFileSync(path, "utf-8");
   return ajv.compile(JSON.parse(raw) as object);
@@ -3183,9 +3233,7 @@ for (const collection of collections) {
   }
 
   const validate = loadSchema(collection.schema);
-  const files = readdirSync(dir).filter(
-    (f) => extname(f) === collection.ext && !f.startsWith("."),
-  );
+  const files = readdirSync(dir).filter((f) => extname(f) === collection.ext && !f.startsWith("."));
 
   if (files.length === 0) {
     console.log(`ℹ ${collection.dir}: 0 arquivos`);
@@ -3237,6 +3285,7 @@ pnpm validate-data
 ```
 
 Expected output (dado que só há temas):
+
 ```
 📂 Validando temas (6 arquivos)
   ✓ economia.yaml
@@ -3283,6 +3332,7 @@ git commit -m "feat(ci): adicionar validate-data com Ajv para schema validation"
 **Spec ref:** Seção 16 (TEP)
 
 **Files:**
+
 - Create: `.github/workflows/ci.yml`
 
 - [ ] **Step 1: Criar workflow CI**
@@ -3374,6 +3424,7 @@ Se algum falhar, corrigir antes de seguir.
 **Spec ref:** Seção 10.2 (arquivos obrigatórios)
 
 **Files:**
+
 - Create: `docs/SCHEMA.md`
 
 - [ ] **Step 1: Criar docs/SCHEMA.md**
@@ -3392,6 +3443,7 @@ Pessoa física registrada como candidata à presidência da República no Brasil
 em 2026. Identificada por `id` (ULID) e `slug` único.
 
 **Campos obrigatórios:**
+
 - `id` — identificador único (string ULID)
 - `slug` — slug URL-safe (kebab-case, ASCII apenas)
 - `nome` — nome completo registrado no TSE
@@ -3401,6 +3453,7 @@ em 2026. Identificada por `id` (ULID) e `slug` único.
 - `criado_em`, `atualizado_em` — timestamps ISO 8601
 
 **Campos opcionais:**
+
 - `foto_url` — URL da foto oficial
 
 ### Tema
@@ -3409,6 +3462,7 @@ Tópico amplo usado para classificar declarações. Hierarquia opcional via
 `tema_pai_id`.
 
 **Campos obrigatórios:**
+
 - `id`, `slug`, `nome`, `descricao_curta`, `nivel`
 
 **Níveis:** `primario` (top-level) ou `secundario` (subtema).
@@ -3419,6 +3473,7 @@ Ocorrência identificável onde uma ou mais declarações foram feitas. Ex.:
 debate, entrevista, comício, post em rede social.
 
 **Campos obrigatórios:**
+
 - `id`, `titulo`, `data` (ISO 8601), `tipo`
 - `local` — objeto `{ fisico, digital }` (cada um pode ser null)
 - `fonte_primaria_url` — link canônico da gravação/transcrição completa
@@ -3432,6 +3487,7 @@ debate, entrevista, comício, post em rede social.
 Trecho específico do que um candidato disse, sempre com fonte primária.
 
 **Campos obrigatórios:**
+
 - `id`, `slug`, `candidato_id`, `evento_id`
 - `texto` — citação literal
 - `timestamp_no_evento` — HH:MM:SS (ou `null` se não aplicável)
@@ -3444,6 +3500,7 @@ Trecho específico do que um candidato disse, sempre com fonte primária.
 - `criado_em`, `atualizado_em`
 
 **Campos opcionais:**
+
 - `snapshot_interno_path` — backup local se Wayback falhar
 - `contexto_adicional` — fato circundante documentável
 - `vereditos_externos` — array de vereditos de fact-checkers reconhecidos
@@ -3579,20 +3636,21 @@ Quando todos os itens acima ✓, **Fase 1 completa**.
 
 ## 1. Spec coverage
 
-| Seção do spec | Tarefa que implementa |
-|---|---|
-| Seção 3 (princípios) | Refletidos em `docs/GOVERNANCE.md`, Disclaimer.astro |
-| Seção 5 (modelo de dados) | Tasks 15-17 (Zod, loaders, types) |
-| Seção 6 (stack) | Tasks 1-5 (Astro, ESLint, Tailwind, shadcn, Geist) |
-| Seção 8.1 (rotas) | Tasks 9, 12 (BaseLayout + 404) — rotas adicionais nas Fases 2-3 |
-| Seção 8.2 (visual identity) | Tasks 3, 5 (design tokens, Geist) |
-| Seção 8.3 (layout) | Task 11 (componentes shared) — DeclaracaoFull na Fase 2 |
-| Seção 10 (open-source) | Task 6 (LICENSE), Task 7 (governance), Task 8 (issue templates) |
-| Seção 13 (riscos — disclaimer) | Task 11 (Disclaimer component), Task 9 (BaseLayout) |
-| Seção 16 (TEP) | Tasks 2 (Vitest), 19 (validate-data), 20 (CI) |
-| Seção 17 (futuras) | Fora desta fase (Fases 2-3+) |
+| Seção do spec                  | Tarefa que implementa                                           |
+| ------------------------------ | --------------------------------------------------------------- |
+| Seção 3 (princípios)           | Refletidos em `docs/GOVERNANCE.md`, Disclaimer.astro            |
+| Seção 5 (modelo de dados)      | Tasks 15-17 (Zod, loaders, types)                               |
+| Seção 6 (stack)                | Tasks 1-5 (Astro, ESLint, Tailwind, shadcn, Geist)              |
+| Seção 8.1 (rotas)              | Tasks 9, 12 (BaseLayout + 404) — rotas adicionais nas Fases 2-3 |
+| Seção 8.2 (visual identity)    | Tasks 3, 5 (design tokens, Geist)                               |
+| Seção 8.3 (layout)             | Task 11 (componentes shared) — DeclaracaoFull na Fase 2         |
+| Seção 10 (open-source)         | Task 6 (LICENSE), Task 7 (governance), Task 8 (issue templates) |
+| Seção 13 (riscos — disclaimer) | Task 11 (Disclaimer component), Task 9 (BaseLayout)             |
+| Seção 16 (TEP)                 | Tasks 2 (Vitest), 19 (validate-data), 20 (CI)                   |
+| Seção 17 (futuras)             | Fora desta fase (Fases 2-3+)                                    |
 
 **Gaps identificados:**
+
 - ✓ Sem gaps. Seção 17 (futuras) é explicitamente roadmap V2.
 - Pagefind, structured data, OG dinâmico estão na Fase 2 (Plan 2).
 - Conteúdo real de candidatos/declarações está na Fase 3 (Plan 3).

@@ -29,13 +29,13 @@ Critério de sucesso: missão cívica + portfolio técnico. Receita não é alvo
 
 ### Perfil do operador
 
-| Dimensão | Valor |
-|---|---|
-| Motivação primária | Missão cívica + portfolio/aprendizado |
-| Critério de sucesso | Impacto real OU visibilidade técnica (receita = bônus) |
-| Recursos | 8-15h/sem · até R$ 2k/mês · ~17 meses até eleição |
-| Postura | Tecnicista neutro radical · sem rosto público |
-| Distribuição existente | Zero canais — precisa ser embutida no formato do produto |
+| Dimensão                     | Valor                                                          |
+| ---------------------------- | -------------------------------------------------------------- |
+| Motivação primária           | Missão cívica + portfolio/aprendizado                          |
+| Critério de sucesso          | Impacto real OU visibilidade técnica (receita = bônus)         |
+| Recursos                     | 8-15h/sem · até R$ 2k/mês · ~17 meses até eleição              |
+| Postura                      | Tecnicista neutro radical · sem rosto público                  |
+| Distribuição existente       | Zero canais — precisa ser embutida no formato do produto       |
 | Familiaridade com fact-check | Leitor casual (research participante necessário antes/durante) |
 
 ### Por que Atlas e não fact-checker?
@@ -231,18 +231,18 @@ OG images            → Satori (gerado em build time)
 
 ### 6.2 Custo mensal MVP
 
-| Item | Custo |
-|---|---|
-| Cloudflare Pages | R$ 0 |
-| GitHub (repo público) | R$ 0 |
-| Turso free tier | R$ 0 |
-| Wayback Machine | R$ 0 |
-| HuggingFace dataset | R$ 0 |
-| Zenodo DOI | R$ 0 |
-| Domain `.com.br` | ~R$ 40/ano |
+| Item                    | Custo                 |
+| ----------------------- | --------------------- |
+| Cloudflare Pages        | R$ 0                  |
+| GitHub (repo público)   | R$ 0                  |
+| Turso free tier         | R$ 0                  |
+| Wayback Machine         | R$ 0                  |
+| HuggingFace dataset     | R$ 0                  |
+| Zenodo DOI              | R$ 0                  |
+| Domain `.com.br`        | ~R$ 40/ano            |
 | Whisper (se OpenAI API) | ~R$ 30/mês (estimado) |
-| Analytics self-hosted | ~R$ 20/mês (opcional) |
-| **Total** | **R$ 0 - 50/mês** |
+| Analytics self-hosted   | ~R$ 20/mês (opcional) |
+| **Total**               | **R$ 0 - 50/mês**     |
 
 Bem abaixo do teto de R$ 2k/mês.
 
@@ -282,11 +282,11 @@ Bem abaixo do teto de R$ 2k/mês.
 
 ## 7. Pipeline de Ingestão (3 níveis de esforço)
 
-| Nível | Fonte | Pipeline | Esforço/item |
-|---|---|---|---|
-| **1 — Fácil (automatizável)** | YouTube oficial · TSE · Diário Oficial · transcrições Câmara/Senado | Script baixa + Whisper transcreve + você seleciona trechos | ~5-10 min |
-| **2 — Médio (semi-auto)** | Mídia consolidada (G1, Folha, UOL, BBC Brasil, Estadão) com vídeo embedado | Cola URL → script extrai metadata + screenshot + Wayback → você confirma trecho + timestamp | ~10-15 min |
-| **3 — Difícil (manual+assistido)** | Posts X/IG/FB/TikTok oficiais verificados | Cola URL → script tenta Wayback + screenshot + yt-dlp se vídeo → você transcreve manualmente | ~20-30 min |
+| Nível                              | Fonte                                                                      | Pipeline                                                                                     | Esforço/item |
+| ---------------------------------- | -------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------ |
+| **1 — Fácil (automatizável)**      | YouTube oficial · TSE · Diário Oficial · transcrições Câmara/Senado        | Script baixa + Whisper transcreve + você seleciona trechos                                   | ~5-10 min    |
+| **2 — Médio (semi-auto)**          | Mídia consolidada (G1, Folha, UOL, BBC Brasil, Estadão) com vídeo embedado | Cola URL → script extrai metadata + screenshot + Wayback → você confirma trecho + timestamp  | ~10-15 min   |
+| **3 — Difícil (manual+assistido)** | Posts X/IG/FB/TikTok oficiais verificados                                  | Cola URL → script tenta Wayback + screenshot + yt-dlp se vídeo → você transcreve manualmente | ~20-30 min   |
 
 ### 7.1 Princípios da ingestão
 
@@ -301,6 +301,7 @@ Bem abaixo do teto de R$ 2k/mês.
 **Não fazemos cobertura ao vivo no MVP.** Cobertura é assíncrona: 24-48h após o evento, processamos declarações relevantes.
 
 Razões:
+
 1. Tempo real = competir com Twitter, jogo perdido para solo founder.
 2. Valor agregado do Atlas é **permanência e rigor**, não velocidade.
 3. Slogan operacional: "no dia seguinte, com fonte primária."
@@ -417,12 +418,12 @@ Astro estático entrega isso na configuração padrão. Não negociar para baixo
 
 ### 10.1 Licenças
 
-| Componente | Licença |
-|---|---|
-| Código | MIT |
-| Dataset | CC-BY 4.0 (atribuição obrigatória) |
-| Conteúdo editorial (descrições, metodologia) | CC-BY 4.0 |
-| Citações de candidatos | Fair use (citação factual com fonte) |
+| Componente                                   | Licença                              |
+| -------------------------------------------- | ------------------------------------ |
+| Código                                       | MIT                                  |
+| Dataset                                      | CC-BY 4.0 (atribuição obrigatória)   |
+| Conteúdo editorial (descrições, metodologia) | CC-BY 4.0                            |
+| Citações de candidatos                       | Fair use (citação factual com fonte) |
 
 ### 10.2 Arquivos obrigatórios no repo
 
@@ -445,27 +446,27 @@ Astro estático entrega isso na configuração padrão. Não negociar para baixo
 
 ## 11. Dataset Paralelo
 
-| Aspecto | Decisão |
-|---|---|
-| Formatos | JSON Lines (`.jsonl`) + CSV simétrico |
-| Schema | `SCHEMA.md` + JSON Schema linkado |
-| Publicação | GitHub Releases (tag por release) + HuggingFace dataset card |
-| Frequência MVP | A cada release tag (manual) |
-| Frequência futura | Automatizado via GitHub Action (semanal ou por commit) |
-| Versionamento | SemVer adaptado: MAJOR=schema, MINOR=novos candidatos/temas, PATCH=novas declarações |
-| DOI | Zenodo (gera DOI citável a cada release) |
+| Aspecto           | Decisão                                                                              |
+| ----------------- | ------------------------------------------------------------------------------------ |
+| Formatos          | JSON Lines (`.jsonl`) + CSV simétrico                                                |
+| Schema            | `SCHEMA.md` + JSON Schema linkado                                                    |
+| Publicação        | GitHub Releases (tag por release) + HuggingFace dataset card                         |
+| Frequência MVP    | A cada release tag (manual)                                                          |
+| Frequência futura | Automatizado via GitHub Action (semanal ou por commit)                               |
+| Versionamento     | SemVer adaptado: MAJOR=schema, MINOR=novos candidatos/temas, PATCH=novas declarações |
+| DOI               | Zenodo (gera DOI citável a cada release)                                             |
 
 ---
 
 ## 12. Workflow Operacional Semanal (8-15h/sem)
 
-| Atividade | Horas/sem | Quando (sugestão) |
-|---|---|---|
-| Ingestão (scraping + organização) | 2h | Domingo |
-| Curadoria + transcrição manual | 4-6h | 2-3 sessões distribuídas |
-| Melhoria de produto (UX, código) | 2-3h | Fins de semana |
-| Monitoramento (analytics, issues, PRs) | 1-2h | Diluído |
-| Comunicação (issues, divulgação leve) | 1h | Quando aparece |
+| Atividade                              | Horas/sem | Quando (sugestão)        |
+| -------------------------------------- | --------- | ------------------------ |
+| Ingestão (scraping + organização)      | 2h        | Domingo                  |
+| Curadoria + transcrição manual         | 4-6h      | 2-3 sessões distribuídas |
+| Melhoria de produto (UX, código)       | 2-3h      | Fins de semana           |
+| Monitoramento (analytics, issues, PRs) | 1-2h      | Diluído                  |
+| Comunicação (issues, divulgação leve)  | 1h        | Quando aparece           |
 
 **Antifrágil**: se uma semana só rende 4h, foca em ingestão. Resto do pipeline aguenta atraso temporário.
 
@@ -473,31 +474,31 @@ Astro estático entrega isso na configuração padrão. Não negociar para baixo
 
 ## 13. Riscos e Mitigações
 
-| Risco | Severidade | Probabilidade | Mitigação |
-|---|---|---|---|
-| Acusação de viés político | Média | Alta | Código + dataset abertos · log de edições público · paridade rígida de critério |
-| Processo por difamação | Baixa-Média | Baixa | Zero veredito próprio · agregamos vereditos externos com atribuição clara |
-| TSE Res. 23.732/2024 (IA generativa) | Baixa | Baixa | Não usamos IA generativa para conteúdo · só transcrição (Whisper) · disclosure público na metodologia |
-| LGPD | Baixa | Baixa | Políticos públicos em contexto público (Art. 7 §III LGPD) · privacy policy explícita |
-| Scraping cinzento (X/IG/FB) | Média | Alta | Wayback como fallback obrigatório · manual quando não escala · respeitar robots.txt |
-| Remoção/edição de fonte primária | Alta | Quase certa | Snapshot interno + Wayback API obrigatórios em cada item |
-| Burnout do solo founder | Média | Média | Cobertura limitada (2 cand.) · workflow definido · gates de parada honestos |
-| Erro factual descoberto no Atlas | Alta | Quase certa | Auditoria via git · processo público de correção · página de errata visível |
-| Confundir Atlas com fact-checker | Alta | Alta | Disclaimer prominente em TODA página · FAQ clara · metodologia destacada |
+| Risco                                | Severidade  | Probabilidade | Mitigação                                                                                             |
+| ------------------------------------ | ----------- | ------------- | ----------------------------------------------------------------------------------------------------- |
+| Acusação de viés político            | Média       | Alta          | Código + dataset abertos · log de edições público · paridade rígida de critério                       |
+| Processo por difamação               | Baixa-Média | Baixa         | Zero veredito próprio · agregamos vereditos externos com atribuição clara                             |
+| TSE Res. 23.732/2024 (IA generativa) | Baixa       | Baixa         | Não usamos IA generativa para conteúdo · só transcrição (Whisper) · disclosure público na metodologia |
+| LGPD                                 | Baixa       | Baixa         | Políticos públicos em contexto público (Art. 7 §III LGPD) · privacy policy explícita                  |
+| Scraping cinzento (X/IG/FB)          | Média       | Alta          | Wayback como fallback obrigatório · manual quando não escala · respeitar robots.txt                   |
+| Remoção/edição de fonte primária     | Alta        | Quase certa   | Snapshot interno + Wayback API obrigatórios em cada item                                              |
+| Burnout do solo founder              | Média       | Média         | Cobertura limitada (2 cand.) · workflow definido · gates de parada honestos                           |
+| Erro factual descoberto no Atlas     | Alta        | Quase certa   | Auditoria via git · processo público de correção · página de errata visível                           |
+| Confundir Atlas com fact-checker     | Alta        | Alta          | Disclaimer prominente em TODA página · FAQ clara · metodologia destacada                              |
 
 ---
 
 ## 14. Roadmap MVP (6 Semanas)
 
-| Sprint | Foco | Entregáveis |
-|---|---|---|
-| **0** (pré) | Setup e decisões | Repo público · design tokens · identidade visual · fonts · paleta |
-| **1** | Infra base | Astro + Tailwind v4 + shadcn + layout mestre + tipografia + design system |
-| **2** | Modelo de dados | Schema YAML/Markdown · validação CI · páginas estáticas candidato/declaração/evento/tema |
-| **3** | Pipeline ingestão | Scripts: yt-dlp · Firecrawl · Wayback · Whisper transcript · OG image gen (Satori) |
-| **4** | SEO + busca | JSON-LD structured data · sitemap · Pagefind · robots · OG dinâmico |
-| **5** | Conteúdo MVP | 2 candidatos × 30 declarações · dataset jsonl+csv · GitHub Releases v0.1.0 |
-| **6** | Polimento + soft launch | Zenodo DOI · README robusto · FAQ · metodologia · soft launch silencioso |
+| Sprint      | Foco                    | Entregáveis                                                                              |
+| ----------- | ----------------------- | ---------------------------------------------------------------------------------------- |
+| **0** (pré) | Setup e decisões        | Repo público · design tokens · identidade visual · fonts · paleta                        |
+| **1**       | Infra base              | Astro + Tailwind v4 + shadcn + layout mestre + tipografia + design system                |
+| **2**       | Modelo de dados         | Schema YAML/Markdown · validação CI · páginas estáticas candidato/declaração/evento/tema |
+| **3**       | Pipeline ingestão       | Scripts: yt-dlp · Firecrawl · Wayback · Whisper transcript · OG image gen (Satori)       |
+| **4**       | SEO + busca             | JSON-LD structured data · sitemap · Pagefind · robots · OG dinâmico                      |
+| **5**       | Conteúdo MVP            | 2 candidatos × 30 declarações · dataset jsonl+csv · GitHub Releases v0.1.0               |
+| **6**       | Polimento + soft launch | Zenodo DOI · README robusto · FAQ · metodologia · soft launch silencioso                 |
 
 **Soft launch silencioso** = publicar, deixar Google indexar, sem alarde. Tração orgânica leva 4-12 semanas pós-launch.
 
@@ -505,12 +506,12 @@ Astro estático entrega isso na configuração padrão. Não negociar para baixo
 
 ## 15. Métricas Objetivas e Gates de Continuidade
 
-| Marco | Métricas | Veredito honesto |
-|---|---|---|
-| **T+0 (lançamento)** | Site no ar · 60 declarações · Lighthouse 95+ · MIT no GitHub | Sucesso técnico |
-| **T+3 meses** | 150 declarações · 200+ uniques/mês orgânicos · ≥3 mentions externas · ≥10 dataset downloads | Tração mínima |
-| **T+6 meses** (início campanha oficial) | 400+ declarações · 1k+ uniques/mês · ≥1 citação acadêmica ou jornalística | Validação |
-| **T+12 meses** (mês da eleição) | Operando ao vivo · ≥5k uniques/mês durante debates | Impacto real |
+| Marco                                   | Métricas                                                                                    | Veredito honesto |
+| --------------------------------------- | ------------------------------------------------------------------------------------------- | ---------------- |
+| **T+0 (lançamento)**                    | Site no ar · 60 declarações · Lighthouse 95+ · MIT no GitHub                                | Sucesso técnico  |
+| **T+3 meses**                           | 150 declarações · 200+ uniques/mês orgânicos · ≥3 mentions externas · ≥10 dataset downloads | Tração mínima    |
+| **T+6 meses** (início campanha oficial) | 400+ declarações · 1k+ uniques/mês · ≥1 citação acadêmica ou jornalística                   | Validação        |
+| **T+12 meses** (mês da eleição)         | Operando ao vivo · ≥5k uniques/mês durante debates                                          | Impacto real     |
 
 ### Gates de parada honestos
 
@@ -526,16 +527,16 @@ Nenhuma métrica é financeira — coerente com motivação declarada (missão +
 
 (Obrigatório pelo CLAUDE.md global.)
 
-| Item | Como testar | Evidência |
-|---|---|---|
-| Lighthouse ≥ 95 | `npm run build && lhci autorun` | Relatório HTML no Vault |
-| Schema validation | `npm run validate-data` (CI obrigatório) | CI logs |
-| Structured data | Google Rich Results Test | Screenshot do pass |
-| Acessibilidade WCAG 2.2 AA | axe-core + screen reader manual (NVDA/VoiceOver) | Audit report |
-| LCP < 2.5s | WebPageTest + PageSpeed Insights | Reports salvos no Vault |
-| Dataset integrity | JSON Schema + amostragem aleatória manual | CI logs + `sample-validation.md` |
-| Anti-regressão | Mapa de impacto no Vault antes de cada feature | `docs/mapa-impacto-[feature].md` |
-| Verificação de fontes | Cada PR de declaração checa: URL acessível + archive_url presente + timestamp válido | CI check obrigatório |
+| Item                       | Como testar                                                                          | Evidência                        |
+| -------------------------- | ------------------------------------------------------------------------------------ | -------------------------------- |
+| Lighthouse ≥ 95            | `npm run build && lhci autorun`                                                      | Relatório HTML no Vault          |
+| Schema validation          | `npm run validate-data` (CI obrigatório)                                             | CI logs                          |
+| Structured data            | Google Rich Results Test                                                             | Screenshot do pass               |
+| Acessibilidade WCAG 2.2 AA | axe-core + screen reader manual (NVDA/VoiceOver)                                     | Audit report                     |
+| LCP < 2.5s                 | WebPageTest + PageSpeed Insights                                                     | Reports salvos no Vault          |
+| Dataset integrity          | JSON Schema + amostragem aleatória manual                                            | CI logs + `sample-validation.md` |
+| Anti-regressão             | Mapa de impacto no Vault antes de cada feature                                       | `docs/mapa-impacto-[feature].md` |
+| Verificação de fontes      | Cada PR de declaração checa: URL acessível + archive_url presente + timestamp válido | CI check obrigatório             |
 
 ---
 
@@ -547,13 +548,13 @@ Itens registrados para reflexão posterior — **não fazem parte do MVP**.
 
 Quando Atlas tiver tração mínima (T+3 meses+), considerar:
 
-| Plataforma | Tipo | Vantagem | Encaixe |
-|---|---|---|---|
-| **Open Collective** | Recorrente + one-shot · transparente | Mostra todas as despesas publicamente; padrão ouro para open-source cívico | Alta |
-| **GitHub Sponsors** | Recorrente · USD | Zero atrito para devs apoiarem | Alta |
-| **Apoia.se / Padrim** | Recorrente · BRL | Audiência brasileira em massa | Média |
-| **Ko-fi / BuyMeACoffee** | One-shot + recorrente | Baixíssima taxa, simples | Média |
-| **Pix doação + cripto** | One-shot | Apoiadores anônimos | Média |
+| Plataforma               | Tipo                                 | Vantagem                                                                   | Encaixe |
+| ------------------------ | ------------------------------------ | -------------------------------------------------------------------------- | ------- |
+| **Open Collective**      | Recorrente + one-shot · transparente | Mostra todas as despesas publicamente; padrão ouro para open-source cívico | Alta    |
+| **GitHub Sponsors**      | Recorrente · USD                     | Zero atrito para devs apoiarem                                             | Alta    |
+| **Apoia.se / Padrim**    | Recorrente · BRL                     | Audiência brasileira em massa                                              | Média   |
+| **Ko-fi / BuyMeACoffee** | One-shot + recorrente                | Baixíssima taxa, simples                                                   | Média   |
+| **Pix doação + cripto**  | One-shot                             | Apoiadores anônimos                                                        | Média   |
 
 **Política sugerida**: 100% das doações usadas para infra + dataset paralelo + dois pontos auditáveis em relatório trimestral público. Sem retirada para si até o projeto sustentar todos os custos operacionais.
 
@@ -606,19 +607,19 @@ Pós-T+6 meses, quando dataset tiver cobertura razoável (400+ declarações):
 
 ## 19. Histórico de Decisões-Chave (rationale resumido)
 
-| Decisão | Alternativa rejeitada | Razão |
-|---|---|---|
-| Atlas como infraestrutura factual | Fact-checker editorial próprio | Solo founder não escala fact-check; categoria saturada |
-| Sem veredito próprio | Veredito (verdade/mentira/parcial) | Risco editorial + jurídico; quebra postura tecnicista |
-| Agregador de vereditos externos | Sem mencionar vereditos | Adiciona valor sem reintroduzir risco |
-| Tecnicista neutro sem rosto | Curador identificado | Reduz exposição pessoal + risco reputacional |
-| Astro 5 | Next.js 15 | Performance/SEO sem JS overhead; conteúdo majoritariamente estático |
-| Markdown em git (MVP) | Banco de dados desde início | Audit trail nativo · zero infra · backups gratuitos via mirrors |
-| Cobertura assíncrona | Tempo real | Competir com Twitter é jogo perdido; valor é permanência |
-| Soft launch silencioso | Lançamento com PR/divulgação | Sem network · SEO orgânico precisa de tempo · evitar atenção indevida cedo |
-| Open-source desde dia 1 | Open-source depois de MVP estável | Defesa anti-viés + portfolio + colaboração externa desde início |
-| 2 candidatos × 30 declarações | 6+ candidatos × 80 declarações | Risco de virar projeto que nunca lança |
-| Crowdfunding adiado | Crowdfunding desde MVP | Sem tração não há razão para captar; T+3 meses mínimo |
+| Decisão                           | Alternativa rejeitada              | Razão                                                                      |
+| --------------------------------- | ---------------------------------- | -------------------------------------------------------------------------- |
+| Atlas como infraestrutura factual | Fact-checker editorial próprio     | Solo founder não escala fact-check; categoria saturada                     |
+| Sem veredito próprio              | Veredito (verdade/mentira/parcial) | Risco editorial + jurídico; quebra postura tecnicista                      |
+| Agregador de vereditos externos   | Sem mencionar vereditos            | Adiciona valor sem reintroduzir risco                                      |
+| Tecnicista neutro sem rosto       | Curador identificado               | Reduz exposição pessoal + risco reputacional                               |
+| Astro 5                           | Next.js 15                         | Performance/SEO sem JS overhead; conteúdo majoritariamente estático        |
+| Markdown em git (MVP)             | Banco de dados desde início        | Audit trail nativo · zero infra · backups gratuitos via mirrors            |
+| Cobertura assíncrona              | Tempo real                         | Competir com Twitter é jogo perdido; valor é permanência                   |
+| Soft launch silencioso            | Lançamento com PR/divulgação       | Sem network · SEO orgânico precisa de tempo · evitar atenção indevida cedo |
+| Open-source desde dia 1           | Open-source depois de MVP estável  | Defesa anti-viés + portfolio + colaboração externa desde início            |
+| 2 candidatos × 30 declarações     | 6+ candidatos × 80 declarações     | Risco de virar projeto que nunca lança                                     |
+| Crowdfunding adiado               | Crowdfunding desde MVP             | Sem tração não há razão para captar; T+3 meses mínimo                      |
 
 ---
 
