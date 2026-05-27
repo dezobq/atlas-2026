@@ -1,5 +1,5 @@
 import { getCollection, getEntry } from "astro:content";
-import type { Candidato } from "@types";
+import type { Candidato } from "@/types";
 
 export async function getAllCandidatos(): Promise<Candidato[]> {
   const candidatos = await getCollection("candidatos");
