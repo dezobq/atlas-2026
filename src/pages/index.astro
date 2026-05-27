@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import Disclaimer from "@components/shared/Disclaimer.astro";
+import Tag from "@components/shared/Tag.astro";
+---
+
+<BaseLayout title="Atlas dos Candidatos 2026">
+  <section class="container-narrow" style="padding-block: var(--space-4xl);">
+    <p class="eyebrow" style="margin-bottom: var(--space-sm);">ATLAS · ELEIÇÃO 2026</p>
+    <h1>Atlas dos Candidatos 2026.</h1>
+    <p
+      style="margin-top: var(--space-md); color: var(--color-text-body); font-size: var(--text-body-lg); max-width: 60ch;"
+    >
+      Memória factual da eleição presidencial brasileira de 2026. Declarações com fonte primária.
+      Sem julgamento editorial.
+    </p>
+
+    <div style="margin-top: var(--space-lg); display: flex; gap: var(--space-xs); flex-wrap: wrap;">
+      <Tag>economia</Tag>
+      <Tag>saúde</Tag>
+      <Tag variant="structural">promessa</Tag>
+      <Tag variant="structural">dado_numerico</Tag>
+    </div>
+
+    <div style="margin-top: var(--space-2xl);">
+      <Disclaimer variant="prominent" />
+    </div>
+  </section>
+</BaseLayout>

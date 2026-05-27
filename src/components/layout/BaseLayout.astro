@@ -1,0 +1,53 @@
+---
+import "@styles/global.css";
+import { ClientRouter } from "astro:transitions";
+import Header from "@components/layout/Header.astro";
+import Footer from "@components/layout/Footer.astro";
+import SkipLink from "@components/shared/SkipLink.astro";
+
+interface Props {
+  title: string;
+  description?: string;
+  canonicalUrl?: string;
+  noindex?: boolean;
+}
+
+const {
+  title,
+  description = "Memória factual da eleição presidencial brasileira de 2026. Declarações com fonte primária. Sem julgamento editorial.",
+  canonicalUrl,
+  noindex = false,
+} = Astro.props;
+
+const fullTitle =
+  title === "Atlas dos Candidatos 2026" ? title : `${title} · Atlas dos Candidatos 2026`;
+
+const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+
+    <title>{fullTitle}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+
+    {noindex && <meta name="robots" content="noindex" />}
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <ClientRouter />
+  </head>
+  <body>
+    <SkipLink />
+    <Header />
+    <main id="main-content" tabindex="-1">
+      <slot />
+    </main>
+    <Footer />
+  </body>
+</html>

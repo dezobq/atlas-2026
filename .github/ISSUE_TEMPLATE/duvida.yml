@@ -1,0 +1,22 @@
+name: ❓ Dúvida
+description: Pergunta sobre metodologia, projeto ou uso.
+title: "[dúvida] "
+labels: ["question"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Antes de abrir, confira `docs/METODOLOGIA.md` (Fase 3+) e `docs/GOVERNANCE.md`.
+
+  - type: textarea
+    id: question
+    attributes:
+      label: Sua dúvida
+    validations:
+      required: true
+
+  - type: textarea
+    id: context
+    attributes:
+      label: Contexto (opcional)
+      description: Onde você encontrou o tema da sua dúvida.

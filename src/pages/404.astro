@@ -1,0 +1,44 @@
+---
+import BaseLayout from "@components/layout/BaseLayout.astro";
+---
+
+<BaseLayout title="Página não encontrada" noindex>
+  <section class="container-narrow" style="padding-block: var(--space-5xl); text-align: center;">
+    <p
+      class="eyebrow"
+      style="
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+      "
+    >
+      Erro 404
+    </p>
+    <h1 style="margin-top: var(--space-sm);">Página não encontrada.</h1>
+    <p
+      style="
+        margin-top: var(--space-md);
+        color: var(--color-text-body);
+        font-size: var(--text-body-lg);
+      "
+    >
+      O endereço que você tentou acessar não existe ou foi movido.
+    </p>
+
+    <nav
+      style="
+        margin-top: var(--space-2xl);
+        display: flex;
+        gap: var(--space-sm);
+        justify-content: center;
+        flex-wrap: wrap;
+      "
+      aria-label="Páginas alternativas"
+    >
+      <a href="/" style="font-size: var(--text-body-sm);">Página inicial</a>
+      <span aria-hidden="true" style="color: var(--color-text-mute);">·</span>
+      <a href="/candidatos" style="font-size: var(--text-body-sm);">Candidatos</a>
+      <span aria-hidden="true" style="color: var(--color-text-mute);">·</span>
+      <a href="/buscar" style="font-size: var(--text-body-sm);">Buscar</a>
+    </nav>
+  </section>
+</BaseLayout>

@@ -1,0 +1,156 @@
+@import "@fontsource-variable/geist/index.css";
+@import "@fontsource-variable/geist-mono/index.css";
+@import "tailwindcss";
+@import "./tokens.css";
+
+@theme inline {
+  --color-bg: var(--color-canvas-soft);
+  --color-fg: var(--color-text-primary);
+  --color-fg-muted: var(--color-text-body);
+  --color-border: var(--color-hairline);
+  --color-accent: var(--color-link);
+  --font-family-sans: var(--font-sans);
+  --font-family-mono: var(--font-mono);
+  --radius-default: var(--radius);
+}
+
+@layer base {
+  * {
+    border-color: var(--color-hairline);
+  }
+
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--color-canvas-soft);
+    color: var(--color-text-primary);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    margin: 0;
+    line-height: var(--leading-body);
+    min-height: 100vh;
+  }
+
+  ::selection {
+    background-color: var(--color-link-bg-soft);
+    color: var(--color-ink);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-focus);
+    outline-offset: 2px;
+    border-radius: var(--radius-sm);
+  }
+
+  /* Displays — sentence-case, period-terminated convention (não forçado em CSS),
+   * tracking negativo agressivo, weight 600
+   */
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: var(--weight-semibold);
+    margin: 0;
+    color: var(--color-text-primary);
+  }
+
+  h1 {
+    font-size: var(--text-display-xl);
+    line-height: var(--leading-display-xl);
+    letter-spacing: var(--tracking-display-xl);
+  }
+  h2 {
+    font-size: var(--text-display-lg);
+    line-height: var(--leading-display-lg);
+    letter-spacing: var(--tracking-display-lg);
+  }
+  h3 {
+    font-size: var(--text-display-md);
+    line-height: var(--leading-display-md);
+    letter-spacing: var(--tracking-display-md);
+  }
+  h4 {
+    font-size: var(--text-display-sm);
+    line-height: var(--leading-display-sm);
+    letter-spacing: var(--tracking-display-sm);
+  }
+
+  p {
+    margin: 0;
+    font-size: var(--text-body-md);
+    line-height: var(--leading-body);
+  }
+
+  a {
+    color: var(--color-link);
+    text-decoration: underline;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.15em;
+    transition: color var(--transition-fast);
+  }
+
+  a:hover {
+    color: var(--color-link-deep);
+  }
+
+  a:visited {
+    color: var(--color-link-deep);
+  }
+
+  code,
+  pre,
+  kbd {
+    font-family: var(--font-mono);
+    font-size: var(--text-code);
+    line-height: var(--leading-body);
+  }
+
+  blockquote {
+    border-left: 3px solid var(--color-text-body);
+    padding-left: var(--space-md);
+    margin: 0;
+    color: var(--color-text-body);
+  }
+}
+
+@layer utilities {
+  /* Containers */
+  .container-narrow {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+  }
+  .container-default {
+    max-width: var(--container-default);
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+  }
+  .container-wide {
+    max-width: var(--container-wide);
+    margin-inline: auto;
+    padding-inline: var(--space-md);
+  }
+
+  /* Eyebrow — caption-mono pattern do Vercel
+   * Usar em section labels técnicos: "ATLAS DECLARAÇÃO", "FONTE PRIMÁRIA", etc
+   */
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    font-weight: var(--weight-regular);
+    letter-spacing: 0;
+    color: var(--color-text-body);
+  }
+
+  /* Pill shapes */
+  .pill {
+    border-radius: var(--radius-pill);
+  }
+  .pill-sm {
+    border-radius: var(--radius-pill-sm);
+  }
+}

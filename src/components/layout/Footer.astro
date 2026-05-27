@@ -1,0 +1,102 @@
+---
+const year = new Date().getFullYear();
+---
+
+<footer
+  role="contentinfo"
+  style="
+    border-top: 1px solid var(--color-hairline);
+    margin-top: var(--space-5xl);
+    padding-block: var(--space-4xl);
+    background-color: var(--color-canvas-soft);
+  "
+>
+  <div
+    class="container-wide"
+    style="
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: var(--space-xl);
+    "
+  >
+    <div>
+      <p
+        style="font-weight: var(--weight-semibold); margin-bottom: var(--space-xs); color: var(--color-text-primary);"
+      >
+        Atlas dos Candidatos 2026
+      </p>
+      <p style="color: var(--color-text-body); font-size: var(--text-body-sm); line-height: 1.5;">
+        Infraestrutura factual da eleição presidencial brasileira de 2026.
+      </p>
+    </div>
+
+    <div>
+      <p
+        class="eyebrow"
+        style="margin-bottom: var(--space-sm); text-transform: uppercase; letter-spacing: 0.05em;"
+      >
+        Navegar
+      </p>
+      <ul
+        style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-xxs); font-size: var(--text-body-sm);"
+      >
+        <li><a href="/candidatos">Candidatos</a></li>
+        <li><a href="/temas">Temas</a></li>
+        <li><a href="/eventos">Eventos</a></li>
+        <li><a href="/dataset">Dataset</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p
+        class="eyebrow"
+        style="margin-bottom: var(--space-sm); text-transform: uppercase; letter-spacing: 0.05em;"
+      >
+        Projeto
+      </p>
+      <ul
+        style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-xxs); font-size: var(--text-body-sm);"
+      >
+        <li><a href="/metodologia">Metodologia</a></li>
+        <li><a href="/sobre">Sobre</a></li>
+        <li><a href="/contribuir">Contribuir</a></li>
+      </ul>
+    </div>
+
+    <div>
+      <p
+        class="eyebrow"
+        style="margin-bottom: var(--space-sm); text-transform: uppercase; letter-spacing: 0.05em;"
+      >
+        Open-source
+      </p>
+      <ul
+        style="list-style: none; padding: 0; display: flex; flex-direction: column; gap: var(--space-xxs); font-size: var(--text-body-sm);"
+      >
+        <li>
+          <a href="https://github.com/atlas2026" rel="noopener external">GitHub</a>
+        </li>
+        <li style="color: var(--color-text-mute);">Código MIT</li>
+        <li style="color: var(--color-text-mute);">Dataset CC-BY 4.0</li>
+      </ul>
+    </div>
+  </div>
+
+  <div
+    class="container-wide"
+    style="
+      margin-top: var(--space-xl);
+      padding-top: var(--space-md);
+      border-top: 1px solid var(--color-hairline);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: var(--space-sm);
+      color: var(--color-text-mute);
+      font-size: var(--text-caption);
+    "
+  >
+    <p>© {year} Atlas dos Candidatos 2026</p>
+    <p>O Atlas não é um fact-checker. É infraestrutura factual.</p>
+  </div>
+</footer>

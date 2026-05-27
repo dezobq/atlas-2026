@@ -1,0 +1,49 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "tema",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "nome": {
+      "type": "string",
+      "minLength": 1
+    },
+    "descricao_curta": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 280
+    },
+    "nivel": {
+      "type": "string",
+      "enum": [
+        "primario",
+        "secundario"
+      ]
+    },
+    "tema_pai_id": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    }
+  },
+  "required": [
+    "id",
+    "slug",
+    "nome",
+    "descricao_curta",
+    "nivel"
+  ],
+  "additionalProperties": false
+}

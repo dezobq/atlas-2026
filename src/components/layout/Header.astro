@@ -1,0 +1,99 @@
+---
+const currentPath = Astro.url.pathname;
+
+const navItems = [
+  { href: "/candidatos", label: "Candidatos" },
+  { href: "/temas", label: "Temas" },
+  { href: "/eventos", label: "Eventos" },
+  { href: "/dataset", label: "Dataset" },
+  { href: "/metodologia", label: "Metodologia" },
+];
+
+const isActive = (href: string) =>
+  href === "/" ? currentPath === "/" : currentPath.startsWith(href);
+---
+
+<header
+  role="banner"
+  style="
+    border-bottom: 1px solid var(--color-hairline);
+    background-color: var(--color-canvas);
+    position: sticky;
+    top: 0;
+    z-index: 50;
+    backdrop-filter: saturate(140%) blur(8px);
+  "
+>
+  <div
+    class="container-wide"
+    style="
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: var(--space-sm);
+      gap: var(--space-lg);
+      height: 64px;
+    "
+  >
+    <a
+      href="/"
+      style="
+        font-weight: var(--weight-semibold);
+        font-size: var(--text-body-lg);
+        letter-spacing: -0.02em;
+        text-decoration: none;
+        color: var(--color-text-primary);
+      "
+      aria-label="Atlas — página inicial"
+    >
+      Atlas <span style="color: var(--color-text-mute); font-weight: var(--weight-regular);"
+        >2026</span
+      >
+    </a>
+
+    <nav aria-label="Navegação principal" style="display: flex; gap: var(--space-lg);">
+      {
+        navItems.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? "page" : undefined}
+            style={`
+              font-size: var(--text-body-sm);
+              text-decoration: none;
+              color: ${isActive(item.href) ? "var(--color-text-primary)" : "var(--color-text-body)"};
+              font-weight: ${isActive(item.href) ? "var(--weight-medium)" : "var(--weight-regular)"};
+              transition: color var(--transition-fast);
+            `}
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div style="display: flex; gap: var(--space-sm); align-items: center;">
+      <a
+        href="/buscar"
+        style="
+          font-size: var(--text-body-sm);
+          color: var(--color-text-body);
+          text-decoration: none;
+        "
+        aria-label="Buscar"
+      >
+        Buscar
+      </a>
+      <a
+        href="https://github.com/atlas2026"
+        rel="noopener external"
+        style="
+          font-size: var(--text-body-sm);
+          color: var(--color-text-body);
+          text-decoration: none;
+        "
+      >
+        GitHub
+      </a>
+    </div>
+  </div>
+</header>

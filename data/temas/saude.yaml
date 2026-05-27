@@ -1,0 +1,6 @@
+id: TEMA_SAUDE
+slug: saude
+nome: Saúde
+descricao_curta: SUS, planos de saúde, medicamentos, vacinação, gestão hospitalar e políticas sanitárias.
+nivel: primario
+tema_pai_id: null
