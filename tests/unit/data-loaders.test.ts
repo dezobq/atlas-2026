@@ -63,7 +63,7 @@ describe("temas loader (mocked astro:content via alias Vite)", () => {
   });
 
   it("retorna todos os temas primários", async () => {
-    mockGetCollection.mockResolvedValue(temasMock as never);
+    mockGetCollection.mockResolvedValue(temasMock);
     const temas = await getAllTemas();
     expect(temas.length).toBeGreaterThanOrEqual(6);
     expect(temas.every((t) => t.data.nivel === "primario")).toBe(true);
@@ -73,8 +73,9 @@ describe("temas loader (mocked astro:content via alias Vite)", () => {
     // getAllTemas e getTemaBySlug chamam getCollection com filtro opcional.
     // Simulamos o comportamento real: aplicar o filtro ao mock dataset.
     mockGetCollection.mockImplementation(async (_col, filter) => {
+      await Promise.resolve();
       const all = temasMock;
-      return (filter ? all.filter(filter as (e: TemaEntry) => boolean) : all) as never;
+      return filter ? all.filter(filter) : all;
     });
     const economia = await getTemaBySlug("economia");
     expect(economia).toBeDefined();
@@ -83,15 +84,16 @@ describe("temas loader (mocked astro:content via alias Vite)", () => {
 
   it("retorna undefined para slug inexistente", async () => {
     mockGetCollection.mockImplementation(async (_col, filter) => {
+      await Promise.resolve();
       const all = temasMock;
-      return (filter ? all.filter(filter as (e: TemaEntry) => boolean) : all) as never;
+      return filter ? all.filter(filter) : all;
     });
     const fake = await getTemaBySlug("tema-inexistente");
     expect(fake).toBeUndefined();
   });
 
   it("temas ordenados por nome", async () => {
-    mockGetCollection.mockResolvedValue(temasMock as never);
+    mockGetCollection.mockResolvedValue(temasMock);
     const temas = await getAllTemas();
     const nomes = temas.map((t) => t.data.nome);
     const sorted = [...nomes].sort((a, b) => a.localeCompare(b, "pt-BR"));
