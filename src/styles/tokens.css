@@ -1,94 +1,220 @@
 @layer base {
   :root {
-    /* Espaços (8px scale) */
-    --space-1: 0.25rem; /* 4px  */
-    --space-2: 0.5rem; /* 8px  */
-    --space-3: 0.75rem; /* 12px */
-    --space-4: 1rem; /* 16px */
-    --space-5: 1.5rem; /* 24px */
-    --space-6: 2rem; /* 32px */
-    --space-8: 3rem; /* 48px */
-    --space-10: 4rem; /* 64px */
-    --space-12: 6rem; /* 96px */
+    /* ============================================
+     * Espaços — Vercel-style 4-192px, base 4px
+     * ============================================ */
+    --space-xxs: 0.25rem; /* 4px */
+    --space-xs: 0.5rem; /* 8px */
+    --space-sm: 0.75rem; /* 12px */
+    --space-md: 1rem; /* 16px */
+    --space-lg: 1.5rem; /* 24px */
+    --space-xl: 2rem; /* 32px */
+    --space-2xl: 2.5rem; /* 40px */
+    --space-3xl: 3rem; /* 48px */
+    --space-4xl: 4rem; /* 64px */
+    --space-5xl: 6rem; /* 96px */
+    --space-6xl: 8rem; /* 128px */
+    --space-section: 12rem; /* 192px — hero/section padding */
 
-    /* Tipografia (escala modular 1.250) */
-    --text-xs: 0.75rem;
-    --text-sm: 0.875rem;
-    --text-base: 1rem;
-    --text-lg: 1.125rem;
-    --text-xl: 1.25rem;
-    --text-2xl: 1.5rem;
-    --text-3xl: 1.875rem;
-    --text-4xl: 2.25rem;
-    --text-5xl: 3rem;
+    /* Aliases para compat com Sprint 0 (não remover) */
+    --space-1: var(--space-xxs);
+    --space-2: var(--space-xs);
+    --space-3: var(--space-sm);
+    --space-4: var(--space-md);
+    --space-5: var(--space-lg);
+    --space-6: var(--space-xl);
+    --space-8: var(--space-3xl);
+    --space-10: var(--space-4xl);
+    --space-12: var(--space-5xl);
 
-    /* Famílias */
+    /* ============================================
+     * Tipografia — escala Vercel, tracking explícito por size
+     * Pesos: 400/500/600 apenas (não promover Geist a 700)
+     * ============================================ */
     --font-sans: "Geist Variable", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
     --font-mono: "Geist Mono Variable", ui-monospace, "JetBrains Mono", "SFMono-Regular", monospace;
 
-    /* Pesos */
+    /* Display sizes (weight 600, tracking negativo agressivo) */
+    --text-display-xl: 3rem; /* 48px */
+    --text-display-lg: 2rem; /* 32px */
+    --text-display-md: 1.5rem; /* 24px */
+    --text-display-sm: 1.25rem; /* 20px */
+
+    /* Body sizes */
+    --text-body-lg: 1.125rem; /* 18px */
+    --text-body-md: 1rem; /* 16px */
+    --text-body-sm: 0.875rem; /* 14px */
+
+    /* Caption / code */
+    --text-caption: 0.75rem; /* 12px */
+    --text-code: 0.8125rem; /* 13px */
+
+    /* Aliases para compat */
+    --text-xs: var(--text-caption);
+    --text-sm: var(--text-body-sm);
+    --text-base: var(--text-body-md);
+    --text-lg: var(--text-body-lg);
+    --text-xl: var(--text-display-sm);
+    --text-2xl: var(--text-display-md);
+    --text-3xl: var(--text-display-lg);
+    --text-4xl: var(--text-display-xl);
+    --text-5xl: var(--text-display-xl);
+
+    /* Tracking (letter-spacing) — Vercel: negativo agressivo no display */
+    --tracking-display-xl: -0.15rem; /* -2.4px @ 48px */
+    --tracking-display-lg: -0.08rem; /* -1.28px @ 32px */
+    --tracking-display-md: -0.06rem; /* -0.96px @ 24px */
+    --tracking-display-sm: -0.0375rem; /* -0.6px @ 20px */
+    --tracking-body-sm: -0.0175rem; /* -0.28px @ 14px */
+
+    /* Pesos — display ceiling = 600 */
     --weight-regular: 400;
     --weight-medium: 500;
     --weight-semibold: 600;
-    --weight-bold: 700;
+    /* sem --weight-bold por design */
 
-    /* Cores neutras — modo claro */
-    --color-bg: oklch(98% 0.005 280);
-    --color-bg-elevated: oklch(100% 0 0);
-    --color-bg-muted: oklch(96% 0.005 280);
-    --color-fg: oklch(20% 0.02 280);
-    --color-fg-muted: oklch(50% 0.02 280);
-    --color-fg-subtle: oklch(65% 0.015 280);
-    --color-border: oklch(90% 0.005 280);
-    --color-border-strong: oklch(78% 0.01 280);
+    /* Line heights */
+    --leading-display-xl: 1; /* 48px on 48px */
+    --leading-display-lg: 1.25; /* 40px on 32px */
+    --leading-display-md: 1.333; /* 32px on 24px */
+    --leading-display-sm: 1.4; /* 28px on 20px */
+    --leading-body: 1.5; /* 24px on 16px */
 
-    /* Accent neutro — âmbar suave (sem viés político) */
-    --color-accent: oklch(70% 0.13 70);
-    --color-accent-fg: oklch(20% 0.02 70);
-    --color-accent-muted: oklch(95% 0.03 70);
+    /* ============================================
+     * Paleta — Vercel-style hex puros (light only base)
+     * Dark bands via classe .surface-dark abaixo
+     * ============================================ */
+    /* Surfaces */
+    --color-canvas: #ffffff;
+    --color-canvas-soft: #fafafa;
+    --color-canvas-soft-2: #f5f5f5;
+    --color-ink: #171717;
+    --color-on-primary: #ffffff;
 
-    /* Estados */
-    --color-focus: oklch(60% 0.2 250);
-    --color-info: oklch(60% 0.15 230);
-    --color-warning: oklch(70% 0.18 60);
+    /* Hairlines */
+    --color-hairline: #ebebeb;
+    --color-hairline-strong: #a1a1a1;
 
-    /* Sombras (sutis, Linear-style) */
-    --shadow-sm: 0 1px 2px 0 oklch(20% 0.02 280 / 0.05);
-    --shadow: 0 1px 3px 0 oklch(20% 0.02 280 / 0.08), 0 1px 2px 0 oklch(20% 0.02 280 / 0.04);
-    --shadow-md:
-      0 4px 6px -1px oklch(20% 0.02 280 / 0.08), 0 2px 4px -2px oklch(20% 0.02 280 / 0.04);
-    --shadow-lg:
-      0 10px 15px -3px oklch(20% 0.02 280 / 0.08), 0 4px 6px -4px oklch(20% 0.02 280 / 0.04);
+    /* Text */
+    --color-text-primary: var(--color-ink);
+    --color-text-body: #4d4d4d;
+    --color-text-mute: #888888;
 
-    /* Raio de borda */
-    --radius-sm: 0.25rem;
-    --radius: 0.5rem;
-    --radius-md: 0.625rem;
-    --radius-lg: 0.875rem;
+    /* Link colors */
+    --color-link: #0070f3;
+    --color-link-deep: #0761d1;
+    --color-link-bg-soft: #d3e5ff;
 
-    /* Larguras de container */
-    --container-narrow: 42rem;
-    --container-default: 64rem;
-    --container-wide: 80rem;
+    /* Semantic */
+    --color-success: #0070f3;
+    --color-error: #ee0000;
+    --color-error-soft: #f7d4d6;
+    --color-error-deep: #c50000;
+    --color-warning: #f5a623;
+    --color-warning-soft: #ffefcf;
+    --color-warning-deep: #ab570a;
 
-    /* Transições */
+    /* Focus ring */
+    --color-focus: var(--color-link);
+
+    /* Aliases para compat com Sprint 0 (shadcn Button já usa estes) */
+    --color-bg: var(--color-canvas-soft);
+    --color-bg-elevated: var(--color-canvas);
+    --color-bg-muted: var(--color-canvas-soft-2);
+    --color-fg: var(--color-text-primary);
+    --color-fg-muted: var(--color-text-body);
+    --color-fg-subtle: var(--color-text-mute);
+    --color-border: var(--color-hairline);
+    --color-border-strong: var(--color-hairline-strong);
+    --color-accent: var(--color-link);
+    --color-accent-fg: var(--color-ink);
+    --color-accent-muted: var(--color-link-bg-soft);
+
+    /* ============================================
+     * Sombras — STACKED, Vercel-style
+     * 5 níveis: 0=flat → 5=modal
+     * ============================================ */
+    --shadow-0: none;
+    --shadow-1-inset: 0 0 0 1px rgba(0, 0, 0, 0.08) inset;
+    --shadow-2-subtle:
+      0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 1px 1px rgba(0, 0, 0, 0.02),
+      0 2px 2px rgba(0, 0, 0, 0.04);
+    --shadow-3-soft:
+      0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 2px 2px rgba(0, 0, 0, 0.04),
+      0 8px 8px -8px rgba(0, 0, 0, 0.04);
+    --shadow-4-float:
+      0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 2px 2px rgba(0, 0, 0, 0.04),
+      0 8px 16px -4px rgba(0, 0, 0, 0.04);
+    --shadow-5-modal:
+      0 0 0 1px rgba(0, 0, 0, 0.08) inset, 0 1px 1px rgba(0, 0, 0, 0.02),
+      0 8px 16px -4px rgba(0, 0, 0, 0.04), 0 24px 32px -8px rgba(0, 0, 0, 0.06);
+
+    /* Aliases compat */
+    --shadow-sm: var(--shadow-2-subtle);
+    --shadow: var(--shadow-3-soft);
+    --shadow-md: var(--shadow-4-float);
+    --shadow-lg: var(--shadow-5-modal);
+
+    /* ============================================
+     * Raios — escala Vercel completa
+     * ============================================ */
+    --radius-none: 0;
+    --radius-xs: 0.25rem; /* 4px */
+    --radius-sm: 0.375rem; /* 6px — base UI (forms, dropdowns) */
+    --radius-md: 0.5rem; /* 8px — marketing cards */
+    --radius-lg: 0.75rem; /* 12px */
+    --radius-xl: 1rem; /* 16px */
+    --radius-pill-sm: 4rem; /* 64px — tab pills */
+    --radius-pill: 6.25rem; /* 100px — marketing CTAs */
+    --radius-full: 9999px;
+
+    /* Alias compat */
+    --radius: var(--radius-md);
+
+    /* ============================================
+     * Containers
+     * narrow: leitura confortável (declarações)
+     * default: listas e cards
+     * wide: home/dashboard (Vercel uses 1400)
+     * ============================================ */
+    --container-narrow: 42rem; /* 672px */
+    --container-default: 64rem; /* 1024px */
+    --container-wide: 87.5rem; /* 1400px */
+
+    /* ============================================
+     * Transições
+     * ============================================ */
     --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
     --transition-base: 250ms cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-slow: 400ms cubic-bezier(0.4, 0, 0.2, 1);
   }
 
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --color-bg: oklch(15% 0.02 280);
-      --color-bg-elevated: oklch(18% 0.02 280);
-      --color-bg-muted: oklch(22% 0.02 280);
-      --color-fg: oklch(95% 0.005 280);
-      --color-fg-muted: oklch(70% 0.015 280);
-      --color-fg-subtle: oklch(55% 0.02 280);
-      --color-border: oklch(28% 0.02 280);
-      --color-border-strong: oklch(38% 0.02 280);
-      --color-accent: oklch(75% 0.13 70);
-      --color-accent-fg: oklch(15% 0.02 70);
-      --color-accent-muted: oklch(25% 0.04 70);
-    }
+  /* ============================================
+   * Polarity-flipped dark surface
+   * Aplicada via classe .surface-dark — NÃO via @media
+   * Usar em seções específicas para profundidade visual
+   * ============================================ */
+  .surface-dark {
+    --color-canvas: var(--color-ink);
+    --color-canvas-soft: var(--color-ink);
+    --color-canvas-soft-2: #1f1f1f;
+    --color-text-primary: var(--color-on-primary);
+    --color-text-body: #a1a1a1;
+    --color-text-mute: #888888;
+    --color-hairline: #2e2e2e;
+    --color-hairline-strong: #4d4d4d;
+
+    /* Aliases recalculados */
+    --color-bg: var(--color-canvas);
+    --color-bg-elevated: var(--color-canvas-soft-2);
+    --color-bg-muted: var(--color-canvas-soft-2);
+    --color-fg: var(--color-text-primary);
+    --color-fg-muted: var(--color-text-body);
+    --color-fg-subtle: var(--color-text-mute);
+    --color-border: var(--color-hairline);
+    --color-border-strong: var(--color-hairline-strong);
+
+    background-color: var(--color-ink);
+    color: var(--color-on-primary);
   }
 }
