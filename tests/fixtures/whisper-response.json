@@ -1,0 +1,20 @@
+{
+  "task": "transcribe",
+  "language": "portuguese",
+  "duration": 12.5,
+  "text": "Vamos reduzir o imposto de renda para a classe média.",
+  "segments": [
+    {
+      "id": 0,
+      "start": 0.0,
+      "end": 5.2,
+      "text": "Vamos reduzir o imposto de renda"
+    },
+    {
+      "id": 1,
+      "start": 5.2,
+      "end": 12.5,
+      "text": " para a classe média."
+    }
+  ]
+}

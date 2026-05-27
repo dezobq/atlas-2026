@@ -1,5 +1,5 @@
 import { getCollection, getEntry } from "astro:content";
-import type { Declaracao } from "@types";
+import type { Declaracao } from "@/types";
 
 export async function getAllDeclaracoes(): Promise<Declaracao[]> {
   const declaracoes = await getCollection("declaracoes");

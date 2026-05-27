@@ -6,7 +6,7 @@ import tailwindcss from "@tailwindcss/vite";
 const srcDir = fileURLToPath(new URL("./src", import.meta.url));
 
 export default defineConfig({
-  site: "https://atlas2026.example.com",
+  site: "https://atlas-2026.pages.dev",
   output: "static",
   trailingSlash: "never",
   build: {
@@ -23,10 +23,6 @@ export default defineConfig({
     resolve: {
       alias: {
         "@": srcDir,
-        "@components": fileURLToPath(new URL("./src/components", import.meta.url)),
-        "@lib": fileURLToPath(new URL("./src/lib", import.meta.url)),
-        "@styles": fileURLToPath(new URL("./src/styles", import.meta.url)),
-        "@types": fileURLToPath(new URL("./src/types/index.ts", import.meta.url)),
       },
     },
   },

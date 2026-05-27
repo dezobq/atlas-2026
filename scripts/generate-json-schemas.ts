@@ -45,7 +45,7 @@ const veiculoVeredito = z.enum([
 const contaOficialSchema = z.object({
   plataforma: z.enum(["youtube", "x", "instagram", "facebook", "tiktok"]),
   handle: z.string().min(1),
-  url: z.string().url(),
+  url: z.url(),
   verificada: z.boolean(),
 });
 
@@ -53,12 +53,12 @@ const candidatoSchema = z.object({
   id: z.string().min(1),
   slug: z.string().regex(/^[a-z0-9-]+$/),
   nome: z.string().min(1),
-  foto_url: z.string().url().optional(),
+  foto_url: z.url().optional(),
   partido: z.string().min(1),
   biografia_minima: z.string().min(10).max(500),
   contas_oficiais: z.array(contaOficialSchema).default([]),
-  criado_em: z.string().datetime(),
-  atualizado_em: z.string().datetime(),
+  criado_em: z.iso.datetime(),
+  atualizado_em: z.iso.datetime(),
 });
 
 const temaSchema = z.object({
@@ -73,20 +73,20 @@ const temaSchema = z.object({
 const eventoSchema = z.object({
   id: z.string().min(1),
   titulo: z.string().min(1),
-  data: z.string().datetime(),
+  data: z.iso.datetime(),
   tipo: eventoTipoEnum,
   local: z.object({
     fisico: z.string().nullable(),
     digital: z.string().nullable(),
   }),
   duracao_minutos: z.number().int().positive().nullable(),
-  fonte_primaria_url: z.string().url(),
+  fonte_primaria_url: z.url(),
   fonte_primaria_tipo: fonteTipoEnum,
-  archive_url: z.string().url(),
+  archive_url: z.url(),
   candidatos_envolvidos: z.array(z.object({ candidato_id: z.string().min(1) })).min(1),
   descricao: z.string().min(10),
-  criado_em: z.string().datetime(),
-  atualizado_em: z.string().datetime(),
+  criado_em: z.iso.datetime(),
+  atualizado_em: z.iso.datetime(),
 });
 
 const declaracaoSchema = z.object({
@@ -103,9 +103,9 @@ const declaracaoSchema = z.object({
   tema_principal: z.string().min(1),
   temas_secundarios: z.array(z.string()).default([]),
   tipo_estrutural: z.array(tipoEstruturalEnum).min(1),
-  fonte_primaria_url: z.string().url(),
+  fonte_primaria_url: z.url(),
   fonte_primaria_tipo: fonteTipoEnum,
-  archive_url: z.string().url(),
+  archive_url: z.url(),
   snapshot_interno_path: z.string().nullable().optional(),
   contexto_adicional: z
     .object({
@@ -114,8 +114,8 @@ const declaracaoSchema = z.object({
         .array(
           z.object({
             tipo: z.string().min(1),
-            url: z.string().url(),
-            data: z.string().datetime(),
+            url: z.url(),
+            data: z.iso.datetime(),
           }),
         )
         .min(1),
@@ -127,15 +127,15 @@ const declaracaoSchema = z.object({
       z.object({
         veiculo: veiculoVeredito,
         classificacao: z.string().min(1),
-        url: z.string().url(),
-        data: z.string().datetime(),
+        url: z.url(),
+        data: z.iso.datetime(),
         citacao_curta: z.string().min(1).max(300),
       }),
     )
     .default([]),
   versao: z.number().int().positive(),
-  criado_em: z.string().datetime(),
-  atualizado_em: z.string().datetime(),
+  criado_em: z.iso.datetime(),
+  atualizado_em: z.iso.datetime(),
 });
 
 const outDir = join(process.cwd(), "data", "schemas");
@@ -146,7 +146,6 @@ function write(name: string, schema: z.ZodTypeAny): void {
     target: "draft-7",
     unrepresentable: "any",
   });
-  // Add a top-level $schema reference and title for human readability
   const enriched = {
     $schema: "http://json-schema.org/draft-07/schema#",
     title: name,

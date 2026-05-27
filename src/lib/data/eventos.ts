@@ -1,5 +1,5 @@
 import { getCollection, getEntry } from "astro:content";
-import type { Evento } from "@types";
+import type { Evento } from "@/types";
 
 export async function getAllEventos(): Promise<Evento[]> {
   const eventos = await getCollection("eventos");

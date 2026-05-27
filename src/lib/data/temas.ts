@@ -1,5 +1,5 @@
 import { getCollection, getEntry } from "astro:content";
-import type { Tema } from "@types";
+import type { Tema } from "@/types";
 
 export async function getAllTemas(): Promise<Tema[]> {
   const temas = await getCollection("temas");

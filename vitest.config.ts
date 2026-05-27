@@ -5,10 +5,13 @@ export default defineConfig({
   resolve: {
     alias: {
       "@": fileURLToPath(new URL("./src", import.meta.url)),
-      "@components": fileURLToPath(new URL("./src/components", import.meta.url)),
-      "@lib": fileURLToPath(new URL("./src/lib", import.meta.url)),
-      "@styles": fileURLToPath(new URL("./src/styles", import.meta.url)),
-      "@types": fileURLToPath(new URL("./src/types/index.ts", import.meta.url)),
+      // astro:content é um módulo virtual resolvido pelo Astro Vite plugin,
+      // indisponível no runtime do Vitest. Mapeamos para um mock local que
+      // expõe vi.fn() para getCollection/getEntry, permitindo testes unitários
+      // dos loaders sem precisar do Astro SSR completo.
+      "astro:content": fileURLToPath(
+        new URL("./tests/__mocks__/astro-content.ts", import.meta.url),
+      ),
     },
   },
   test: {

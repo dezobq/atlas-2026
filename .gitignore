@@ -49,3 +49,7 @@ data/_scraping_raw/
 # secrets
 *.pem
 *.key
+
+# Pipeline cache (Plan 2 Sprint 3)
+dist-dataset/
+public/og/
