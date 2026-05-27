@@ -123,9 +123,6 @@ importers:
       vitest:
         specifier: ^2.1.9
         version: 2.1.9(@types/node@25.9.1)(jsdom@29.1.1)(lightningcss@1.32.0)
-      zod-to-json-schema:
-        specifier: ^3.25.2
-        version: 3.25.2(zod@4.4.3)
 
 packages:
 
@@ -10494,10 +10491,6 @@ snapshots:
   zod-to-json-schema@3.25.2(zod@3.25.76):
     dependencies:
       zod: 3.25.76
-
-  zod-to-json-schema@3.25.2(zod@4.4.3):
-    dependencies:
-      zod: 4.4.3
 
   zod-to-ts@1.2.0(typescript@5.9.3)(zod@3.25.76):
     dependencies:

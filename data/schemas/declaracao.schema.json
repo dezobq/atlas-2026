@@ -1,0 +1,232 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "declaracao",
+  "type": "object",
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z0-9-]+$"
+    },
+    "candidato_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "evento_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "texto": {
+      "type": "string",
+      "minLength": 1
+    },
+    "timestamp_no_evento": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^\\d{2}:\\d{2}:\\d{2}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contexto": {
+      "type": "string",
+      "minLength": 10,
+      "maxLength": 500
+    },
+    "tema_principal": {
+      "type": "string",
+      "minLength": 1
+    },
+    "temas_secundarios": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "tipo_estrutural": {
+      "minItems": 1,
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "promessa",
+          "dado_numerico",
+          "atribuicao_a_terceiro",
+          "afirmacao_historica",
+          "comparacao",
+          "afirmacao_sobre_pesquisa",
+          "compromisso_politico",
+          "interpretacao_pessoal"
+        ]
+      }
+    },
+    "fonte_primaria_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "fonte_primaria_tipo": {
+      "type": "string",
+      "enum": [
+        "youtube_oficial",
+        "tse",
+        "camara",
+        "senado",
+        "diario_oficial",
+        "midia_consolidada",
+        "rede_social_oficial"
+      ]
+    },
+    "archive_url": {
+      "type": "string",
+      "format": "uri"
+    },
+    "snapshot_interno_path": {
+      "anyOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "contexto_adicional": {
+      "anyOf": [
+        {
+          "type": "object",
+          "properties": {
+            "texto": {
+              "type": "string",
+              "minLength": 10
+            },
+            "fontes": {
+              "minItems": 1,
+              "type": "array",
+              "items": {
+                "type": "object",
+                "properties": {
+                  "tipo": {
+                    "type": "string",
+                    "minLength": 1
+                  },
+                  "url": {
+                    "type": "string",
+                    "format": "uri"
+                  },
+                  "data": {
+                    "type": "string",
+                    "format": "date-time",
+                    "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+                  }
+                },
+                "required": [
+                  "tipo",
+                  "url",
+                  "data"
+                ],
+                "additionalProperties": false
+              }
+            }
+          },
+          "required": [
+            "texto",
+            "fontes"
+          ],
+          "additionalProperties": false
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "vereditos_externos": {
+      "default": [],
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "veiculo": {
+            "type": "string",
+            "enum": [
+              "Lupa",
+              "Aos Fatos",
+              "Comprova",
+              "Estadão Verifica",
+              "Agência Pública",
+              "BBC Verify",
+              "outro"
+            ]
+          },
+          "classificacao": {
+            "type": "string",
+            "minLength": 1
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "data": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "citacao_curta": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 300
+          }
+        },
+        "required": [
+          "veiculo",
+          "classificacao",
+          "url",
+          "data",
+          "citacao_curta"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "versao": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    },
+    "criado_em": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+    },
+    "atualizado_em": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+    }
+  },
+  "required": [
+    "id",
+    "slug",
+    "candidato_id",
+    "evento_id",
+    "texto",
+    "timestamp_no_evento",
+    "contexto",
+    "tema_principal",
+    "temas_secundarios",
+    "tipo_estrutural",
+    "fonte_primaria_url",
+    "fonte_primaria_tipo",
+    "archive_url",
+    "vereditos_externos",
+    "versao",
+    "criado_em",
+    "atualizado_em"
+  ],
+  "additionalProperties": false
+}
