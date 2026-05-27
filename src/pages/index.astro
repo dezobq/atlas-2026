@@ -1,55 +1,29 @@
 ---
-import "@styles/global.css";
-import { Button } from "@/components/ui/button";
-
-const title = "Atlas dos Candidatos 2026";
+import BaseLayout from "@components/layout/BaseLayout.astro";
+import Disclaimer from "@components/shared/Disclaimer.astro";
+import Tag from "@components/shared/Tag.astro";
 ---
 
-<html lang="pt-BR">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{title}</title>
-  </head>
-  <body>
-    <main class="container-narrow" style="padding-block: var(--space-3xl);">
-      <p class="eyebrow" style="margin-bottom: var(--space-sm);">SPRINT 0 · DESIGN TOKENS</p>
-      <h1>{title}.</h1>
-      <p
-        style="margin-top: var(--space-md); font-size: var(--text-body-lg); color: var(--color-text-body); max-width: 60ch;"
-      >
-        Memória factual da eleição presidencial brasileira de 2026. Declarações com fonte primária.
-        Sem julgamento editorial.
-      </p>
-
-      <div
-        style="margin-top: var(--space-xl); display: flex; gap: var(--space-sm); flex-wrap: wrap;"
-      >
-        <Button>Botão padrão</Button>
-        <Button variant="outline" client:load>Botão outline (interativo)</Button>
-      </div>
-
-      <p style="margin-top: var(--space-2xl); color: var(--color-text-body);">
-        Para mais sobre o projeto, veja a <a href="#metodologia">metodologia</a> ou consulte o <a
-          href="#dataset">dataset</a
-        >.
-      </p>
-    </main>
-
-    <section
-      class="surface-dark"
-      style="padding-block: var(--space-3xl); margin-top: var(--space-2xl);"
+<BaseLayout title="Atlas dos Candidatos 2026">
+  <section class="container-narrow" style="padding-block: var(--space-4xl);">
+    <p class="eyebrow" style="margin-bottom: var(--space-sm);">ATLAS · ELEIÇÃO 2026</p>
+    <h1>Atlas dos Candidatos 2026.</h1>
+    <p
+      style="margin-top: var(--space-md); color: var(--color-text-body); font-size: var(--text-body-lg); max-width: 60ch;"
     >
-      <div class="container-narrow">
-        <p class="eyebrow" style="margin-bottom: var(--space-sm);">POLARITY-FLIPPED BAND</p>
-        <h2>Atlas não é um fact-checker.</h2>
-        <p
-          style="margin-top: var(--space-md); font-size: var(--text-body-lg); color: var(--color-text-body); max-width: 60ch;"
-        >
-          O Atlas apresenta declarações com fonte primária linkada, sem emitir veredito. Quando há
-          veredito de fact-checker reconhecido, agregamos com atribuição.
-        </p>
-      </div>
-    </section>
-  </body>
-</html>
+      Memória factual da eleição presidencial brasileira de 2026. Declarações com fonte primária.
+      Sem julgamento editorial.
+    </p>
+
+    <div style="margin-top: var(--space-lg); display: flex; gap: var(--space-xs); flex-wrap: wrap;">
+      <Tag>economia</Tag>
+      <Tag>saúde</Tag>
+      <Tag variant="structural">promessa</Tag>
+      <Tag variant="structural">dado_numerico</Tag>
+    </div>
+
+    <div style="margin-top: var(--space-2xl);">
+      <Disclaimer variant="prominent" />
+    </div>
+  </section>
+</BaseLayout>
