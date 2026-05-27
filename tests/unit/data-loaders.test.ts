@@ -1,47 +1,100 @@
-// NOTE: These tests rely on `astro:content`'s virtual module, which is
-// not resolvable in vitest's default runtime. They are skipped until
-// we either (a) configure vitest to use astro's getViteConfig
-// (with Vite version compatibility resolved), or (b) refactor loaders
-// to use a testable abstraction. Tracked in memory: bugs-do-plano-fase1.md (Bug 5)
-//
-// Validation strategy meanwhile: `pnpm typecheck` proves the loaders
-// satisfy the generated CollectionEntry types from src/content/config.ts,
-// and `pnpm build` exercises the loaders in the real Astro runtime.
+/**
+ * Testes unitários dos loaders de dados (temas).
+ *
+ * astro:content é mapeado via alias Vite (vitest.config.ts) para
+ * tests/__mocks__/astro-content.ts, que expõe vi.fn() para
+ * getCollection/getEntry. Isso evita a necessidade do Astro Vite plugin
+ * em runtime de testes — o módulo virtual é substituído por stubs controláveis.
+ *
+ * Bug 5 resolvido em Plan 2 Task 3 via Approach B (alias Vite + mock local).
+ */
+import { describe, it, expect, vi, beforeEach } from "vitest";
+import { getCollection } from "astro:content";
+import { getAllTemas, getTemaBySlug } from "@/lib/data/temas";
 
-import { describe, it } from "vitest";
+// Tipo mínimo compatível com CollectionEntry<"temas">
+interface TemaEntry {
+  id: string;
+  collection: "temas";
+  data: {
+    id: string;
+    slug: string;
+    nome: string;
+    descricao_curta: string;
+    nivel: "primario" | "secundario";
+    tema_pai_id?: string | null;
+  };
+}
 
-describe.skip("temas loader (requires astro:content runtime)", () => {
+const mockGetCollection = vi.mocked(getCollection);
+
+function makeTema(
+  id: string,
+  nome: string,
+  slug: string,
+  nivel: "primario" | "secundario" = "primario",
+): TemaEntry {
+  return {
+    id,
+    collection: "temas",
+    data: {
+      id,
+      slug,
+      nome,
+      descricao_curta: `Descrição de teste para ${nome}`,
+      nivel,
+      tema_pai_id: null,
+    },
+  };
+}
+
+const temasMock: TemaEntry[] = [
+  makeTema("economia", "Economia", "economia"),
+  makeTema("educacao", "Educação", "educacao"),
+  makeTema("saude", "Saúde", "saude"),
+  makeTema("seguranca", "Segurança", "seguranca"),
+  makeTema("meio-ambiente", "Meio Ambiente", "meio-ambiente"),
+  makeTema("tecnologia", "Tecnologia", "tecnologia"),
+];
+
+describe("temas loader (mocked astro:content via alias Vite)", () => {
+  beforeEach(() => {
+    mockGetCollection.mockReset();
+  });
+
   it("retorna todos os temas primários", async () => {
-    const { getAllTemas } = await import("@/lib/data/temas");
+    mockGetCollection.mockResolvedValue(temasMock as never);
     const temas = await getAllTemas();
-    if (temas.length < 6) throw new Error("Esperado ao menos 6 temas");
-    if (!temas.every((t) => t.data.nivel === "primario")) {
-      throw new Error("Esperado nivel='primario' em todos os temas");
-    }
+    expect(temas.length).toBeGreaterThanOrEqual(6);
+    expect(temas.every((t) => t.data.nivel === "primario")).toBe(true);
   });
 
   it("retorna tema por slug", async () => {
-    const { getTemaBySlug } = await import("@/lib/data/temas");
+    // getAllTemas e getTemaBySlug chamam getCollection com filtro opcional.
+    // Simulamos o comportamento real: aplicar o filtro ao mock dataset.
+    mockGetCollection.mockImplementation(async (_col, filter) => {
+      const all = temasMock;
+      return (filter ? all.filter(filter as (e: TemaEntry) => boolean) : all) as never;
+    });
     const economia = await getTemaBySlug("economia");
-    if (!economia) throw new Error("Esperado encontrar tema economia");
-    if (economia.data.nome !== "Economia") {
-      throw new Error("Esperado nome='Economia'");
-    }
+    expect(economia).toBeDefined();
+    expect(economia?.data.nome).toBe("Economia");
   });
 
   it("retorna undefined para slug inexistente", async () => {
-    const { getTemaBySlug } = await import("@/lib/data/temas");
+    mockGetCollection.mockImplementation(async (_col, filter) => {
+      const all = temasMock;
+      return (filter ? all.filter(filter as (e: TemaEntry) => boolean) : all) as never;
+    });
     const fake = await getTemaBySlug("tema-inexistente");
-    if (fake !== undefined) throw new Error("Esperado undefined");
+    expect(fake).toBeUndefined();
   });
 
   it("temas ordenados por nome", async () => {
-    const { getAllTemas } = await import("@/lib/data/temas");
+    mockGetCollection.mockResolvedValue(temasMock as never);
     const temas = await getAllTemas();
     const nomes = temas.map((t) => t.data.nome);
     const sorted = [...nomes].sort((a, b) => a.localeCompare(b, "pt-BR"));
-    if (JSON.stringify(nomes) !== JSON.stringify(sorted)) {
-      throw new Error("Esperado temas ordenados por nome");
-    }
+    expect(nomes).toEqual(sorted);
   });
 });
