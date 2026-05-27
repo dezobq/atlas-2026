@@ -1,6 +1,7 @@
 import { defineConfig } from "astro/config";
 import { fileURLToPath } from "node:url";
 import react from "@astrojs/react";
+import tailwindcss from "@tailwindcss/vite";
 
 const srcDir = fileURLToPath(new URL("./src", import.meta.url));
 
@@ -18,6 +19,7 @@ export default defineConfig({
     defaultStrategy: "viewport",
   },
   vite: {
+    plugins: [tailwindcss()],
     resolve: {
       alias: {
         "@": srcDir,
