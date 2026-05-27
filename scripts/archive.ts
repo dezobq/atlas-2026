@@ -18,9 +18,7 @@ export function extractArchiveUrl(headers: Headers): string | null {
   }
   const location = headers.get("Location");
   if (location) {
-    return location.startsWith("http")
-      ? location
-      : `https://web.archive.org${location}`;
+    return location.startsWith("http") ? location : `https://web.archive.org${location}`;
   }
   return null;
 }
@@ -62,11 +60,7 @@ async function run(): Promise<void> {
 
   const hash = hashUrl(url);
   const recordPath = join(outDir, `${hash}.txt`);
-  writeFileSync(
-    recordPath,
-    `${new Date().toISOString()}\n${url}\n${archiveUrl}\n`,
-    "utf-8",
-  );
+  writeFileSync(recordPath, `${new Date().toISOString()}\n${url}\n${archiveUrl}\n`, "utf-8");
 
   logger.success(`Snapshot criado:\n  ${archiveUrl}`);
   logger.info(`Registro: ${recordPath}`);

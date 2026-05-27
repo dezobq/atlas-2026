@@ -8,9 +8,7 @@ const fixture = JSON.parse(readFileSync(fixturePath, "utf-8")) as Record<string,
 
 describe("extractVideoId", () => {
   it("extrai ID de URL watch?v=", () => {
-    expect(extractVideoId("https://www.youtube.com/watch?v=dQw4w9WgXcQ")).toBe(
-      "dQw4w9WgXcQ",
-    );
+    expect(extractVideoId("https://www.youtube.com/watch?v=dQw4w9WgXcQ")).toBe("dQw4w9WgXcQ");
   });
 
   it("extrai ID de URL youtu.be/", () => {
@@ -18,9 +16,9 @@ describe("extractVideoId", () => {
   });
 
   it("extrai ID de URL com query params extras", () => {
-    expect(
-      extractVideoId("https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=120s"),
-    ).toBe("dQw4w9WgXcQ");
+    expect(extractVideoId("https://www.youtube.com/watch?v=dQw4w9WgXcQ&t=120s")).toBe(
+      "dQw4w9WgXcQ",
+    );
   });
 
   it("retorna null para URL inválida", () => {

@@ -1,9 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  buildSaveUrl,
-  extractArchiveUrl,
-  hashUrl,
-} from "../../../scripts/archive";
+import { buildSaveUrl, extractArchiveUrl, hashUrl } from "../../../scripts/archive";
 
 describe("buildSaveUrl", () => {
   it("monta URL com encoding correto", () => {

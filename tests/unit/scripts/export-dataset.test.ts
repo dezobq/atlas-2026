@@ -1,9 +1,5 @@
 import { describe, it, expect } from "vitest";
-import {
-  flattenDeclaracao,
-  toJsonl,
-  toCsv,
-} from "../../../scripts/export-dataset";
+import { flattenDeclaracao, toJsonl, toCsv } from "../../../scripts/export-dataset";
 
 const sample = {
   id: "01J9XYZ123",

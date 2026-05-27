@@ -1,5 +1,11 @@
 import { describe, it, expect } from "vitest";
-import { DATA_DIR, CACHE_DIR, PUBLIC_DIR, OG_DIR, DATASET_DIR } from "../../../../scripts/lib/paths";
+import {
+  DATA_DIR,
+  CACHE_DIR,
+  PUBLIC_DIR,
+  OG_DIR,
+  DATASET_DIR,
+} from "../../../../scripts/lib/paths";
 import { resolve } from "node:path";
 
 describe("paths", () => {

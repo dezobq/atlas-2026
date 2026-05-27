@@ -19,9 +19,7 @@ describe("requireEnv", () => {
 
   it("lança erro com mensagem clara quando env var falta", () => {
     delete process.env.MISSING_VAR;
-    expect(() => requireEnv("MISSING_VAR")).toThrow(
-      /MISSING_VAR.*\.env/i,
-    );
+    expect(() => requireEnv("MISSING_VAR")).toThrow(/MISSING_VAR.*\.env/i);
   });
 
   it("lança erro quando env var é string vazia", () => {

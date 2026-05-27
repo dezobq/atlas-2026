@@ -20,16 +20,10 @@ function formatDuration(totalSeconds: number): string {
 }
 
 export function summarizeMetadata(metadata: Record<string, unknown>): string {
-  const title =
-    typeof metadata.title === "string" ? metadata.title : "(sem título)";
-  const duration =
-    typeof metadata.duration === "number" ? metadata.duration : 0;
-  const uploader =
-    typeof metadata.uploader === "string"
-      ? metadata.uploader
-      : "(desconhecido)";
-  const uploadDate =
-    typeof metadata.upload_date === "string" ? metadata.upload_date : "?";
+  const title = typeof metadata.title === "string" ? metadata.title : "(sem título)";
+  const duration = typeof metadata.duration === "number" ? metadata.duration : 0;
+  const uploader = typeof metadata.uploader === "string" ? metadata.uploader : "(desconhecido)";
+  const uploadDate = typeof metadata.upload_date === "string" ? metadata.upload_date : "?";
   return `${title}\n  Duração: ${formatDuration(duration)}\n  Canal: ${uploader}\n  Data: ${uploadDate}`;
 }
 
@@ -74,8 +68,7 @@ async function run(): Promise<void> {
   logger.info("\n" + summarizeMetadata(metadata));
 }
 
-const isMain =
-  import.meta.url === pathToFileURL(process.argv[1] ?? "").href;
+const isMain = import.meta.url === pathToFileURL(process.argv[1] ?? "").href;
 if (isMain) {
   run().catch((err: unknown) => {
     logger.error(err instanceof Error ? err : String(err));

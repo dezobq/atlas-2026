@@ -22,9 +22,7 @@ function formatTimestamp(seconds: number): string {
 }
 
 export function formatSegmentsAsTimestamps(segments: WhisperSegment[]): string {
-  return segments
-    .map((seg) => `[${formatTimestamp(seg.start)}] ${seg.text.trim()}`)
-    .join("\n");
+  return segments.map((seg) => `[${formatTimestamp(seg.start)}] ${seg.text.trim()}`).join("\n");
 }
 
 async function run(): Promise<void> {
