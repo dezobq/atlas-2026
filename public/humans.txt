@@ -1,0 +1,9 @@
+/* TEAM */
+Atlas dos Candidatos 2026
+Site: atlas2026.example.com
+Source: github.com/atlas2026
+
+/* THANKS */
+Lupa, Aos Fatos, Comprova, Estadão Verifica
+TSE, Câmara, Senado
+Astro, Tailwind, shadcn/ui, Vercel
