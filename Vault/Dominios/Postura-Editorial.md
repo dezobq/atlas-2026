@@ -28,7 +28,7 @@ dependencies: [[Sem-Veredito-Proprio]]
 - Voz nos textos do site: terceira pessoa, presente, sem adjetivos avaliativos
 - Quando há divergência entre fontes: registrar todas, sem peso editorial
 - Quando não há veredito: dizer explicitamente "sem veredito de fact-checker reconhecido até <data>"
-- Erratas públicas em `/errata`, datadas, com diff visível (ver [[Decisoes/...]])
+- Erratas públicas em `/errata`, datadas, com diff visível em git (processo materializado na página, sem decisão dedicada em `Vault/Decisoes/`)
 
 ## Links
 

@@ -49,7 +49,7 @@ Próxima atualização do critério vai requerer:
 1. Nova entrada em `data/criterio-selecao/` (versionar; nunca sobrescrever)
 2. Atualizar `latest.yaml` symlink/cópia
 3. Re-rodar `pnpm audit-paridade` em CI
-4. Atualizar esta nota e [[../Decisoes/...]] correspondente
+4. Atualizar esta nota com a nova versão; registrar a mudança no commit que altera o critério (sem decisão dedicada em `Vault/Decisoes/` — o domínio é a fonte canônica)
 
 ## Links
 
