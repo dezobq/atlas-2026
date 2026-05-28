@@ -52,6 +52,9 @@ jobs:
       - name: Validate data
         run: pnpm validate-data
 
+      - name: Auditoria de paridade Fase 4
+        run: pnpm audit:paridade
+
       - name: Run tests
         run: pnpm test
 
