@@ -2,9 +2,28 @@
 import BaseLayout from "@/components/layout/BaseLayout.astro";
 import Disclaimer from "@/components/shared/Disclaimer.astro";
 import Tag from "@/components/shared/Tag.astro";
+import JSONLDDataset from "@/components/seo/JSONLDDataset.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+
+const datasetMeta = {
+  version: "0.0.0",
+  downloads: [],
+  totalDeclaracoes: 0,
+};
+
+const canonical = new URL("/", Astro.site).toString();
 ---
 
 <BaseLayout title="Atlas dos Candidatos 2026">
+  <SEOTags
+    slot="head"
+    title="Atlas dos Candidatos 2026"
+    description="Memória factual da eleição presidencial brasileira de 2026. Declarações com fonte primária. Sem julgamento editorial."
+    canonical={canonical}
+    ogType="website"
+  />
+  <JSONLDDataset slot="head" meta={datasetMeta} />
+
   <section class="container-narrow" style="padding-block: var(--space-4xl);">
     <p class="eyebrow" style="margin-bottom: var(--space-sm);">ATLAS · ELEIÇÃO 2026</p>
     <h1>Atlas dos Candidatos 2026.</h1>
