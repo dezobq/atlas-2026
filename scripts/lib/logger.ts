@@ -3,6 +3,7 @@ type Logger = {
   success: (msg: string) => void;
   warn: (msg: string) => void;
   error: (msg: string | Error) => void;
+  debug: (msg: string) => void;
 };
 
 export const logger: Logger = {
@@ -13,4 +14,5 @@ export const logger: Logger = {
     const text = msg instanceof Error ? msg.message : msg;
     console.error(`✗ ${text}`);
   },
+  debug: (msg) => console.log(`⋯ ${msg}`),
 };

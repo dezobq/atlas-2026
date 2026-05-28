@@ -32,6 +32,7 @@
     "archive": "tsx scripts/archive.ts",
     "scrape:url": "tsx scripts/scrape-url.ts",
     "generate:og": "tsx scripts/generate-og-images.ts",
+    "generate:cards": "tsx scripts/generate-cards.ts",
     "export:dataset": "tsx scripts/export-dataset.ts"
   },
   "dependencies": {
