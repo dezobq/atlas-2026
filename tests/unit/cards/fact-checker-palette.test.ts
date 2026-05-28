@@ -11,8 +11,15 @@ describe("factCheckerColor", () => {
     expect(factCheckerColor("BBC Verify")).toBe("#B40000");
   });
 
-  it("retorna fallback cinza neutro para 'outro'", () => {
+  it("retorna fallback para 'outro' (sentinel canônico de sem fact-checker)", () => {
     expect(factCheckerColor("outro")).toBe(FALLBACK_COLOR);
+  });
+
+  it("retorna fallback para veículo desconhecido (defensivo)", () => {
+    expect(factCheckerColor("Inventado")).toBe(FALLBACK_COLOR);
+  });
+
+  it("FALLBACK_COLOR é cinza neutro #737373", () => {
     expect(FALLBACK_COLOR).toBe("#737373");
   });
 });
