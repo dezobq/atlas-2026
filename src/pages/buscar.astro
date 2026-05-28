@@ -1,0 +1,29 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import PagefindSearch from "@/components/search/PagefindSearch.astro";
+
+const canonical = new URL("/buscar", Astro.site).toString();
+const description =
+  "Busca textual em declarações, candidatos e eventos do Atlas dos Candidatos 2026.";
+---
+
+<BaseLayout title="Buscar" description={description} noindex={true}>
+  <SEOTags
+    slot="head"
+    title="Buscar · Atlas dos Candidatos 2026"
+    description={description}
+    canonical={canonical}
+    ogType="website"
+  />
+
+  <section class="container-default" style="padding-block: var(--space-3xl);">
+    <p class="eyebrow" style="margin-bottom: var(--space-sm);">BUSCAR</p>
+    <h1 style="margin-bottom: var(--space-lg);">Buscar no Atlas</h1>
+    <p style="color: var(--color-text-body); max-width: 60ch; margin-bottom: var(--space-2xl);">
+      A busca opera totalmente no seu navegador. Nenhum dado é enviado a servidores externos.
+    </p>
+
+    <PagefindSearch />
+  </section>
+</BaseLayout>
