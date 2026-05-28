@@ -6,6 +6,35 @@
 >
 > Janela vigente: **[2025-05-16, 2026-05-28]** (Errata — ver [[Extensao-Janela-Temporal]]).
 
+---
+
+## ⏱️ ATUALIZAÇÃO 2026-05-28 (sessão do agente) — 10/12 PUBLICADAS
+
+O agente avançou o piloto de **4 → 10/12** declarações (commits `8d1c605`, `e8a2149`, `287aff8`), todas `validador="pendente"`. **Lula completo (6/6 temas); Flávio 4/6.** O `audit:paridade --piloto-mode` agora reporta o estado real (10/12).
+
+**Resolvido (re-sourceado de mídia acessível, verbatim do texto REAL da página):**
+
+- 🟡5 Lula Economia → Band ("…economia de R$ 4 mil… quase um 14º salário", dado_numerico)
+- 🟡6 Lula Saúde → Agência Gov ("nunca antes um governo entregou tanto…", comparacao) — ⚠️ fit de tema genérico, revisar
+- 🟡7 Lula Educação → Poder360 ("a elite brasileira não queria que vocês estudassem…") — ⚠️ NÃO é a fala editada que a Lupa desmentiu
+- 🟡8 Lula Segurança → Conexão Tocantins ("…não serão mais donos de nenhum território")
+- 🟡9 Lula PolExterna → Agência Brasil ("Por que eu sou obrigado a ficar lastreado pelo dólar…")
+- 🟠10 Flávio PolExterna → Gazeta do Povo ("…assinará os Acordos de Isaac em janeiro de 2027") — ✅ "Acordos de Isaac" é REAL (proposta de Milei), não era erro do WebFetch
+
+**Falta só (decisão sua):**
+
+- 🔴 **Flávio Educação** + 🔴 **Flávio Saúde** — lacunas reais confirmadas pelo audit. Decidir A/B/C (novo lead / N2 / reduzir quota — Risco F4-5, relatório Task 9).
+- **Sign-off das 10**: confira verbatim/datas/casing; várias fontes podem ser ELEVADAS ao oficial (gov.br) quando você acessar.
+
+**Achados da sessão:**
+
+- gov.br **bloqueia CAPTCHA em 3 caminhos** (browser ao vivo, snapshot Wayback e WebFetch) — por isso re-sourceei de mídia acessível.
+- `pnpm archive` (Save Page Now) **falhou em todos os domínios testados** (status 200 sem snapshot) — possível bug/mudança da API do Wayback a investigar. Usei snapshots **já existentes** via API de disponibilidade.
+
+> O placar e os pacotes abaixo são o **estado ORIGINAL** (pré-sessão), mantidos como histórico.
+
+---
+
 ## Legenda de status
 
 - 🟢 **PRONTO P/ VERIFICAR** — texto-candidato + `archive_url` real. Você só confere o texto e assina.
