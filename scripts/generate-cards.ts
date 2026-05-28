@@ -92,7 +92,7 @@ async function main(): Promise<void> {
 const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
 if (isMain) {
   main().catch((err) => {
-    logger.error("Erro:", err);
+    logger.error(err instanceof Error ? err : String(err));
     process.exit(1);
   });
 }
