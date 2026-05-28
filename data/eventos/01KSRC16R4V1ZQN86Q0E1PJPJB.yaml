@@ -1,0 +1,16 @@
+id: "01KSRC16R4V1ZQN86Q0E1PJPJB"
+titulo: "Encontro de Flávio Bolsonaro com Netanyahu em conferência em Israel"
+data: "2026-01-26T20:00:00.000Z" # ⚠️ 26/01/2026 — horário aproximado, confirmar
+tipo: "declaracao_oficial"
+local:
+  fisico: "Israel"
+  digital: null
+duracao_minutos: null
+fonte_primaria_url: "https://www.gazetadopovo.com.br/eleicoes/2026/flavio-bolsonaro-promete-retomar-relacoes-comerciais-com-israel/"
+fonte_primaria_tipo: "midia_consolidada"
+archive_url: "http://web.archive.org/web/20260302210419/https://www.gazetadopovo.com.br/eleicoes/2026/flavio-bolsonaro-promete-retomar-relacoes-comerciais-com-israel/"
+candidatos_envolvidos:
+  - candidato_id: "bolsonaro-flavio"
+descricao: "Encontro do senador Flávio Bolsonaro com o primeiro-ministro de Israel, Benjamin Netanyahu, durante conferência internacional de combate ao antissemitismo, em 26 de janeiro de 2026."
+criado_em: "2026-05-28T22:10:00.000Z"
+atualizado_em: "2026-05-28T22:10:00.000Z"

@@ -1,0 +1,16 @@
+id: "01KSRC16R343Q8C1GRN82K4AAD"
+titulo: "Pronunciamento em cadeia nacional sobre a isenção do Imposto de Renda"
+data: "2025-11-30T23:44:00.000Z" # ⚠️ 30/11 ~20h44 BRT → ~23h44 UTC — confirmar
+tipo: "declaracao_oficial"
+local:
+  fisico: "Brasília, DF"
+  digital: "cadeia nacional de rádio e TV"
+duracao_minutos: null
+fonte_primaria_url: "https://www.band.com.br/noticias/lula-faz-pronunciamento-e-fala-sobre-isencao-do-imposto-de-renda-202511302044"
+fonte_primaria_tipo: "midia_consolidada"
+archive_url: "http://web.archive.org/web/20251202205616/https://www.band.com.br/noticias/lula-faz-pronunciamento-e-fala-sobre-isencao-do-imposto-de-renda-202511302044"
+candidatos_envolvidos:
+  - candidato_id: "lula-luiz-inacio"
+descricao: "Pronunciamento do presidente Lula em cadeia nacional de rádio e TV, em 30 de novembro de 2025, detalhando a lei de isenção do Imposto de Renda para quem ganha até R$ 5 mil por mês."
+criado_em: "2026-05-28T22:10:00.000Z"
+atualizado_em: "2026-05-28T22:10:00.000Z"

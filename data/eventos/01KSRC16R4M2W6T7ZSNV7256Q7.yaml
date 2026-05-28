@@ -1,0 +1,16 @@
+id: "01KSRC16R4M2W6T7ZSNV7256Q7"
+titulo: "Lançamento do Programa Brasil Contra o Crime Organizado"
+data: "2026-05-12T18:00:00.000Z" # ⚠️ 12/05/2026 — horário aproximado, confirmar
+tipo: "declaracao_oficial"
+local:
+  fisico: "Brasília, DF"
+  digital: null
+duracao_minutos: null
+fonte_primaria_url: "https://conexaoto.com.br/2026/05/12/em-pouco-tempo-nao-serao-donos-de-nenhum-territorio-diz-lula-sobre-o-crime-organizado"
+fonte_primaria_tipo: "midia_consolidada"
+archive_url: "http://web.archive.org/web/20260513140331/https://conexaoto.com.br/2026/05/12/em-pouco-tempo-nao-serao-donos-de-nenhum-territorio-diz-lula-sobre-o-crime-organizado"
+candidatos_envolvidos:
+  - candidato_id: "lula-luiz-inacio"
+descricao: "Cerimônia de lançamento do Programa Brasil Contra o Crime Organizado, no Palácio do Planalto, em 12 de maio de 2026, com assinatura de decreto pelo presidente Lula."
+criado_em: "2026-05-28T22:10:00.000Z"
+atualizado_em: "2026-05-28T22:10:00.000Z"
