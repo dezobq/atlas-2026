@@ -1,0 +1,17 @@
+---
+import type { Candidato, Evento } from "@/types";
+import { buildEventSchema } from "@/lib/seo/build-event";
+import { safeJsonLd } from "@/lib/seo/safe-json-ld";
+
+interface Props {
+  evento: Evento;
+  candidatos: Candidato[];
+}
+
+const { evento, candidatos } = Astro.props;
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://atlas-2026.pages.dev";
+const schema = buildEventSchema(evento, candidatos, siteUrl);
+const json = safeJsonLd(schema);
+---
+
+<script type="application/ld+json" is:inline set:html={json} />
