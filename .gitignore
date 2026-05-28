@@ -53,3 +53,9 @@ data/_scraping_raw/
 # Pipeline cache (Plan 2 Sprint 3)
 dist-dataset/
 public/og/
+
+# MCP Serena cache (índice LSP local, não versionar)
+.serena/
+
+# Pagefind build artifacts
+.pagefind/

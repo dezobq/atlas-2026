@@ -1,0 +1,66 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import DeclaracaoCard from "@/components/declaracao/DeclaracaoCard.astro";
+import { getCollection } from "astro:content";
+import { getDeclaracoesByTema } from "@/lib/data/declaracoes";
+import { getAllCandidatos } from "@/lib/data/candidatos";
+import type { Candidato, Tema } from "@/types";
+
+export async function getStaticPaths() {
+  const temas = await getCollection("temas");
+  return temas.map((tema) => ({
+    params: { slug: tema.data.slug },
+    props: { tema },
+  }));
+}
+
+interface Props {
+  tema: Tema;
+}
+
+const { tema } = Astro.props;
+const declaracoes = await getDeclaracoesByTema(tema.data.slug);
+const candidatos = await getAllCandidatos();
+const candidatosPorId = new Map(candidatos.map((c: Candidato) => [c.data.id, c]));
+const canonical = new URL(`/temas/${tema.data.slug}`, Astro.site).toString();
+const description = `${tema.data.nome} — ${declaracoes.length} declarações documentadas no Atlas. ${tema.data.descricao_curta}`;
+---
+
+<BaseLayout title={tema.data.nome} description={description}>
+  <SEOTags
+    slot="head"
+    title={`${tema.data.nome} · Atlas dos Candidatos 2026`}
+    description={description}
+    canonical={canonical}
+    ogType="website"
+  />
+
+  <section class="container-default" style="padding-block: var(--space-xl);">
+    <p class="eyebrow">TEMA</p>
+    <h1 style="margin-block: var(--space-xs);">{tema.data.nome}</h1>
+    <p
+      style="color: var(--color-text-body); max-width: 70ch; line-height: var(--leading-body); margin-block: var(--space-md) var(--space-2xl);"
+    >
+      {tema.data.descricao_curta}
+    </p>
+
+    <h2 style="margin-bottom: var(--space-lg);">
+      Declarações sobre {tema.data.nome.toLowerCase()}
+    </h2>
+    {
+      declaracoes.length === 0 ? (
+        <p style="color: var(--color-text-mute);">
+          Nenhuma declaração registrada ainda neste tema.
+        </p>
+      ) : (
+        <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+          {declaracoes.map((d) => {
+            const cand = candidatosPorId.get(d.data.candidato_id);
+            return <DeclaracaoCard declaracao={d} {...(cand ? { candidato: cand } : {})} />;
+          })}
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

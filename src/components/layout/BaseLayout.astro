@@ -40,6 +40,8 @@ const canonical = canonicalUrl ?? new URL(Astro.url.pathname, Astro.site).toStri
 
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 
+    <slot name="head" />
+
     <ClientRouter />
   </head>
   <body>

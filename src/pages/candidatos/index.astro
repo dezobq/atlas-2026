@@ -1,0 +1,40 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import CandidatoCard from "@/components/candidato/CandidatoCard.astro";
+import { getAllCandidatos } from "@/lib/data/candidatos";
+
+const candidatos = await getAllCandidatos();
+const canonical = new URL("/candidatos", Astro.site).toString();
+const description = `Lista de ${candidatos.length} candidatos à presidência do Brasil em 2026 documentados no Atlas.`;
+---
+
+<BaseLayout title="Candidatos" description={description}>
+  <SEOTags
+    slot="head"
+    title="Candidatos · Atlas dos Candidatos 2026"
+    description={description}
+    canonical={canonical}
+    ogType="website"
+  />
+
+  <section class="container-default" style="padding-block: var(--space-3xl);">
+    <p class="eyebrow" style="margin-bottom: var(--space-sm);">CANDIDATOS</p>
+    <h1 style="margin-bottom: var(--space-lg);">Candidatos documentados</h1>
+    <p style="color: var(--color-text-body); max-width: 60ch; margin-bottom: var(--space-2xl);">
+      {description}
+    </p>
+
+    {
+      candidatos.length === 0 ? (
+        <p style="color: var(--color-text-mute);">Nenhum candidato registrado ainda.</p>
+      ) : (
+        <div style="display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          {candidatos.map((c) => (
+            <CandidatoCard candidato={c} />
+          ))}
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>

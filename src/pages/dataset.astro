@@ -1,0 +1,110 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import JSONLDDataset from "@/components/seo/JSONLDDataset.astro";
+import { getAllDeclaracoes } from "@/lib/data/declaracoes";
+
+const declaracoes = await getAllDeclaracoes();
+const totalDeclaracoes = declaracoes.length;
+
+const datasetVersion = "0.1.0-demo";
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://atlas-2026.pages.dev";
+
+const downloads = [
+  {
+    format: "application/x-ndjson",
+    url: `${siteUrl}/dataset/declaracoes.jsonl`,
+    label: "Declarações (JSON Lines)",
+  },
+  {
+    format: "text/csv",
+    url: `${siteUrl}/dataset/declaracoes.csv`,
+    label: "Declarações (CSV)",
+  },
+];
+
+const datasetMeta = {
+  version: datasetVersion,
+  downloads: downloads.map(({ format, url }) => ({ format, url })),
+  totalDeclaracoes,
+};
+
+const canonical = new URL("/dataset", Astro.site).toString();
+const description = `Dataset aberto de ${totalDeclaracoes} declarações documentadas no Atlas. Formatos JSONL e CSV. Licença CC-BY 4.0.`;
+---
+
+<BaseLayout title="Dataset" description={description}>
+  <SEOTags
+    slot="head"
+    title="Dataset · Atlas dos Candidatos 2026"
+    description={description}
+    canonical={canonical}
+    ogType="website"
+  />
+  <JSONLDDataset slot="head" meta={datasetMeta} />
+
+  <section class="container-narrow" style="padding-block: var(--space-3xl);">
+    <p class="eyebrow" style="margin-bottom: var(--space-sm);">DATASET</p>
+    <h1 style="margin-bottom: var(--space-lg);">Atlas dos Candidatos 2026 — Dataset</h1>
+    <p
+      style="color: var(--color-text-body); line-height: var(--leading-body); margin-bottom: var(--space-xl);"
+    >
+      {description}
+    </p>
+
+    <h2 style="margin-block: var(--space-xl) var(--space-md);">Downloads</h2>
+    <ul
+      style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-md);"
+    >
+      {
+        downloads.map((d) => (
+          <li>
+            <a
+              href={d.url}
+              style="display: flex; justify-content: space-between; align-items: baseline; padding: var(--space-md) var(--space-lg); border: 1px solid var(--color-hairline); border-radius: var(--radius-md); color: var(--color-text-primary); text-decoration: none;"
+            >
+              <span style="font-weight: var(--weight-medium);">{d.label}</span>
+              <span style="font-family: var(--font-mono); font-size: var(--text-caption); color: var(--color-text-mute);">
+                {d.format}
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+
+    <h2 style="margin-block: var(--space-xl) var(--space-md);">Licença</h2>
+    <p style="color: var(--color-text-body); line-height: var(--leading-body);">
+      Dataset distribuído sob licença
+      <a
+        href="https://creativecommons.org/licenses/by/4.0/"
+        rel="external noopener"
+        target="_blank"
+      >
+        Creative Commons Attribution 4.0 International (CC-BY 4.0)
+      </a>. Você pode usar, redistribuir e adaptar, desde que atribua a fonte como "Atlas dos
+      Candidatos 2026 — atlas-2026.pages.dev".
+    </p>
+
+    <h2 style="margin-block: var(--space-xl) var(--space-md);">Esquema</h2>
+    <p style="color: var(--color-text-body); line-height: var(--leading-body);">
+      Cada registro de declaração tem o esquema documentado em
+      <a
+        href="https://github.com/dezobq/atlas-2026/blob/main/dist-dataset/SCHEMA.md"
+        rel="external noopener"
+        target="_blank"
+      >
+        SCHEMA.md
+      </a>. Para gerar os arquivos localmente, rode <code>pnpm export:dataset</code>.
+    </p>
+
+    <h2 style="margin-block: var(--space-xl) var(--space-md);">Versão e citação</h2>
+    <p style="color: var(--color-text-body); line-height: var(--leading-body);">
+      Versão atual: <code>{datasetVersion}</code>. Total de declarações: <strong
+        >{totalDeclaracoes}</strong
+      >. Cite como: "Atlas dos Candidatos 2026 — Dataset v{datasetVersion}, acessado em {
+        new Date().toISOString().slice(0, 10)
+      }."
+    </p>
+  </section>
+</BaseLayout>

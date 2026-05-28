@@ -1,0 +1,82 @@
+---
+import type { Candidato, Declaracao } from "@/types";
+import { formatDateBR } from "@/lib/utils/format-date";
+import { truncate } from "@/lib/utils/truncate";
+
+interface Props {
+  declaracao: Declaracao;
+  candidato?: Candidato;
+}
+
+const { declaracao, candidato } = Astro.props;
+const { data } = declaracao;
+---
+
+<a href={`/declaracoes/${data.id}`} class="declaracao-card">
+  <header class="declaracao-card__meta">
+    {candidato && <span class="declaracao-card__candidato">{candidato.data.nome}</span>}
+    <time datetime={data.criado_em} class="declaracao-card__data"
+      >{formatDateBR(data.criado_em)}</time
+    >
+  </header>
+  <p class="declaracao-card__texto">"{truncate(data.texto, 180)}"</p>
+  <footer class="declaracao-card__footer">
+    <span class="declaracao-card__tema">{data.tema_principal}</span>
+    {data.tipo_estrutural.map((t) => <span class="declaracao-card__tipo">{t}</span>)}
+  </footer>
+</a>
+
+<style>
+  .declaracao-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-md);
+    background: var(--color-canvas);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: var(--transition-base);
+  }
+  .declaracao-card:hover {
+    border-color: var(--color-hairline-strong);
+    box-shadow: var(--shadow-3-soft);
+  }
+  .declaracao-card__meta {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-size: var(--text-caption);
+    color: var(--color-text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .declaracao-card__candidato {
+    font-weight: var(--weight-medium);
+    color: var(--color-text-body);
+  }
+  .declaracao-card__data {
+    font-family: var(--font-mono);
+  }
+  .declaracao-card__texto {
+    margin: 0;
+    font-size: var(--text-body-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-primary);
+  }
+  .declaracao-card__footer {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+    font-size: var(--text-caption);
+  }
+  .declaracao-card__tema,
+  .declaracao-card__tipo {
+    padding: var(--space-xxs) var(--space-xs);
+    border-radius: var(--radius-xs);
+    background: var(--color-bg-muted);
+    color: var(--color-text-body);
+    text-transform: lowercase;
+  }
+</style>

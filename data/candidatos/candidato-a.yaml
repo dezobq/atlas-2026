@@ -1,0 +1,18 @@
+id: candidato-a
+slug: candidato-a
+nome: Candidato Demo A
+partido: Partido Demonstração Alfa
+biografia_minima: |
+  Candidato fictício A. Este registro é placeholder para validação técnica
+  do pipeline de renderização. Não representa pessoa real.
+contas_oficiais:
+  - plataforma: x
+    handle: "@candidatoa_demo"
+    url: https://x.com/candidatoa_demo
+    verificada: true
+  - plataforma: youtube
+    handle: "@candidatoa_demo"
+    url: https://youtube.com/@candidatoa_demo
+    verificada: true
+criado_em: "2026-01-15T00:00:00.000Z"
+atualizado_em: "2026-04-15T00:00:00.000Z"

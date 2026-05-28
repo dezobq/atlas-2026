@@ -1,0 +1,108 @@
+---
+import type { Declaracao, Evento } from "@/types";
+import { formatDateBR } from "@/lib/utils/format-date";
+
+interface Props {
+  evento: Evento;
+  declaracoes: Declaracao[];
+}
+
+const { evento, declaracoes } = Astro.props;
+---
+
+<article class="timeline-evento">
+  <header class="timeline-evento__header">
+    <time datetime={evento.data.data} class="timeline-evento__data">
+      {formatDateBR(evento.data.data)}
+    </time>
+    <p class="timeline-evento__tipo">{evento.data.tipo}</p>
+    <h3 class="timeline-evento__titulo">
+      <a href={`/eventos/${evento.data.id}`}>{evento.data.titulo}</a>
+    </h3>
+  </header>
+
+  {
+    declaracoes.length > 0 && (
+      <ul class="timeline-evento__declaracoes">
+        {declaracoes.map((d) => (
+          <li>
+            <a href={`/declaracoes/${d.data.id}`} class="timeline-evento__declaracao-link">
+              {d.data.timestamp_no_evento && (
+                <span class="timeline-evento__timestamp">{d.data.timestamp_no_evento}</span>
+              )}
+              <span class="timeline-evento__texto">{d.data.texto}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</article>
+
+<style>
+  .timeline-evento {
+    padding-block: var(--space-lg);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .timeline-evento:last-child {
+    border-bottom: none;
+  }
+  .timeline-evento__data {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .timeline-evento__tipo {
+    display: inline-block;
+    margin-left: var(--space-sm);
+    font-size: var(--text-caption);
+    color: var(--color-text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .timeline-evento__titulo {
+    margin-block: var(--space-xs) var(--space-md);
+    font-size: var(--text-display-sm);
+    font-weight: var(--weight-semibold);
+  }
+  .timeline-evento__titulo a {
+    color: var(--color-text-primary);
+    text-decoration: none;
+  }
+  .timeline-evento__titulo a:hover {
+    color: var(--color-link-deep);
+  }
+  .timeline-evento__declaracoes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .timeline-evento__declaracao-link {
+    display: flex;
+    gap: var(--space-md);
+    align-items: baseline;
+    padding: var(--space-sm) var(--space-md);
+    border-radius: var(--radius-sm);
+    background: var(--color-bg-muted);
+    color: var(--color-text-body);
+    text-decoration: none;
+    line-height: var(--leading-body);
+  }
+  .timeline-evento__declaracao-link:hover {
+    background: var(--color-canvas-soft-2);
+  }
+  .timeline-evento__timestamp {
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-mute);
+    flex-shrink: 0;
+  }
+  .timeline-evento__texto {
+    font-size: var(--text-body-sm);
+  }
+</style>

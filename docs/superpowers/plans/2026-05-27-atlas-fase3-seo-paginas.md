@@ -40,13 +40,13 @@ Antes de iniciar qualquer task, o engenheiro DEVE estar ciente destas constraint
 
 ### Decisões travadas pelo André antes do plan
 
-| # | Decisão | Justificativa registrada |
-|---|---------|-------------------------|
-| 1 | Sitemap: `@astrojs/sitemap` (oficial) | Zero código manual; suporta `serialize/filter/customPages` (Context7: `/withastro/docs`) |
-| 2 | Pagefind UI: `@pagefind/default-ui` (oficial) | Web component plug-and-play; acessível por padrão; alinha com postura tecnicista neutra |
-| 3 | JSON-LD: componentes Astro `<JSONLDPerson />` etc. | Re-uso por página, tipo-safe via `schema-dts` (Context7: `/google/schema-dts`) |
-| 4 | Issues #3, #4, #5, #6: PRs dedicados depois | Fora do escopo deste plano — declarações reais ainda não existem; fixes não bloqueiam Plan 3 |
-| 5 | Domínio: manter `atlas-2026.pages.dev` | Migração para domínio próprio = find/replace em `astro.config.mjs` no futuro |
+| #   | Decisão                                            | Justificativa registrada                                                                     |
+| --- | -------------------------------------------------- | -------------------------------------------------------------------------------------------- |
+| 1   | Sitemap: `@astrojs/sitemap` (oficial)              | Zero código manual; suporta `serialize/filter/customPages` (Context7: `/withastro/docs`)     |
+| 2   | Pagefind UI: `@pagefind/default-ui` (oficial)      | Web component plug-and-play; acessível por padrão; alinha com postura tecnicista neutra      |
+| 3   | JSON-LD: componentes Astro `<JSONLDPerson />` etc. | Re-uso por página, tipo-safe via `schema-dts` (Context7: `/google/schema-dts`)               |
+| 4   | Issues #3, #4, #5, #6: PRs dedicados depois        | Fora do escopo deste plano — declarações reais ainda não existem; fixes não bloqueiam Plan 3 |
+| 5   | Domínio: manter `atlas-2026.pages.dev`             | Migração para domínio próprio = find/replace em `astro.config.mjs` no futuro                 |
 
 ---
 
@@ -185,11 +185,13 @@ Componentes `.astro` (sem framework de teste para Astro components diretamente) 
 ## Task 0: Criar branch de trabalho via worktree
 
 **Files:**
+
 - N/A (apenas git)
 
 - [ ] **Step 1: Garantir que `main` está limpo e atualizado**
 
 Run:
+
 ```bash
 git checkout main
 git pull origin main
@@ -212,6 +214,7 @@ A skill cria a worktree, faz `cd` e confirma branch + estado.
 - [ ] **Step 3: Verificar worktree**
 
 Run:
+
 ```bash
 git worktree list
 git branch --show-current
@@ -219,6 +222,7 @@ git status --short
 ```
 
 Expected:
+
 - `git worktree list` lista a nova worktree em `../atlas-fase3`
 - `git branch --show-current` retorna `feat/fase3-seo-paginas`
 - `git status --short` retorna vazio
@@ -226,6 +230,7 @@ Expected:
 - [ ] **Step 4: Instalar deps na worktree**
 
 Run:
+
 ```bash
 pnpm install --frozen-lockfile
 pnpm test
@@ -246,10 +251,12 @@ Objetivo: helpers tipados, 5 componentes JSON-LD, SEOTags, BaseLayout estendido.
 **Por que primeiro:** o helper é usado por todos os 5 componentes JSON-LD. Establece o padrão de escape para evitar XSS quando JSON-LD entra no HTML.
 
 **Context7 (já validado):**
+
 - Library ID: `/google/schema-dts`
 - Padrão canônico: `WithContext<T>` + função `JsonLd<T>(json)` que escapa `< > & '`. Fonte: `https://github.com/google/schema-dts/blob/main/packages/schema-dts/README.md`.
 
 **Files:**
+
 - Modify: `package.json`
 - Create: `src/lib/seo/safe-json-ld.ts`
 - Create: `tests/unit/seo/safe-json-ld.test.ts`
@@ -257,6 +264,7 @@ Objetivo: helpers tipados, 5 componentes JSON-LD, SEOTags, BaseLayout estendido.
 - [ ] **Step 1: Adicionar schema-dts como dep**
 
 Run:
+
 ```bash
 pnpm add schema-dts@^1.1.5
 ```
@@ -264,9 +272,11 @@ pnpm add schema-dts@^1.1.5
 Expected: `schema-dts` adicionado em `dependencies` do `package.json`, lockfile atualizado.
 
 Verificar:
+
 ```bash
 grep '"schema-dts"' package.json
 ```
+
 Expected: `    "schema-dts": "^1.1.5",`
 
 - [ ] **Step 2: Escrever teste do helper de escape**
@@ -332,6 +342,7 @@ describe("safeJsonLd", () => {
 - [ ] **Step 3: Rodar teste — deve FALHAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/safe-json-ld.test.ts
 ```
@@ -365,6 +376,7 @@ export function safeJsonLd<T extends Thing>(data: WithContext<T>): string {
 - [ ] **Step 5: Rodar teste — deve PASSAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/safe-json-ld.test.ts
 ```
@@ -374,6 +386,7 @@ Expected: 4 tests pass.
 - [ ] **Step 6: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -395,6 +408,7 @@ git commit -m "feat(seo): adicionar schema-dts e helper safeJsonLd"
 **Por que:** schema mais simples (Person). Estabelece o padrão build-function + componente que será replicado nas próximas 4 tasks.
 
 **Files:**
+
 - Create: `src/lib/seo/build-person.ts`
 - Create: `src/components/seo/JSONLDPerson.astro`
 - Create: `tests/unit/seo/build-person.test.ts`
@@ -477,6 +491,7 @@ describe("buildPersonSchema", () => {
 - [ ] **Step 2: Rodar teste — deve FALHAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-person.test.ts
 ```
@@ -501,9 +516,7 @@ import type { Candidato } from "@/types";
  */
 export function buildPersonSchema(candidato: Candidato, siteUrl: string): WithContext<Person> {
   const { data } = candidato;
-  const sameAs = data.contas_oficiais
-    .filter((c) => c.verificada)
-    .map((c) => c.url);
+  const sameAs = data.contas_oficiais.filter((c) => c.verificada).map((c) => c.url);
 
   const schema: WithContext<Person> = {
     "@context": "https://schema.org",
@@ -531,6 +544,7 @@ export function buildPersonSchema(candidato: Candidato, siteUrl: string): WithCo
 - [ ] **Step 4: Rodar teste — deve PASSAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-person.test.ts
 ```
@@ -563,6 +577,7 @@ const json = safeJsonLd(schema);
 - [ ] **Step 6: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -584,6 +599,7 @@ git commit -m "feat(seo): adicionar buildPersonSchema e componente JSONLDPerson"
 **Por que:** Quotation é o schema mais importante do projeto — cada declaração é uma Quotation com `spokenByCharacter` (Person) e `citation` (URL primária). Esse é o componente que vai dar visibilidade SEO mais alta.
 
 **Files:**
+
 - Create: `src/lib/seo/build-quotation.ts`
 - Create: `src/components/seo/JSONLDQuotation.astro`
 - Create: `tests/unit/seo/build-quotation.test.ts`
@@ -642,18 +658,30 @@ const fakeDeclaracao: Declaracao = {
 
 describe("buildQuotationSchema", () => {
   it("retorna Quotation com @context e @type", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Quotation");
   });
 
   it("usa o texto da declaração como text", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.text).toBe("Vou reduzir o imposto de renda em 30% no primeiro ano.");
   });
 
   it("inclui spokenByCharacter referenciando o candidato", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.spokenByCharacter).toEqual({
       "@type": "Person",
       name: "Candidato A",
@@ -662,19 +690,31 @@ describe("buildQuotationSchema", () => {
   });
 
   it("inclui citation com URL da fonte primária", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.citation).toBe("https://youtube.com/watch?v=abc123");
   });
 
   it("inclui url canônica da declaração no site", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.url).toBe(
       "https://atlas-2026.pages.dev/declaracoes/2026-04-15-candidato-a-economia-imposto",
     );
   });
 
   it("inclui dateCreated com criado_em", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.dateCreated).toBe("2026-04-15T00:00:00Z");
   });
 });
@@ -683,6 +723,7 @@ describe("buildQuotationSchema", () => {
 - [ ] **Step 2: Rodar teste — deve FALHAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-quotation.test.ts
 ```
@@ -732,6 +773,7 @@ export function buildQuotationSchema(
 - [ ] **Step 4: Rodar teste — deve PASSAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-quotation.test.ts
 ```
@@ -765,6 +807,7 @@ const json = safeJsonLd(schema);
 - [ ] **Step 6: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -786,6 +829,7 @@ git commit -m "feat(seo): adicionar buildQuotationSchema e componente JSONLDQuot
 **Por que:** evento é o contêiner factual onde declarações acontecem. Schema.org/Event ajuda buscadores a entender o contexto (debate, entrevista, comício).
 
 **Files:**
+
 - Create: `src/lib/seo/build-event.ts`
 - Create: `src/components/seo/JSONLDEvent.astro`
 - Create: `tests/unit/seo/build-event.test.ts`
@@ -845,10 +889,7 @@ const fakeEvento: Evento = {
     fonte_primaria_url: "https://youtube.com/watch?v=abc123",
     fonte_primaria_tipo: "youtube_oficial",
     archive_url: "https://web.archive.org/web/2026/https://youtube.com/watch?v=abc123",
-    candidatos_envolvidos: [
-      { candidato_id: "candidato-a" },
-      { candidato_id: "candidato-b" },
-    ],
+    candidatos_envolvidos: [{ candidato_id: "candidato-a" }, { candidato_id: "candidato-b" }],
     descricao: "Debate entre candidatos sobre economia e saúde.",
     criado_em: "2026-04-15T00:00:00Z",
     atualizado_em: "2026-04-15T00:00:00Z",
@@ -925,6 +966,7 @@ describe("buildEventSchema", () => {
 - [ ] **Step 2: Rodar teste — deve FALHAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-event.test.ts
 ```
@@ -987,6 +1029,7 @@ export function buildEventSchema(
 - [ ] **Step 4: Rodar teste — deve PASSAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-event.test.ts
 ```
@@ -1020,6 +1063,7 @@ const json = safeJsonLd(schema);
 - [ ] **Step 6: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -1041,6 +1085,7 @@ git commit -m "feat(seo): adicionar buildEventSchema e componente JSONLDEvent"
 **Por que:** Article wrapping em torno de cada página de declaração ajuda crawlers genéricos (não-Schema-aware) a tratar a página como conteúdo jornalístico/factual com autor (o Atlas) e data.
 
 **Files:**
+
 - Create: `src/lib/seo/build-article.ts`
 - Create: `src/components/seo/JSONLDArticle.astro`
 - Create: `tests/unit/seo/build-article.test.ts`
@@ -1099,13 +1144,21 @@ const fakeDeclaracao: Declaracao = {
 
 describe("buildArticleSchema", () => {
   it("retorna Article com @context e @type", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Article");
   });
 
   it("usa nome do candidato e texto truncado como headline", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.headline).toBe(
       'Candidato A: "Vou reduzir o imposto de renda em 30% no primeiro ano."',
     );
@@ -1117,13 +1170,21 @@ describe("buildArticleSchema", () => {
       ...fakeDeclaracao,
       data: { ...fakeDeclaracao.data, texto: longText },
     } as Declaracao;
-    const schema = buildArticleSchema(declaracaoLonga, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildArticleSchema(
+      declaracaoLonga,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.headline?.toString().length).toBeLessThanOrEqual(140);
     expect(schema.headline?.toString()).toContain("…");
   });
 
   it("inclui author como Organization Atlas", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.author).toEqual({
       "@type": "Organization",
       name: "Atlas dos Candidatos 2026",
@@ -1132,13 +1193,21 @@ describe("buildArticleSchema", () => {
   });
 
   it("usa criado_em como datePublished e atualizado_em como dateModified", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.datePublished).toBe("2026-04-15T00:00:00Z");
     expect(schema.dateModified).toBe("2026-04-20T00:00:00Z");
   });
 
   it("inclui mainEntityOfPage com URL da declaração", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev");
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    );
     expect(schema.mainEntityOfPage).toEqual({
       "@type": "WebPage",
       "@id": "https://atlas-2026.pages.dev/declaracoes/2026-04-15-candidato-a-economia-imposto",
@@ -1150,6 +1219,7 @@ describe("buildArticleSchema", () => {
 - [ ] **Step 2: Rodar teste — deve FALHAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-article.test.ts
 ```
@@ -1212,6 +1282,7 @@ export function buildArticleSchema(
 - [ ] **Step 4: Rodar teste — deve PASSAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-article.test.ts
 ```
@@ -1245,6 +1316,7 @@ const json = safeJsonLd(schema);
 - [ ] **Step 6: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -1266,6 +1338,7 @@ git commit -m "feat(seo): adicionar buildArticleSchema e componente JSONLDArticl
 **Por que:** a página `/dataset` precisa ser indexada como Schema.org/Dataset para que Google Dataset Search, HuggingFace e outros agregadores encontrem o dataset CC-BY 4.0 do Atlas.
 
 **Files:**
+
 - Create: `src/lib/seo/build-dataset.ts`
 - Create: `src/components/seo/JSONLDDataset.astro`
 - Create: `tests/unit/seo/build-dataset.test.ts`
@@ -1284,7 +1357,10 @@ describe("buildDatasetSchema", () => {
       {
         version: "0.1.0",
         downloads: [
-          { format: "application/x-ndjson", url: "https://atlas-2026.pages.dev/dataset/declaracoes.jsonl" },
+          {
+            format: "application/x-ndjson",
+            url: "https://atlas-2026.pages.dev/dataset/declaracoes.jsonl",
+          },
           { format: "text/csv", url: "https://atlas-2026.pages.dev/dataset/declaracoes.csv" },
         ],
         totalDeclaracoes: 60,
@@ -1327,7 +1403,10 @@ describe("buildDatasetSchema", () => {
       {
         version: "0.1.0",
         downloads: [
-          { format: "application/x-ndjson", url: "https://atlas-2026.pages.dev/dataset/declaracoes.jsonl" },
+          {
+            format: "application/x-ndjson",
+            url: "https://atlas-2026.pages.dev/dataset/declaracoes.jsonl",
+          },
           { format: "text/csv", url: "https://atlas-2026.pages.dev/dataset/declaracoes.csv" },
         ],
         totalDeclaracoes: 60,
@@ -1365,6 +1444,7 @@ describe("buildDatasetSchema", () => {
 - [ ] **Step 2: Rodar teste — deve FALHAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-dataset.test.ts
 ```
@@ -1394,10 +1474,7 @@ export interface DatasetMeta {
  *
  * Schema.org/Dataset: https://schema.org/Dataset
  */
-export function buildDatasetSchema(
-  meta: DatasetMeta,
-  siteUrl: string,
-): WithContext<Dataset> {
+export function buildDatasetSchema(meta: DatasetMeta, siteUrl: string): WithContext<Dataset> {
   const distribution: DataDownload[] = meta.downloads.map((d) => ({
     "@type": "DataDownload" as const,
     encodingFormat: d.format,
@@ -1429,6 +1506,7 @@ export function buildDatasetSchema(
 - [ ] **Step 4: Rodar teste — deve PASSAR**
 
 Run:
+
 ```bash
 pnpm test -- tests/unit/seo/build-dataset.test.ts
 ```
@@ -1460,6 +1538,7 @@ const json = safeJsonLd(schema);
 - [ ] **Step 6: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -1478,9 +1557,10 @@ git commit -m "feat(seo): adicionar buildDatasetSchema e componente JSONLDDatase
 
 ## Task 7: Estender BaseLayout com slot `head` + criar SEOTags.astro
 
-**Por que:** BaseLayout atual não permite injeção de tags adicionais no `<head>` por página (necessário para JSON-LD por página, OG image dinâmica, Twitter Cards, etc.). Adicionamos um `<slot name="head" />` no BaseLayout para que cada página injete o que precisar via componentes (SEOTags + JSONLD*). SEOTags.astro centraliza Open Graph + Twitter Cards + article:published_time.
+**Por que:** BaseLayout atual não permite injeção de tags adicionais no `<head>` por página (necessário para JSON-LD por página, OG image dinâmica, Twitter Cards, etc.). Adicionamos um `<slot name="head" />` no BaseLayout para que cada página injete o que precisar via componentes (SEOTags + JSONLD\*). SEOTags.astro centraliza Open Graph + Twitter Cards + article:published_time.
 
 **Files:**
+
 - Modify: `src/components/layout/BaseLayout.astro`
 - Create: `src/components/seo/SEOTags.astro`
 
@@ -1592,13 +1672,22 @@ const {
 <meta name="twitter:description" content={description} />
 {ogImage && <meta name="twitter:image" content={ogImage} />}
 
-{ogType === "article" && publishedTime && <meta property="article:published_time" content={publishedTime} />}
-{ogType === "article" && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+{
+  ogType === "article" && publishedTime && (
+    <meta property="article:published_time" content={publishedTime} />
+  )
+}
+{
+  ogType === "article" && modifiedTime && (
+    <meta property="article:modified_time" content={modifiedTime} />
+  )
+}
 ```
 
 - [ ] **Step 3: Build + typecheck para confirmar que slot extension não quebra**
 
 Run:
+
 ```bash
 pnpm typecheck
 pnpm build
@@ -1609,6 +1698,7 @@ Expected: typecheck 0 hints, build sucede (2 páginas estáticas, igual antes).
 - [ ] **Step 4: Verificar HTML resultante mantém estrutura esperada**
 
 Run:
+
 ```bash
 grep -E '<title>|<meta name="description"|<link rel="canonical"' dist/index.html | head -10
 ```
@@ -1618,6 +1708,7 @@ Expected: as 3 tags continuam aparecendo no HTML — confirmando que adicionar o
 - [ ] **Step 5: Lint**
 
 Run:
+
 ```bash
 pnpm lint
 ```
@@ -1638,6 +1729,7 @@ git commit -m "feat(seo): adicionar slot head em BaseLayout e componente SEOTags
 **Por que:** antes de seguir para Sprint 4.2, validamos que os componentes JSON-LD efetivamente injetam scripts válidos no HTML. Usamos a home como vitrine — adicionamos um JSONLDDataset placeholder e confirmamos no HTML resultante.
 
 **Files:**
+
 - Modify: `src/pages/index.astro` (temporário; depois é refinado em Sprint 4.3)
 
 - [ ] **Step 1: Adicionar JSONLD placeholder na home**
@@ -1698,6 +1790,7 @@ const canonical = new URL("/", Astro.site).toString();
 - [ ] **Step 2: Build**
 
 Run:
+
 ```bash
 pnpm build
 ```
@@ -1707,6 +1800,7 @@ Expected: build sucede com 2 páginas estáticas.
 - [ ] **Step 3: Verificar JSON-LD no HTML resultante**
 
 Run:
+
 ```bash
 grep -c 'application/ld+json' dist/index.html
 grep -c 'og:title' dist/index.html
@@ -1715,6 +1809,7 @@ grep -o '"@type":"Dataset"' dist/index.html
 ```
 
 Expected:
+
 - `grep -c 'application/ld+json'` → 1 ou mais
 - `grep -c 'og:title'` → 1
 - `grep -c 'twitter:card'` → 1
@@ -1723,6 +1818,7 @@ Expected:
 - [ ] **Step 4: Rodar test suite completa para garantir que nada quebrou**
 
 Run:
+
 ```bash
 pnpm test
 pnpm lint
@@ -1730,6 +1826,7 @@ pnpm typecheck
 ```
 
 Expected:
+
 - `pnpm test`: 70 anteriores + 35 novos (6×6=36, menos overlap) = aproximadamente **97 tests passing**, 0 skipped. (Número exato pode variar; o importante é todos passing.)
 - `pnpm lint`: 0 warnings
 - `pnpm typecheck`: 0 hints
@@ -1744,6 +1841,7 @@ git commit -m "test(seo): integrar JSONLDDataset e SEOTags na home como smoke te
 - [ ] **Step 6: PAUSA — Reportar status ao André**
 
 Antes de prosseguir para Sprint 4.2, reportar:
+
 - Sprint 4.1 completo (Tasks 1–8)
 - Total de tests rodando localmente
 - Confirmação de build verde + JSON-LD validado no HTML
@@ -1762,17 +1860,20 @@ Objetivo: infraestrutura de descoberta — sitemap.xml automático, robots.txt p
 ## Task 9: Adicionar `@astrojs/sitemap` integration
 
 **Context7 (já validado):**
+
 - Library ID: `/withastro/docs`
 - Padrão canônico: `import sitemap, { ChangeFreqEnum } from '@astrojs/sitemap'` + `sitemap({ serialize(item) { ... return item } })`. Fonte: `https://github.com/withastro/docs/blob/main/src/content/docs/en/guides/integrations-guide/sitemap.mdx`.
 - Requer `site` em `astro.config.mjs` (já está: `https://atlas-2026.pages.dev`).
 
 **Files:**
+
 - Modify: `package.json`
 - Modify: `astro.config.mjs`
 
 - [ ] **Step 1: Instalar @astrojs/sitemap**
 
 Run:
+
 ```bash
 pnpm add @astrojs/sitemap@^3.6.0
 ```
@@ -1842,6 +1943,7 @@ export default defineConfig({
 - [ ] **Step 3: Build para gerar sitemap**
 
 Run:
+
 ```bash
 pnpm build
 ```
@@ -1851,6 +1953,7 @@ Expected: build sucede; `dist/` contém `sitemap-index.xml` e `sitemap-0.xml`.
 - [ ] **Step 4: Verificar sitemap gerado**
 
 Run:
+
 ```bash
 ls dist/sitemap*.xml
 grep -c "<loc>" dist/sitemap-0.xml
@@ -1861,6 +1964,7 @@ Expected: existe `dist/sitemap-index.xml` e `dist/sitemap-0.xml`; `<loc>` count 
 - [ ] **Step 5: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -1882,6 +1986,7 @@ git commit -m "feat(seo): adicionar @astrojs/sitemap com filtros e prioridades"
 **Por que:** o spec (seção 9.4) é explícito: "robots.txt permissivo — queremos indexação total, inclusive por AI-bots (visibilidade em respostas de chatbots)". Isso é decisão estratégica do projeto.
 
 **Files:**
+
 - Create: `public/robots.txt`
 
 - [ ] **Step 1: Criar `public/robots.txt`**
@@ -1933,6 +2038,7 @@ Sitemap: https://atlas-2026.pages.dev/sitemap-index.xml
 - [ ] **Step 2: Build e verificar robots.txt copiado**
 
 Run:
+
 ```bash
 pnpm build
 ls dist/robots.txt
@@ -1954,12 +2060,14 @@ git commit -m "feat(seo): adicionar robots.txt permissivo (inclusive AI bots) co
 ## Task 11: Instalar Pagefind + configurar `build:full` + atualizar CI
 
 **Context7 (já validado):**
+
 - Library ID: `/cloudcannon/pagefind`
 - Padrão canônico via bundler: `import { PagefindUI } from '@pagefind/default-ui'`. Fonte: `https://github.com/cloudcannon/pagefind/blob/main/pagefind_ui/default/README.md`.
 - Forçar idioma português: `--force-language pt`.
 - Pagefind roda como CLI após `astro build`, indexando o `dist/`.
 
 **Files:**
+
 - Modify: `package.json` (deps + scripts)
 - Modify: `.gitignore`
 - Modify: `.github/workflows/ci.yml`
@@ -1967,6 +2075,7 @@ git commit -m "feat(seo): adicionar robots.txt permissivo (inclusive AI bots) co
 - [ ] **Step 1: Instalar pagefind + UI oficial**
 
 Run:
+
 ```bash
 pnpm add -D pagefind@^1.3.0
 pnpm add @pagefind/default-ui@^1.3.0
@@ -1979,6 +2088,7 @@ Expected: `pagefind` em `devDependencies`; `@pagefind/default-ui` em `dependenci
 Edit `package.json`. Localizar o bloco `"scripts"` e adicionar 2 novos scripts:
 
 `old_string`:
+
 ```
     "dev": "astro dev",
     "build": "astro build",
@@ -1986,6 +2096,7 @@ Edit `package.json`. Localizar o bloco `"scripts"` e adicionar 2 novos scripts:
 ```
 
 `new_string`:
+
 ```
     "dev": "astro dev",
     "build": "astro build",
@@ -2006,6 +2117,7 @@ Edit `.gitignore`. Append no final do arquivo as 2 linhas:
 (Use Edit com `old_string` = última linha atual do `.gitignore`, `new_string` = essa linha + as 2 novas.)
 
 Verificar:
+
 ```bash
 tail -3 .gitignore
 ```
@@ -2013,15 +2125,18 @@ tail -3 .gitignore
 - [ ] **Step 4: Rodar `build:full` localmente**
 
 Run:
+
 ```bash
 pnpm build:full
 ```
 
 Expected:
+
 - `astro build` sucede
 - `pagefind --site dist --force-language pt` roda e cria `dist/pagefind/` com `pagefind-ui.js`, `pagefind-ui.css`, `pagefind.js`, `index.json` e `fragment/*.pf_fragment`.
 
 Verificar:
+
 ```bash
 ls dist/pagefind/ | head
 ```
@@ -2031,15 +2146,17 @@ ls dist/pagefind/ | head
 Ler `.github/workflows/ci.yml` para localizar o step de build atual e substituir.
 
 `old_string`:
+
 ```yaml
-      - name: Build
-        run: pnpm build
+- name: Build
+  run: pnpm build
 ```
 
 `new_string`:
+
 ```yaml
-      - name: Build com índice Pagefind
-        run: pnpm build:full
+- name: Build com índice Pagefind
+  run: pnpm build:full
 ```
 
 Se o nome do step no CI atual for diferente, ajustar `old_string` para refletir o conteúdo real.
@@ -2047,6 +2164,7 @@ Se o nome do step no CI atual for diferente, ajustar `old_string` para refletir 
 - [ ] **Step 6: Lint + typecheck + test**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -2067,6 +2185,7 @@ git commit -m "feat(seo): adicionar Pagefind como devDep e script build:full par
 ## Task 12: Componente `PagefindSearch.astro` que monta `<pagefind-ui>`
 
 **Files:**
+
 - Create: `src/components/search/PagefindSearch.astro`
 
 - [ ] **Step 1: Criar `PagefindSearch.astro`**
@@ -2138,6 +2257,7 @@ const { showSubResults = true, showImages = false } = Astro.props;
 - [ ] **Step 2: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -2155,6 +2275,7 @@ git commit -m "feat(seo): adicionar componente PagefindSearch com UI oficial Pag
 - [ ] **Step 4: PAUSA — Reportar status ao André**
 
 Sprint 4.2 completo. Reportar:
+
 - Sitemap automático funcionando (`dist/sitemap-index.xml` + `dist/sitemap-0.xml`)
 - robots.txt permissivo no `dist/`
 - Pagefind integrado: `pnpm build:full` gera índice em `dist/pagefind/`
@@ -2170,6 +2291,7 @@ Aguardar autorização do André antes de iniciar Task 13.
 Objetivo: renderizar as 9 rotas e 8 componentes compartilhados que consomem a infraestrutura SEO do Sprint 4.1+4.2. Após esta sprint o site tem todas as URLs públicas previstas no spec.
 
 **Convenção para componentes `.astro`:** sem framework de teste unitário direto para Astro components. Validação por:
+
 1. Escrever o componente
 2. Importá-lo na página de destino
 3. `pnpm build` para confirmar compilação
@@ -2185,6 +2307,7 @@ Funções utilitárias extraídas para `src/lib/` ainda são unit-tested via Vit
 **Por que:** `data/candidatos/` e `data/eventos/` não existem ainda. `data/declaracoes/` existe mas está vazio. Sem fixtures, `astro build` produz 0 páginas dinâmicas. Estes fixtures são **placeholders fictícios** ("Candidato Demo A/B") — não dados reais. Servem para validar o pipeline de renderização e documentar o formato dos YAMLs.
 
 **Files:**
+
 - Create: `data/candidatos/candidato-a.yaml`
 - Create: `data/candidatos/candidato-b.yaml`
 - Create: `data/eventos/2026-04-15-debate-rede-tv.yaml`
@@ -2326,6 +2449,7 @@ Conteúdo de placeholder. Declaração fictícia para validação do pipeline.
 - [ ] **Step 6: Validar fixtures**
 
 Run:
+
 ```bash
 pnpm validate-data
 ```
@@ -2335,6 +2459,7 @@ Expected: validação passa para todos os fixtures (2 candidatos, 1 evento, 2 de
 - [ ] **Step 7: Build e confirmar páginas geradas**
 
 Run:
+
 ```bash
 pnpm build
 ls dist/
@@ -2354,6 +2479,7 @@ git commit -m "test(fixtures): adicionar 2 candidatos, 1 evento e 2 declaraçõe
 ## Task 14: `CandidatoCard.astro`
 
 **Files:**
+
 - Create: `src/components/candidato/CandidatoCard.astro`
 
 - [ ] **Step 1: Criar componente**
@@ -2454,6 +2580,7 @@ const { data } = candidato;
 - [ ] **Step 2: Lint + typecheck**
 
 Run:
+
 ```bash
 pnpm lint
 pnpm typecheck
@@ -2473,6 +2600,7 @@ git commit -m "feat(candidato): adicionar componente CandidatoCard"
 ## Task 15: `/candidatos/index.astro` (lista de candidatos)
 
 **Files:**
+
 - Create: `src/pages/candidatos/index.astro`
 
 - [ ] **Step 1: Criar página**
@@ -2511,10 +2639,10 @@ const description = `Lista de ${candidatos.length} candidatos à presidência do
       candidatos.length === 0 ? (
         <p style="color: var(--color-text-mute);">Nenhum candidato registrado ainda.</p>
       ) : (
-        <div
-          style="display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"
-        >
-          {candidatos.map((c) => <CandidatoCard candidato={c} />)}
+        <div style="display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          {candidatos.map((c) => (
+            <CandidatoCard candidato={c} />
+          ))}
         </div>
       )
     }
@@ -2525,6 +2653,7 @@ const description = `Lista de ${candidatos.length} candidatos à presidência do
 - [ ] **Step 2: Build e verificar**
 
 Run:
+
 ```bash
 pnpm build
 ls dist/candidatos/
@@ -2533,6 +2662,7 @@ grep -c "Candidato Demo B" dist/candidatos/index.html
 ```
 
 Expected:
+
 - `dist/candidatos/index.html` existe
 - Ambos nomes aparecem (1+ ocorrências cada)
 
@@ -2555,6 +2685,7 @@ git commit -m "feat(candidato): adicionar página de lista /candidatos"
 ## Task 16: `CandidatoHeader.astro`
 
 **Files:**
+
 - Create: `src/components/candidato/CandidatoHeader.astro`
 
 - [ ] **Step 1: Criar componente**
@@ -2587,7 +2718,10 @@ const contasVerificadas = data.contas_oficiais.filter((c) => c.verificada);
           class="candidato-header__avatar"
         />
       ) : (
-        <div class="candidato-header__avatar candidato-header__avatar--placeholder" aria-hidden="true">
+        <div
+          class="candidato-header__avatar candidato-header__avatar--placeholder"
+          aria-hidden="true"
+        >
           {data.nome.charAt(0)}
         </div>
       )
@@ -2731,6 +2865,7 @@ git commit -m "feat(candidato): adicionar componente CandidatoHeader"
 ## Task 17: `TimelineEvento.astro` + `CandidatoTimeline.astro`
 
 **Files:**
+
 - Create: `src/components/candidato/TimelineEvento.astro`
 - Create: `src/components/candidato/CandidatoTimeline.astro`
 
@@ -2908,6 +3043,7 @@ git commit -m "feat(candidato): adicionar TimelineEvento e CandidatoTimeline"
 ## Task 18: `/candidatos/[slug].astro` (perfil do candidato)
 
 **Files:**
+
 - Create: `src/pages/candidatos/[slug].astro`
 
 - [ ] **Step 1: Criar página**
@@ -2966,6 +3102,7 @@ const description = `${candidato.data.nome} — ${candidato.data.partido}. ${dec
 - [ ] **Step 2: Build e verificar**
 
 Run:
+
 ```bash
 pnpm build
 ls dist/candidatos/
@@ -2974,6 +3111,7 @@ grep -c "Linha do tempo" dist/candidatos/candidato-a/index.html
 ```
 
 Expected:
+
 - `dist/candidatos/candidato-a/index.html` e `dist/candidatos/candidato-b/index.html` existem
 - JSON-LD Person presente
 - Seção "Linha do tempo" presente
@@ -2997,6 +3135,7 @@ git commit -m "feat(candidato): adicionar página de perfil /candidatos/[slug] c
 ## Task 19: `VereditosExternos.astro`
 
 **Files:**
+
 - Create: `src/components/declaracao/VereditosExternos.astro`
 
 - [ ] **Step 1: Criar componente**
@@ -3031,7 +3170,9 @@ const { vereditos } = Astro.props;
             <div class="vereditos__cabecalho">
               <span class="vereditos__veiculo">{v.veiculo}</span>
               <span class="vereditos__classificacao">{v.classificacao}</span>
-              <time class="vereditos__data" datetime={v.data}>{formatDate(v.data)}</time>
+              <time class="vereditos__data" datetime={v.data}>
+                {formatDate(v.data)}
+              </time>
             </div>
             <blockquote class="vereditos__citacao">{v.citacao_curta}</blockquote>
             <a href={v.url} rel="external noopener" target="_blank" class="vereditos__link">
@@ -3138,6 +3279,7 @@ git commit -m "feat(declaracao): adicionar componente VereditosExternos"
 ## Task 20: `ContextoAdicional.astro`
 
 **Files:**
+
 - Create: `src/components/declaracao/ContextoAdicional.astro`
 
 - [ ] **Step 1: Criar componente**
@@ -3253,6 +3395,7 @@ git commit -m "feat(declaracao): adicionar componente ContextoAdicional"
 **Por que:** essa é a página de maior valor SEO do projeto. Cada declaração tem URL estável tipo `/declaracoes/2026-04-15-candidato-a-economia-imposto`. Recebe 3 JSON-LDs (Quotation, Article, Person como spokenByCharacter no Quotation já — Person adicional opcional via inheritance), SEOTags com og:type=article, e usa todos os componentes da declaração.
 
 **Files:**
+
 - Create: `src/components/declaracao/DeclaracaoFull.astro`
 - Create: `src/pages/declaracoes/[id].astro`
 
@@ -3300,9 +3443,11 @@ const { data } = declaracao;
 
   <blockquote class="declaracao-full__citacao">
     <p>"{data.texto}"</p>
-    {data.timestamp_no_evento && (
-      <cite class="declaracao-full__timestamp">{data.timestamp_no_evento}</cite>
-    )}
+    {
+      data.timestamp_no_evento && (
+        <cite class="declaracao-full__timestamp">{data.timestamp_no_evento}</cite>
+      )
+    }
   </blockquote>
 
   <p class="declaracao-full__contexto">{data.contexto}</p>
@@ -3312,14 +3457,18 @@ const { data } = declaracao;
       <dt>Tema principal</dt>
       <dd><Tag>{data.tema_principal}</Tag></dd>
     </div>
-    {data.temas_secundarios.length > 0 && (
-      <div>
-        <dt>Temas secundários</dt>
-        <dd>
-          {data.temas_secundarios.map((t) => <Tag>{t}</Tag>)}
-        </dd>
-      </div>
-    )}
+    {
+      data.temas_secundarios.length > 0 && (
+        <div>
+          <dt>Temas secundários</dt>
+          <dd>
+            {data.temas_secundarios.map((t) => (
+              <Tag>{t}</Tag>
+            ))}
+          </dd>
+        </div>
+      )
+    }
     <div>
       <dt>Tipo estrutural</dt>
       <dd>
@@ -3332,7 +3481,8 @@ const { data } = declaracao;
     <h2 id="fontes-heading" class="declaracao-full__fontes-heading">Fontes</h2>
     <ul>
       <li>
-        <span class="declaracao-full__fonte-tipo">Fonte primária ({data.fonte_primaria_tipo}):</span>
+        <span class="declaracao-full__fonte-tipo">Fonte primária ({data.fonte_primaria_tipo}):</span
+        >
         <a href={data.fonte_primaria_url} rel="external noopener" target="_blank">
           {data.fonte_primaria_url}
         </a>
@@ -3343,12 +3493,14 @@ const { data } = declaracao;
           {data.archive_url}
         </a>
       </li>
-      {data.snapshot_interno_path && (
-        <li>
-          <span class="declaracao-full__fonte-tipo">Snapshot interno:</span>
-          <code>{data.snapshot_interno_path}</code>
-        </li>
-      )}
+      {
+        data.snapshot_interno_path && (
+          <li>
+            <span class="declaracao-full__fonte-tipo">Snapshot interno:</span>
+            <code>{data.snapshot_interno_path}</code>
+          </li>
+        )
+      }
     </ul>
   </section>
 
@@ -3541,6 +3693,7 @@ const description = declaracao.data.contexto;
 - [ ] **Step 3: Build e verificar**
 
 Run:
+
 ```bash
 pnpm build
 ls dist/declaracoes/
@@ -3551,6 +3704,7 @@ grep -c 'article:published_time' dist/declaracoes/2026-04-15-candidato-a-economi
 ```
 
 Expected:
+
 - 2 páginas de declaração geradas
 - Quotation JSON-LD presente
 - Article JSON-LD presente
@@ -3576,6 +3730,7 @@ git commit -m "feat(declaracao): adicionar DeclaracaoFull e página /declaracoes
 ## Task 22: `DeclaracaoCard.astro`
 
 **Files:**
+
 - Create: `src/components/declaracao/DeclaracaoCard.astro`
 
 - [ ] **Step 1: Criar componente**
@@ -3600,16 +3755,13 @@ const { data } = declaracao;
 <a href={`/declaracoes/${data.id}`} class="declaracao-card">
   <header class="declaracao-card__meta">
     {candidato && <span class="declaracao-card__candidato">{candidato.data.nome}</span>}
-    <time datetime={data.criado_em} class="declaracao-card__data">{formatDate(data.criado_em)}</time>
+    <time datetime={data.criado_em} class="declaracao-card__data">{formatDate(data.criado_em)}</time
+    >
   </header>
   <p class="declaracao-card__texto">"{truncate(data.texto, 180)}"</p>
   <footer class="declaracao-card__footer">
     <span class="declaracao-card__tema">{data.tema_principal}</span>
-    {
-      data.tipo_estrutural.map((t) => (
-        <span class="declaracao-card__tipo">{t}</span>
-      ))
-    }
+    {data.tipo_estrutural.map((t) => <span class="declaracao-card__tipo">{t}</span>)}
   </footer>
 </a>
 
@@ -3688,6 +3840,7 @@ git commit -m "feat(declaracao): adicionar componente DeclaracaoCard"
 ## Task 23: `/eventos/index.astro` + `/eventos/[id].astro`
 
 **Files:**
+
 - Create: `src/pages/eventos/index.astro`
 - Create: `src/pages/eventos/[id].astro`
 
@@ -3740,7 +3893,9 @@ const description = `Lista de ${eventos.length} eventos (debates, entrevistas, s
                 >
                   {formatDate(ev.data.data)} · {ev.data.tipo}
                 </time>
-                <h3 style="margin-block: var(--space-xs) 0; font-size: var(--text-display-sm);">{ev.data.titulo}</h3>
+                <h3 style="margin-block: var(--space-xs) 0; font-size: var(--text-display-sm);">
+                  {ev.data.titulo}
+                </h3>
                 {ev.data.local.fisico && (
                   <p style="margin: var(--space-xs) 0 0; color: var(--color-text-mute); font-size: var(--text-body-sm);">
                     {ev.data.local.fisico}
@@ -3817,29 +3972,35 @@ const description = `${evento.data.titulo} — ${declaracoes.length} declaraçõ
       style="display: flex; gap: var(--space-xl); margin-block: var(--space-md) var(--space-xl); flex-wrap: wrap;"
     >
       <div>
-        <dt style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;">
+        <dt
+          style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;"
+        >
           Data
         </dt>
         <dd style="margin: var(--space-xxs) 0 0; font-family: var(--font-mono);">
           <time datetime={evento.data.data}>{formatDate(evento.data.data)}</time>
         </dd>
       </div>
-      {evento.data.local.fisico && (
-        <div>
-          <dt style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;">
-            Local
-          </dt>
-          <dd style="margin: var(--space-xxs) 0 0;">{evento.data.local.fisico}</dd>
-        </div>
-      )}
-      {evento.data.duracao_minutos && (
-        <div>
-          <dt style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;">
-            Duração
-          </dt>
-          <dd style="margin: var(--space-xxs) 0 0;">{evento.data.duracao_minutos} minutos</dd>
-        </div>
-      )}
+      {
+        evento.data.local.fisico && (
+          <div>
+            <dt style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;">
+              Local
+            </dt>
+            <dd style="margin: var(--space-xxs) 0 0;">{evento.data.local.fisico}</dd>
+          </div>
+        )
+      }
+      {
+        evento.data.duracao_minutos && (
+          <div>
+            <dt style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;">
+              Duração
+            </dt>
+            <dd style="margin: var(--space-xxs) 0 0;">{evento.data.duracao_minutos} minutos</dd>
+          </div>
+        )
+      }
     </dl>
 
     <p style="color: var(--color-text-body); max-width: 70ch; line-height: var(--leading-body);">
@@ -3865,6 +4026,7 @@ const description = `${evento.data.titulo} — ${declaracoes.length} declaraçõ
 - [ ] **Step 3: Build e verificar**
 
 Run:
+
 ```bash
 pnpm build
 ls dist/eventos/
@@ -3892,6 +4054,7 @@ git commit -m "feat(evento): adicionar /eventos e /eventos/[id] com JSON-LD Even
 ## Task 24: `/temas/index.astro` + `/temas/[slug].astro`
 
 **Files:**
+
 - Create: `src/pages/temas/index.astro`
 - Create: `src/pages/temas/[slug].astro`
 
@@ -3936,7 +4099,9 @@ const description = `Taxonomia de ${temas.length} temas que organizam as declara
             href={`/temas/${tema.data.slug}`}
             style="display: block; padding: var(--space-lg); border: 1px solid var(--color-hairline); border-radius: var(--radius-md); color: var(--color-text-primary); text-decoration: none; transition: var(--transition-base);"
           >
-            <h3 style="margin-block: 0 var(--space-xs); font-size: var(--text-display-sm);">{tema.data.nome}</h3>
+            <h3 style="margin-block: 0 var(--space-xs); font-size: var(--text-display-sm);">
+              {tema.data.nome}
+            </h3>
             <p style="margin: 0; color: var(--color-text-body); font-size: var(--text-body-sm); line-height: var(--leading-body);">
               {tema.data.descricao_curta}
             </p>
@@ -3994,14 +4159,20 @@ const description = `${tema.data.nome} — ${declaracoes.length} declarações d
   <section class="container-default" style="padding-block: var(--space-xl);">
     <p class="eyebrow">TEMA</p>
     <h1 style="margin-block: var(--space-xs);">{tema.data.nome}</h1>
-    <p style="color: var(--color-text-body); max-width: 70ch; line-height: var(--leading-body); margin-block: var(--space-md) var(--space-2xl);">
+    <p
+      style="color: var(--color-text-body); max-width: 70ch; line-height: var(--leading-body); margin-block: var(--space-md) var(--space-2xl);"
+    >
       {tema.data.descricao_curta}
     </p>
 
-    <h2 style="margin-bottom: var(--space-lg);">Declarações sobre {tema.data.nome.toLowerCase()}</h2>
+    <h2 style="margin-bottom: var(--space-lg);">
+      Declarações sobre {tema.data.nome.toLowerCase()}
+    </h2>
     {
       declaracoes.length === 0 ? (
-        <p style="color: var(--color-text-mute);">Nenhuma declaração registrada ainda neste tema.</p>
+        <p style="color: var(--color-text-mute);">
+          Nenhuma declaração registrada ainda neste tema.
+        </p>
       ) : (
         <div style="display: flex; flex-direction: column; gap: var(--space-md);">
           {declaracoes.map((d) => (
@@ -4017,6 +4188,7 @@ const description = `${tema.data.nome} — ${declaracoes.length} declarações d
 - [ ] **Step 3: Build e verificar**
 
 Run:
+
 ```bash
 pnpm build
 ls dist/temas/
@@ -4043,6 +4215,7 @@ git commit -m "feat(tema): adicionar /temas e /temas/[slug] com declarações re
 ## Task 25: `/buscar.astro` (monta PagefindSearch)
 
 **Files:**
+
 - Create: `src/pages/buscar.astro`
 
 - [ ] **Step 1: Criar página**
@@ -4056,7 +4229,8 @@ import SEOTags from "@/components/seo/SEOTags.astro";
 import PagefindSearch from "@/components/search/PagefindSearch.astro";
 
 const canonical = new URL("/buscar", Astro.site).toString();
-const description = "Busca textual em declarações, candidatos e eventos do Atlas dos Candidatos 2026.";
+const description =
+  "Busca textual em declarações, candidatos e eventos do Atlas dos Candidatos 2026.";
 ---
 
 <BaseLayout title="Buscar" description={description} noindex={true}>
@@ -4085,6 +4259,7 @@ const description = "Busca textual em declarações, candidatos e eventos do Atl
 - [ ] **Step 2: Build:full e verificar**
 
 Run:
+
 ```bash
 pnpm build:full
 ls dist/buscar/
@@ -4092,6 +4267,7 @@ ls dist/pagefind/
 ```
 
 Expected:
+
 - `dist/buscar/index.html` existe
 - `dist/pagefind/` contém os assets (gerados pelo step `build:index`)
 
@@ -4114,6 +4290,7 @@ git commit -m "feat(busca): adicionar página /buscar com PagefindSearch"
 ## Task 26: `/dataset.astro` (descritivo + JSON-LD Dataset)
 
 **Files:**
+
 - Create: `src/pages/dataset.astro`
 
 - [ ] **Step 1: Criar página**
@@ -4169,12 +4346,16 @@ const description = `Dataset aberto de ${totalDeclaracoes} declarações documen
   <section class="container-narrow" style="padding-block: var(--space-3xl);">
     <p class="eyebrow" style="margin-bottom: var(--space-sm);">DATASET</p>
     <h1 style="margin-bottom: var(--space-lg);">Atlas dos Candidatos 2026 — Dataset</h1>
-    <p style="color: var(--color-text-body); line-height: var(--leading-body); margin-bottom: var(--space-xl);">
+    <p
+      style="color: var(--color-text-body); line-height: var(--leading-body); margin-bottom: var(--space-xl);"
+    >
       {description}
     </p>
 
     <h2 style="margin-block: var(--space-xl) var(--space-md);">Downloads</h2>
-    <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-md);">
+    <ul
+      style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-md);"
+    >
       {
         downloads.map((d) => (
           <li>
@@ -4195,24 +4376,35 @@ const description = `Dataset aberto de ${totalDeclaracoes} declarações documen
     <h2 style="margin-block: var(--space-xl) var(--space-md);">Licença</h2>
     <p style="color: var(--color-text-body); line-height: var(--leading-body);">
       Dataset distribuído sob licença
-      <a href="https://creativecommons.org/licenses/by/4.0/" rel="external noopener" target="_blank">
+      <a
+        href="https://creativecommons.org/licenses/by/4.0/"
+        rel="external noopener"
+        target="_blank"
+      >
         Creative Commons Attribution 4.0 International (CC-BY 4.0)
-      </a>. Você pode usar, redistribuir e adaptar, desde que atribua a fonte como
-      "Atlas dos Candidatos 2026 — atlas-2026.pages.dev".
+      </a>. Você pode usar, redistribuir e adaptar, desde que atribua a fonte como "Atlas dos
+      Candidatos 2026 — atlas-2026.pages.dev".
     </p>
 
     <h2 style="margin-block: var(--space-xl) var(--space-md);">Esquema</h2>
     <p style="color: var(--color-text-body); line-height: var(--leading-body);">
       Cada registro de declaração tem o esquema documentado em
-      <a href="https://github.com/dezobq/atlas-2026/blob/main/dist-dataset/SCHEMA.md" rel="external noopener" target="_blank">
+      <a
+        href="https://github.com/dezobq/atlas-2026/blob/main/dist-dataset/SCHEMA.md"
+        rel="external noopener"
+        target="_blank"
+      >
         SCHEMA.md
       </a>. Para gerar os arquivos localmente, rode <code>pnpm export:dataset</code>.
     </p>
 
     <h2 style="margin-block: var(--space-xl) var(--space-md);">Versão e citação</h2>
     <p style="color: var(--color-text-body); line-height: var(--leading-body);">
-      Versão atual: <code>{datasetVersion}</code>. Total de declarações: <strong>{totalDeclaracoes}</strong>.
-      Cite como: "Atlas dos Candidatos 2026 — Dataset v{datasetVersion}, acessado em {new Date().toISOString().slice(0, 10)}."
+      Versão atual: <code>{datasetVersion}</code>. Total de declarações: <strong
+        >{totalDeclaracoes}</strong
+      >. Cite como: "Atlas dos Candidatos 2026 — Dataset v{datasetVersion}, acessado em {
+        new Date().toISOString().slice(0, 10)
+      }."
     </p>
   </section>
 </BaseLayout>
@@ -4221,6 +4413,7 @@ const description = `Dataset aberto de ${totalDeclaracoes} declarações documen
 - [ ] **Step 2: Build e verificar**
 
 Run:
+
 ```bash
 pnpm build
 ls dist/dataset/
@@ -4229,6 +4422,7 @@ grep -c 'creativecommons.org/licenses/by/4.0' dist/dataset/index.html
 ```
 
 Expected:
+
 - `dist/dataset/index.html` existe
 - JSON-LD Dataset presente
 - Link CC-BY 4.0 presente
@@ -4262,6 +4456,7 @@ Objetivo: validar localmente que tudo funciona, abrir PR, esperar CI verde, faze
 - [ ] **Step 1: Limpar e reinstalar deps do zero**
 
 Run:
+
 ```bash
 rm -rf node_modules dist .pagefind
 pnpm install --frozen-lockfile
@@ -4272,6 +4467,7 @@ Expected: install verde, sem warnings de peer deps inesperados.
 - [ ] **Step 2: Rodar bateria completa de validações**
 
 Run (em sequência):
+
 ```bash
 pnpm format:check
 pnpm lint
@@ -4282,6 +4478,7 @@ pnpm build:full
 ```
 
 Expected:
+
 - `format:check`: 0 arquivos a formatar
 - `lint`: 0 warnings
 - `typecheck`: 0 errors, 0 warnings, 0 hints
@@ -4292,6 +4489,7 @@ Expected:
 - [ ] **Step 3: Verificar estrutura final do `dist/`**
 
 Run:
+
 ```bash
 ls dist/
 ls dist/candidatos/
@@ -4304,6 +4502,7 @@ ls dist/sitemap*.xml
 ```
 
 Expected:
+
 - `dist/` contém: `index.html`, `404.html`, `robots.txt`, `humans.txt`, `favicon.svg`, `_assets/`, `og/`, `pagefind/`, `sitemap-index.xml`, `sitemap-0.xml`, e subpastas `candidatos/`, `declaracoes/`, `eventos/`, `temas/`, `buscar/`, `dataset/`
 - `dist/candidatos/`: `index.html`, `candidato-a/`, `candidato-b/`
 - `dist/declaracoes/`: `2026-04-15-candidato-a-economia-imposto/`, `2026-04-15-candidato-b-saude-sus/`
@@ -4314,6 +4513,7 @@ Expected:
 - [ ] **Step 4: Validar JSON-LD em uma amostra de páginas críticas**
 
 Run:
+
 ```bash
 echo "--- /candidatos/candidato-a ---"
 grep -o '"@type":"[^"]*"' dist/candidatos/candidato-a/index.html | sort -u
@@ -4326,6 +4526,7 @@ grep -o '"@type":"[^"]*"' dist/dataset/index.html | sort -u
 ```
 
 Expected output (aproximado):
+
 - `/candidatos/candidato-a`: `"@type":"Person"` e `"@type":"PoliticalParty"`
 - `/declaracoes/...`: `"@type":"Quotation"`, `"@type":"Article"`, `"@type":"Person"`, `"@type":"Organization"`, `"@type":"WebPage"`
 - `/eventos/...`: `"@type":"Event"`, `"@type":"Person"`, `"@type":"Place"`
@@ -4334,6 +4535,7 @@ Expected output (aproximado):
 - [ ] **Step 5: Validar OG e Twitter Cards numa página de declaração**
 
 Run:
+
 ```bash
 grep -E 'og:title|og:description|og:url|og:type|twitter:card|article:published_time' \
   dist/declaracoes/2026-04-15-candidato-a-economia-imposto/index.html | sort -u
@@ -4344,6 +4546,7 @@ Expected: pelo menos 6 meta tags distintas (og:title, og:description, og:url, og
 - [ ] **Step 6: Validar sitemap não inclui /404 nem /buscar**
 
 Run:
+
 ```bash
 grep -c '/buscar' dist/sitemap-0.xml
 grep -c '/404' dist/sitemap-0.xml
@@ -4351,6 +4554,7 @@ grep -c '/declaracoes/' dist/sitemap-0.xml
 ```
 
 Expected:
+
 - `/buscar` count = 0
 - `/404` count = 0
 - `/declaracoes/` count >= 2 (uma por declaração)
@@ -4358,11 +4562,13 @@ Expected:
 - [ ] **Step 7: Validar Pagefind localmente (manual smoke test)**
 
 Run:
+
 ```bash
 pnpm preview
 ```
 
 Abrir `http://localhost:4321/buscar` no navegador. Digitar uma palavra ("imposto", "SUS", "candidato"). Verificar:
+
 - A caixa de busca aparece
 - Resultados aparecem ao digitar
 - Clicar em resultado leva a `/declaracoes/.../`
@@ -4372,6 +4578,7 @@ Esse é o único teste manual do plano. Não é bloqueante para o commit; é con
 - [ ] **Step 8: Commit consolidado se houver alterações pendentes**
 
 Se `git status --short` não retornar vazio (improvável), criar um commit final:
+
 ```bash
 git status --short
 git diff
@@ -4388,6 +4595,7 @@ Se houver mudanças não commitadas, identificar a causa e commitar com mensagem
 - [ ] **Step 1: Push da branch**
 
 Run:
+
 ```bash
 git push -u origin feat/fase3-seo-paginas
 ```
@@ -4397,6 +4605,7 @@ Expected: branch publicada no GitHub.
 - [ ] **Step 2: Abrir PR via `gh`**
 
 Run:
+
 ```bash
 gh pr create --title "feat(fase3): SEO + páginas + JSON-LD" --body "$(cat <<'EOF'
 ## Resumo
@@ -4462,6 +4671,7 @@ Expected: PR aberto. Saída do comando inclui URL `https://github.com/dezobq/atl
 - [ ] **Step 3: Confirmar PR via `gh pr view`**
 
 Run:
+
 ```bash
 gh pr view --json number,title,state,url
 ```
@@ -4477,6 +4687,7 @@ Expected: PR no estado `OPEN` com título correto.
 - [ ] **Step 1: Acompanhar CI**
 
 Run:
+
 ```bash
 gh pr checks --watch
 ```
@@ -4484,6 +4695,7 @@ gh pr checks --watch
 Expected: todas as checks passam — `format:check`, `lint`, `typecheck`, `validate-data`, `test`, `build:full`.
 
 Se alguma falhar:
+
 - Investigar a causa via `gh run view <run-id> --log`
 - Corrigir localmente, commit, push, voltar ao Step 1
 - Mais comum: diferenças de formatação Windows vs Ubuntu (mitigado por `.gitattributes` mas atentar)
@@ -4491,11 +4703,13 @@ Se alguma falhar:
 - [ ] **Step 2: Squash merge**
 
 Run:
+
 ```bash
 gh pr merge --squash --delete-branch --subject "feat(fase3): SEO + páginas + JSON-LD"
 ```
 
 Expected:
+
 - PR mergeado em `main` via squash
 - Branch remote `feat/fase3-seo-paginas` deletada
 - Branch local ainda existe (worktree)
@@ -4515,6 +4729,7 @@ git branch -d feat/fase3-seo-paginas
 ```
 
 Expected:
+
 - `main` agora aponta para o novo squash commit
 - `git log` mostra o novo commit como HEAD
 - Worktree removida
@@ -4523,6 +4738,7 @@ Expected:
 - [ ] **Step 4: Atualizar checkpoint na memória do Claude Code**
 
 Atualizar `~/.claude/projects/C--Users-dezob-Projects-atlas/memory/checkpoint-fase2-completa.md` (ou criar `checkpoint-fase3-completa.md` novo) com:
+
 - Data e SHA do novo merge
 - Lista do que foi entregue
 - Próximo passo: Sprint 5 (Conteúdo MVP)
@@ -4533,6 +4749,7 @@ Atualizar `MEMORY.md` para apontar para o novo checkpoint.
 - [ ] **Step 5: Confirmar tudo verde**
 
 Run:
+
 ```bash
 git status
 pnpm test
@@ -4545,12 +4762,12 @@ Expected: working tree limpo; testes passing; build verde.
 
 ## Resumo executivo do plano
 
-| Sprint | Tasks | Foco | Pausa após |
-|--------|-------|------|------------|
-| 4.1 | 1–8 | SEO Foundation (helpers + 5 JSON-LD + SEOTags) | ✓ Sim |
-| 4.2 | 9–12 | Sitemap + robots + Pagefind | ✓ Sim |
-| 4.3 | 13–26 | 9 páginas + 8 componentes + fixtures | — |
-| 4.4 | 27–29 | Validação final + PR + merge | — |
+| Sprint | Tasks | Foco                                           | Pausa após |
+| ------ | ----- | ---------------------------------------------- | ---------- |
+| 4.1    | 1–8   | SEO Foundation (helpers + 5 JSON-LD + SEOTags) | ✓ Sim      |
+| 4.2    | 9–12  | Sitemap + robots + Pagefind                    | ✓ Sim      |
+| 4.3    | 13–26 | 9 páginas + 8 componentes + fixtures           | —          |
+| 4.4    | 27–29 | Validação final + PR + merge                   | —          |
 
 **Total: 29 tasks, ~3 sprints com pausas para revisão humana entre 4.1↔4.2 e 4.2↔4.3.**
 
@@ -4581,18 +4798,18 @@ du -sh dist/
 
 ## Apêndice B — Glossário de schemas Schema.org usados
 
-| Schema | Aplicação | Build function | Fonte oficial |
-|--------|-----------|----------------|---------------|
-| Person | Candidato | `buildPersonSchema` | https://schema.org/Person |
-| Quotation | Declaração | `buildQuotationSchema` | https://schema.org/Quotation |
-| Event | Debate/Entrevista/Sabatina | `buildEventSchema` | https://schema.org/Event |
-| Article | Wrapper de página de declaração | `buildArticleSchema` | https://schema.org/Article |
-| Dataset | Página `/dataset` | `buildDatasetSchema` | https://schema.org/Dataset |
-| PoliticalParty | Subobjeto em Person.memberOf | inline em `buildPersonSchema` | https://schema.org/PoliticalParty |
-| Organization | Author em Article + creator em Dataset | inline em `buildArticleSchema` e `buildDatasetSchema` | https://schema.org/Organization |
-| Place | Localização do Event | inline em `buildEventSchema` | https://schema.org/Place |
-| DataDownload | Cada distribuição em Dataset | inline em `buildDatasetSchema` | https://schema.org/DataDownload |
-| WebPage | mainEntityOfPage em Article | inline em `buildArticleSchema` | https://schema.org/WebPage |
+| Schema         | Aplicação                              | Build function                                        | Fonte oficial                     |
+| -------------- | -------------------------------------- | ----------------------------------------------------- | --------------------------------- |
+| Person         | Candidato                              | `buildPersonSchema`                                   | https://schema.org/Person         |
+| Quotation      | Declaração                             | `buildQuotationSchema`                                | https://schema.org/Quotation      |
+| Event          | Debate/Entrevista/Sabatina             | `buildEventSchema`                                    | https://schema.org/Event          |
+| Article        | Wrapper de página de declaração        | `buildArticleSchema`                                  | https://schema.org/Article        |
+| Dataset        | Página `/dataset`                      | `buildDatasetSchema`                                  | https://schema.org/Dataset        |
+| PoliticalParty | Subobjeto em Person.memberOf           | inline em `buildPersonSchema`                         | https://schema.org/PoliticalParty |
+| Organization   | Author em Article + creator em Dataset | inline em `buildArticleSchema` e `buildDatasetSchema` | https://schema.org/Organization   |
+| Place          | Localização do Event                   | inline em `buildEventSchema`                          | https://schema.org/Place          |
+| DataDownload   | Cada distribuição em Dataset           | inline em `buildDatasetSchema`                        | https://schema.org/DataDownload   |
+| WebPage        | mainEntityOfPage em Article            | inline em `buildArticleSchema`                        | https://schema.org/WebPage        |
 
 ## Apêndice C — Fontes Context7 citadas
 
@@ -4612,4 +4829,3 @@ du -sh dist/
 8. Português brasileiro com acentos preservados
 9. Path alias único: `@/*` → `src/*`
 10. pnpm v10 local, v9 CI — `--frozen-lockfile` sempre
-
