@@ -24,6 +24,11 @@ Mapa de Conteúdos do vault. Atualizar sempre que uma nota nova for adicionada a
 - [[Decisoes/Sem-Veredito-Proprio]] — Atlas nunca classifica veracidade
 - [[Decisoes/Licencas-MIT-CC-BY]] — código MIT, dados/conteúdo CC-BY 4.0
 - [[Decisoes/URLs-Estaveis]] — estrutura de URLs que nunca quebra
+- [[Decisoes/Audiencia-Primaria]] — mídia + acadêmico + LLM como audiência primária (2026-05-28)
+- [[Decisoes/I4-Compartilhabilidade]] — cards visuais + API JSON pública + embed widget (2026-05-28)
+- [[Decisoes/I3-Metricas-de-Sucesso]] — reframe de métricas primárias (B2B/LLM/features) e secundárias (uniques/cobertura) (2026-05-28)
+- [[Decisoes/I2-Distribuicao]] — outreach controlado em 5 camadas; soft launch silencioso reinterpretado (2026-05-28)
+- [[Decisoes/I6-Canal-Ativo-com-Audiencia]] — RSS + newsletter mensal opcional + feed claim-sem-veredito (2026-05-28)
 
 ## Bugs / Incidentes
 

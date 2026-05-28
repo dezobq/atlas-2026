@@ -19,6 +19,17 @@ Decisões arquiteturais e editoriais com rationale registrado. Cada nota deve re
 - [[Sem-Veredito-Proprio]] — Atlas nunca classifica veracidade
 - [[Licencas-MIT-CC-BY]] — código MIT, dataset/conteúdo CC-BY 4.0
 
+## Estratégia e posicionamento
+
+- [[Audiencia-Primaria]] — mídia + acadêmico + LLM como audiência primária; eleitor leigo via redistribuição transitiva (2026-05-28)
+
+## Produto e distribuição
+
+- [[I4-Compartilhabilidade]] — pacote completo sequencial: cards visuais + API JSON pública + embed widget (2026-05-28)
+- [[I3-Metricas-de-Sucesso]] — reframe de primárias (B2B/LLM/features) e secundárias (uniques/cobertura) (2026-05-28)
+- [[I2-Distribuicao]] — outreach controlado em 5 camadas; soft launch silencioso reinterpretado (2026-05-28)
+- [[I6-Canal-Ativo-com-Audiencia]] — RSS + newsletter mensal opcional + feed claim-sem-veredito (2026-05-28)
+
 ## Como adicionar nova decisão
 
 1. Copiar `[[../Templates/Template-Decisao]]` para esta pasta com nome descritivo
