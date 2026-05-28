@@ -1,0 +1,46 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import JSONLDPerson from "@/components/seo/JSONLDPerson.astro";
+import CandidatoHeader from "@/components/candidato/CandidatoHeader.astro";
+import CandidatoTimeline from "@/components/candidato/CandidatoTimeline.astro";
+import { getAllCandidatos } from "@/lib/data/candidatos";
+import { getDeclaracoesByCandidato } from "@/lib/data/declaracoes";
+import { getEventosByCandidato } from "@/lib/data/eventos";
+import type { Candidato } from "@/types";
+
+export async function getStaticPaths() {
+  const candidatos = await getAllCandidatos();
+  return candidatos.map((candidato) => ({
+    params: { slug: candidato.data.slug },
+    props: { candidato },
+  }));
+}
+
+interface Props {
+  candidato: Candidato;
+}
+
+const { candidato } = Astro.props;
+const declaracoes = await getDeclaracoesByCandidato(candidato.data.id);
+const eventos = await getEventosByCandidato(candidato.data.id);
+const canonical = new URL(`/candidatos/${candidato.data.slug}`, Astro.site).toString();
+const description = `${candidato.data.nome} — ${candidato.data.partido}. ${declaracoes.length} declarações documentadas no Atlas.`;
+---
+
+<BaseLayout title={candidato.data.nome} description={description}>
+  <SEOTags
+    slot="head"
+    title={`${candidato.data.nome} · Atlas dos Candidatos 2026`}
+    description={description}
+    canonical={canonical}
+    {...candidato.data.foto_url ? { ogImage: candidato.data.foto_url } : {}}
+    ogType="website"
+  />
+  <JSONLDPerson slot="head" candidato={candidato} />
+
+  <div class="container-default" style="padding-block: var(--space-xl);">
+    <CandidatoHeader candidato={candidato} totalDeclaracoes={declaracoes.length} />
+    <CandidatoTimeline eventos={eventos} declaracoes={declaracoes} />
+  </div>
+</BaseLayout>
