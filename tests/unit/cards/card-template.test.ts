@@ -43,4 +43,16 @@ describe("buildCardTemplate", () => {
     const serialized = JSON.stringify(tpl);
     expect(serialized).toContain("Sem veredito de fact-checker reconhecido");
   });
+
+  it("usa asOfDate quando fornecido no caso sem vereditos", () => {
+    const tpl = buildCardTemplate({ ...data, vereditos: [], asOfDate: "15/04/2026" }, "1200x630");
+    const serialized = JSON.stringify(tpl);
+    expect(serialized).toContain("até 15/04/2026");
+  });
+
+  it("usa 'data de geração' como fallback quando asOfDate ausente", () => {
+    const tpl = buildCardTemplate({ ...data, vereditos: [] }, "1200x630");
+    const serialized = JSON.stringify(tpl);
+    expect(serialized).toContain("até data de geração");
+  });
 });

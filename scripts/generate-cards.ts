@@ -77,6 +77,7 @@ async function main(): Promise<void> {
       vereditos,
       url,
       qrSvg,
+      asOfDate: new Date().toLocaleDateString("pt-BR"),
     };
 
     for (const fmt of Object.keys(CARD_FORMATS) as CardFormat[]) {

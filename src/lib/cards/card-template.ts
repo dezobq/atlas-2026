@@ -16,6 +16,7 @@ export interface CardData {
   vereditos: VereditoSimple[];
   url: string;
   qrSvg: string;
+  asOfDate?: string;
 }
 
 const BG = "#FAFAFA";
@@ -51,7 +52,7 @@ export function buildCardTemplate(
       children: [
         wordmark(),
         body(declarationTrimmed, titleSize, data),
-        vereditosBlock(data.vereditos, cfg.multiplier),
+        vereditosBlock(data.vereditos, cfg.multiplier, data.asOfDate),
         footer(data.url, data.qrSvg, cfg.multiplier),
       ],
     },
@@ -102,7 +103,7 @@ function body(declaracao: string, fontSize: number, data: CardData) {
           type: "div",
           props: {
             style: { fontSize: 22, fontWeight: 400, color: TEXT_SECONDARY },
-            children: `— ${data.candidato} · ${data.data} · ${data.evento}`,
+            children: `— ${[data.candidato, data.data, data.evento].filter(Boolean).join(" · ")}`,
           },
         },
       ],
@@ -110,13 +111,13 @@ function body(declaracao: string, fontSize: number, data: CardData) {
   };
 }
 
-function vereditosBlock(vereditos: VereditoSimple[], multiplier: number) {
+function vereditosBlock(vereditos: VereditoSimple[], multiplier: number, asOfDate?: string) {
   if (vereditos.length === 0) {
     return {
       type: "div",
       props: {
         style: { fontSize: 22 * multiplier, color: TEXT_SECONDARY, fontWeight: 400 },
-        children: `Sem veredito de fact-checker reconhecido até ${new Date().toLocaleDateString("pt-BR")}`,
+        children: `Sem veredito de fact-checker reconhecido até ${asOfDate ?? "data de geração"}`,
       },
     };
   }
