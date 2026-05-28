@@ -18,12 +18,12 @@ Candidato à Presidência da República em 2026 pelo Partido Liberal (PL). Segun
 
 ## Dados de seleção (Sprint 5.1)
 
-| Pesquisa | Pontuação |
-|----------|-----------|
-| Datafolha | a registrar |
-| Quaest | a registrar |
+| Pesquisa   | Pontuação   |
+| ---------- | ----------- |
+| Datafolha  | a registrar |
+| Quaest     | a registrar |
 | AtlasIntel | a registrar |
-| **Média** | **35.57%** |
+| **Média**  | **35.57%**  |
 
 Cálculo público em `data/criterio-selecao/latest.yaml`. Verificável via `pnpm audit-paridade`.
 

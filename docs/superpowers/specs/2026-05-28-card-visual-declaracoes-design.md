@@ -31,32 +31,32 @@ Tom: neutro, jornalístico, sem associações com marcas de tech (Vercel/Linear/
 
 **Escala dinâmica em 3 faixas (declaração principal):**
 
-| Comprimento da declaração | Tamanho da fonte (1200×630) | Comportamento |
-| ------------------------- | ---------------------------- | ------------- |
-| ≤ 120 caracteres          | 72pt                         | Texto integral, centralizado verticalmente |
-| 120-300 caracteres        | 54pt                         | Texto integral, leading 1.2 |
-| > 300 caracteres          | 40pt                         | Truncamento em **280 chars + "…"** + linha "Ver completo: atlas-2026.pages.dev/declaracoes/&lt;id&gt;" |
+| Comprimento da declaração | Tamanho da fonte (1200×630) | Comportamento                                                                                          |
+| ------------------------- | --------------------------- | ------------------------------------------------------------------------------------------------------ |
+| ≤ 120 caracteres          | 72pt                        | Texto integral, centralizado verticalmente                                                             |
+| 120-300 caracteres        | 54pt                        | Texto integral, leading 1.2                                                                            |
+| > 300 caracteres          | 40pt                        | Truncamento em **280 chars + "…"** + linha "Ver completo: atlas-2026.pages.dev/declaracoes/&lt;id&gt;" |
 
 **Tamanhos derivados por formato (proporcional):**
 
-| Formato | Multiplicador da escala base 1200×630 |
-| ------- | -------------------------------------- |
-| 1200×630 (Twitter/X, OG) | 1.0× |
-| 1200×1200 (square LinkedIn/Threads) | 1.0× |
-| 1080×1350 (Instagram feed) | 0.95× |
-| 1080×1920 (Stories/Reels) | 0.9× (mais espaço para verticalização) |
+| Formato                             | Multiplicador da escala base 1200×630  |
+| ----------------------------------- | -------------------------------------- |
+| 1200×630 (Twitter/X, OG)            | 1.0×                                   |
+| 1200×1200 (square LinkedIn/Threads) | 1.0×                                   |
+| 1080×1350 (Instagram feed)          | 0.95×                                  |
+| 1080×1920 (Stories/Reels)           | 0.9× (mais espaço para verticalização) |
 
 **Hierarquia tipográfica (limitada a 2 pesos disponíveis em `assets/fonts/`: Regular 400 e Medium 500):**
 
-| Elemento | Tamanho 1200×630 | Peso |
-| -------- | ---------------- | ---- |
-| Wordmark "Atlas dos Candidatos · 2026" | 24pt | 500 (medium) |
-| Declaração principal | 40-72pt (3 faixas) | 500 (medium) |
-| Atribuição (candidato · data · evento) | 22pt | 400 (regular) |
-| Nome do fact-checker | 24pt | 500 (medium) |
-| Texto do veredito | 24pt | 400 (regular) |
-| URL `atlas-2026.pages.dev/declaracoes/<id>` | 20pt | 500 (medium) |
-| Rodapé "Atlas dos Candidatos · 2026 · Não emite veredito · CC-BY 4.0" | 18pt | 400 (regular) |
+| Elemento                                                              | Tamanho 1200×630   | Peso          |
+| --------------------------------------------------------------------- | ------------------ | ------------- |
+| Wordmark "Atlas dos Candidatos · 2026"                                | 24pt               | 500 (medium)  |
+| Declaração principal                                                  | 40-72pt (3 faixas) | 500 (medium)  |
+| Atribuição (candidato · data · evento)                                | 22pt               | 400 (regular) |
+| Nome do fact-checker                                                  | 24pt               | 500 (medium)  |
+| Texto do veredito                                                     | 24pt               | 400 (regular) |
+| URL `atlas-2026.pages.dev/declaracoes/<id>`                           | 20pt               | 500 (medium)  |
+| Rodapé "Atlas dos Candidatos · 2026 · Não emite veredito · CC-BY 4.0" | 18pt               | 400 (regular) |
 
 Hierarquia visual decorre de **tamanho** + **peso** + **cor** sem precisar de Semibold/Bold. Caso testes visuais revelem hierarquia insuficiente, adicionar Geist-SemiBold.ttf em `assets/fonts/` numa task futura.
 
@@ -76,15 +76,15 @@ Cada fact-checker reconhecido (Tier 1) tem cor própria associada à identidade 
 
 A paleta deve cobrir **exatamente** os valores do enum `veiculoVeredito` em `src/content/config.ts`:
 
-| Valor do enum | Cor identidade | Hex |
-| ------------- | -------------- | --- |
-| `Lupa` (Agência Lupa / UOL) | Vermelho marca | `#E20E0E` |
-| `Aos Fatos` | Verde marca | `#1A9E5E` |
-| `Comprova` (Projeto Comprova) | Azul marca | `#1E5AAF` |
-| `Estadão Verifica` | Cinza Estadão | `#3F3F3F` |
-| `Agência Pública` | Laranja marca | `#E67E22` |
-| `BBC Verify` | Vermelho BBC | `#B40000` |
-| `outro` | Cinza neutro (fallback) | `#737373` |
+| Valor do enum                 | Cor identidade          | Hex       |
+| ----------------------------- | ----------------------- | --------- |
+| `Lupa` (Agência Lupa / UOL)   | Vermelho marca          | `#E20E0E` |
+| `Aos Fatos`                   | Verde marca             | `#1A9E5E` |
+| `Comprova` (Projeto Comprova) | Azul marca              | `#1E5AAF` |
+| `Estadão Verifica`            | Cinza Estadão           | `#3F3F3F` |
+| `Agência Pública`             | Laranja marca           | `#E67E22` |
+| `BBC Verify`                  | Vermelho BBC            | `#B40000` |
+| `outro`                       | Cinza neutro (fallback) | `#737373` |
 
 (Esta tabela vive em `src/lib/cards/fact-checker-palette.ts` para uso programático. Adição de novo veículo exige primeiro estender o enum em `src/content/config.ts` e depois adicionar entrada aqui.)
 
@@ -110,7 +110,7 @@ Borda sutil; texto do veredito sempre em `#525252` (cinza neutro).
 
 Não mostrar lista vazia. Substituir por linha discreta em `#525252`:
 
-> *"Sem veredito de fact-checker reconhecido até DD/MM/AAAA"*
+> _"Sem veredito de fact-checker reconhecido até DD/MM/AAAA"_
 
 ### 2.4 Escopo MVP (primeira sprint)
 
@@ -134,26 +134,31 @@ Não mostrar lista vazia. Substituir por linha discreta em `#525252`:
 ## 3. Conteúdo do card (por seção)
 
 **Header (10% da altura):**
-- Wordmark *"Atlas dos Candidatos · 2026"* em `#171717` peso medium 24pt
+
+- Wordmark _"Atlas dos Candidatos · 2026"_ em `#171717` peso medium 24pt
 - Linha divisória `1px solid #E5E5E5` abaixo
 
 **Corpo principal (60% da altura):**
+
 - Declaração em destaque tipográfico (escala dinâmica em 3 faixas)
 - Centralizada verticalmente quando ≤ 120 chars
 - Justificada à esquerda quando > 120 chars
 
 **Atribuição (8% da altura):**
-- *"— Candidato Nome · DD/MM/AAAA · Evento Y"*
+
+- _"— Candidato Nome · DD/MM/AAAA · Evento Y"_
 - Em `#525252` 22pt medium
 
 **Cascata de vereditos (15% da altura):**
+
 - Lista de até 3 vereditos com tratamento M1+M2+M3
 - Ou linha "Sem veredito..." se vazia
 
 **Rodapé (7% da altura):**
+
 - Esquerda: URL `atlas-2026.pages.dev/declaracoes/<id>` em 20pt medium
 - Direita: QR code 120×120px com a mesma URL
-- Linha base: *"Atlas dos Candidatos · 2026 · Não emite veredito · CC-BY 4.0"* em 18pt regular cinza
+- Linha base: _"Atlas dos Candidatos · 2026 · Não emite veredito · CC-BY 4.0"_ em 18pt regular cinza
 
 ## 4. Layout por formato
 
@@ -239,6 +244,7 @@ Proporção 1:1. Layout do 1200×630 com altura proporcionalmente maior dedicada
 Refatorar `scripts/generate-og-images.ts` em `scripts/generate-cards.ts` com lógica de multi-formato.
 
 Output:
+
 ```
 public/cards/<id>/1200x630.png
 public/cards/<id>/1080x1350.png
@@ -268,6 +274,7 @@ Componente `CardActions.astro` (novo) em `src/components/declaracoes/CardActions
 ### Botão 1 — Baixar card
 
 Menu dropdown:
+
 - 1200×630 (Twitter / WhatsApp)
 - 1080×1350 (Instagram Feed)
 - 1080×1920 (Stories / Reels)
@@ -282,12 +289,13 @@ Menu dropdown com mesmos 4 formatos. Cada item dispara `navigator.clipboard.writ
 ### Botão 3 — Compartilhar
 
 Menu dropdown com intents:
+
 - **WhatsApp:** `https://wa.me/?text=<texto>` com URL Atlas pré-formada
-- **Twitter/X:** `https://twitter.com/intent/tweet?text=<texto>&url=<url>` 
+- **Twitter/X:** `https://twitter.com/intent/tweet?text=<texto>&url=<url>`
 - **Threads:** `https://www.threads.net/intent/post?text=<texto>+<url>`
 - **Telegram:** `https://t.me/share/url?url=<url>&text=<texto>`
 
-Texto pré-formado: *"<Declaração resumida em ~80 chars>. Veja vereditos em <URL>."*
+Texto pré-formado: _"<Declaração resumida em ~80 chars>. Veja vereditos em <URL>."_
 
 Estilo: botões em estilo discreto, alinhados com design system existente (shadcn/ui).
 
@@ -328,13 +336,13 @@ Para o card MVP ser considerado pronto:
 
 ## 9. Riscos editoriais e mitigações
 
-| Risco | Mitigação |
-| ----- | --------- |
-| Card percebido como endosso do veredito do fact-checker | M1+M2+M3 (cor do fact-checker, borda lateral, saturação calma) + rodapé "Atlas não emite veredito" presente em **todos** os formatos |
-| Card editado/cropado para descontextualizar | QR code visível em **todos** os formatos; pequeno e funcional, dispara para página completa |
-| Cards usados em campanha política como ataque | CC-BY 4.0 permite uso; clarificar nos termos de uso em `/sobre` que reuso requer atribuição visual ao Atlas |
-| Fact-checker se sentir desconfortável com sua cor sendo usada | Cores são as identidades visuais oficiais; mas se solicitação formal vier, ajustar paleta em `src/lib/cards/fact-checker-palette.ts` |
-| Declaração contém ofensa pessoal | Cobertura editorial decide se publicar a declaração; cards não-MVP têm filtro adicional. No MVP, qualquer declaração publicada vira card |
+| Risco                                                         | Mitigação                                                                                                                                |
+| ------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| Card percebido como endosso do veredito do fact-checker       | M1+M2+M3 (cor do fact-checker, borda lateral, saturação calma) + rodapé "Atlas não emite veredito" presente em **todos** os formatos     |
+| Card editado/cropado para descontextualizar                   | QR code visível em **todos** os formatos; pequeno e funcional, dispara para página completa                                              |
+| Cards usados em campanha política como ataque                 | CC-BY 4.0 permite uso; clarificar nos termos de uso em `/sobre` que reuso requer atribuição visual ao Atlas                              |
+| Fact-checker se sentir desconfortável com sua cor sendo usada | Cores são as identidades visuais oficiais; mas se solicitação formal vier, ajustar paleta em `src/lib/cards/fact-checker-palette.ts`     |
+| Declaração contém ofensa pessoal                              | Cobertura editorial decide se publicar a declaração; cards não-MVP têm filtro adicional. No MVP, qualquer declaração publicada vira card |
 
 ## 10. Dependências e premissas
 

@@ -18,12 +18,12 @@ Candidato à Presidência da República em 2026 pelo Partido dos Trabalhadores (
 
 ## Dados de seleção (Sprint 5.1)
 
-| Pesquisa | Pontuação |
-|----------|-----------|
-| Datafolha | a registrar nas próximas auditorias |
-| Quaest | a registrar |
-| AtlasIntel | a registrar |
-| **Média** | **40.53%** |
+| Pesquisa   | Pontuação                           |
+| ---------- | ----------------------------------- |
+| Datafolha  | a registrar nas próximas auditorias |
+| Quaest     | a registrar                         |
+| AtlasIntel | a registrar                         |
+| **Média**  | **40.53%**                          |
 
 Cálculo público em `data/criterio-selecao/latest.yaml`. Verificável via `pnpm audit-paridade`.
 

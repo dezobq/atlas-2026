@@ -51,39 +51,39 @@ Cada uma é sprint independente (~1-5 dias). Pode pausar entre cada para validar
 - Declaração textual em destaque tipográfico (Geist Sans, contraste alto)
 - Atribuição: candidato + data + evento + link primário
 - Cascata de vereditos com fontes nomeadas e datadas:
-  - *"Lupa, 12/04/2026: parcialmente falso"*
-  - *"Aos Fatos, 14/04/2026: distorce"*
-  - *"Comprova: sem registro até 28/05/2026"*
+  - _"Lupa, 12/04/2026: parcialmente falso"_
+  - _"Aos Fatos, 14/04/2026: distorce"_
+  - _"Comprova: sem registro até 28/05/2026"_
 - URL Atlas: `atlas-2026.pages.dev/declaracoes/<id>` em rodapé
 - QR code para a URL acima
-- Rodapé fixo: *"Atlas dos Candidatos · 2026 · Não emite veredito · CC-BY 4.0"*
+- Rodapé fixo: _"Atlas dos Candidatos · 2026 · Não emite veredito · CC-BY 4.0"_
 
 **Formatos gerados:**
 
-| Formato | Uso primário |
-| ------- | ------------ |
-| 1200×630 | Twitter/X large card, WhatsApp preview, OG genérico |
-| 1080×1350 | Instagram feed |
-| 1080×1920 | Stories/Reels |
-| 1200×1200 | Square (LinkedIn, Threads) |
+| Formato   | Uso primário                                        |
+| --------- | --------------------------------------------------- |
+| 1200×630  | Twitter/X large card, WhatsApp preview, OG genérico |
+| 1080×1350 | Instagram feed                                      |
+| 1080×1920 | Stories/Reels                                       |
+| 1200×1200 | Square (LinkedIn, Threads)                          |
 
 **Variantes futuras (não-MVP):**
 
-- Card de comparação temporal: *"Em 2024 candidato X disse A. Em 2026 disse B."* (usa timeline existente)
+- Card de comparação temporal: _"Em 2024 candidato X disse A. Em 2026 disse B."_ (usa timeline existente)
 - Card de "claim sem veredito": alerta para fact-checker — alinha com I6 (canal ativo, a definir)
 
 **UI em `/declaracoes/[id]`:**
 
-- Botão *"Baixar card"* → menu com 4 tamanhos
-- Botão *"Copiar link da imagem"* → URL direta do PNG (compartilhar como imagem, não link)
-- Botão *"Compartilhar"* → intents nativos: WhatsApp / Twitter/X / Threads / Telegram
+- Botão _"Baixar card"_ → menu com 4 tamanhos
+- Botão _"Copiar link da imagem"_ → URL direta do PNG (compartilhar como imagem, não link)
+- Botão _"Compartilhar"_ → intents nativos: WhatsApp / Twitter/X / Threads / Telegram
 
 **Mitigações editoriais (críticas):**
 
 - Atribuição visual forte de cada veredito (nome do fact-checker em fonte distintamente identificada + data ao lado)
-- Rodapé fixo *"Atlas não emite veredito"*
+- Rodapé fixo _"Atlas não emite veredito"_
 - QR code visível em todos os cards → reduz risco de crop/edição maliciosa
-- Termos de uso em `/sobre`: cards CC-BY 4.0; reuso requer atribuição *"Dados do Atlas dos Candidatos · 2026 (atlas-2026.pages.dev)"*
+- Termos de uso em `/sobre`: cards CC-BY 4.0; reuso requer atribuição _"Dados do Atlas dos Candidatos · 2026 (atlas-2026.pages.dev)"_
 
 ### 2. API JSON pública
 
@@ -126,15 +126,19 @@ Cada uma é sprint independente (~1-5 dias). Pode pausar entre cada para validar
 <atlas-widget tipo="alerta-claim"></atlas-widget>
 
 <!-- Fallback iframe -->
-<iframe src="https://atlas-2026.pages.dev/embed/candidato/lula-luiz-inacio?tema=economia"
-        width="100%" height="400" frameborder="0"></iframe>
+<iframe
+  src="https://atlas-2026.pages.dev/embed/candidato/lula-luiz-inacio?tema=economia"
+  width="100%"
+  height="400"
+  frameborder="0"
+></iframe>
 ```
 
 **Características:**
 
 - Self-contained CSS (Shadow DOM no web component)
 - Lazy-loading nativo
-- Branding mínimo: *"via Atlas dos Candidatos"* com link permanente
+- Branding mínimo: _"via Atlas dos Candidatos"_ com link permanente
 - Sem JavaScript de tracking, sem cookies, sem fingerprinting
 - Telemetria opcional via 1×1 pixel image — contagem agregada por referer apenas (privacy by default)
 - Playground/preview ao vivo em `/embed` com gerador de código copy-paste
@@ -180,11 +184,11 @@ Embed widget exige outreach a parceiros mídia para validar adoção real (5-10 
 
 ## Sequência de implementação (não-vinculante; pode ajustar entre sprints)
 
-| Ordem | Feature | Estimativa | Sprint sugerido |
-| ----- | ------- | ---------- | --------------- |
-| 1 | Card visual (4 formatos) | 1-2 dias | Após Sprint 5.2 (piloto 12 decl.) ou em paralelo |
-| 2 | API JSON pública | 1-2 dias | Após card validado |
-| 3 | Embed widget + playground | 3-5 dias | Após API + outreach inicial |
+| Ordem | Feature                   | Estimativa | Sprint sugerido                                  |
+| ----- | ------------------------- | ---------- | ------------------------------------------------ |
+| 1     | Card visual (4 formatos)  | 1-2 dias   | Após Sprint 5.2 (piloto 12 decl.) ou em paralelo |
+| 2     | API JSON pública          | 1-2 dias   | Após card validado                               |
+| 3     | Embed widget + playground | 3-5 dias   | Após API + outreach inicial                      |
 
 Cada feature vai gerar spec próprio em `docs/superpowers/specs/` (writing-plans skill) na hora de implementar.
 

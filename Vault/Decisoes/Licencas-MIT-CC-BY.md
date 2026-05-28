@@ -13,11 +13,11 @@ Atlas é projeto de utilidade pública. Quem deve poder usar o código, os dados
 
 ## Decisão
 
-| Camada | Licença | Implicação |
-|--------|---------|------------|
-| **Código** (`src/`, `scripts/`, configs) | MIT | Reuso livre, inclusive comercial, com atribuição |
-| **Dataset** (`data/`, `dist-dataset/*.jsonl|csv`) | CC-BY 4.0 | Reuso livre com atribuição obrigatória |
-| **Conteúdo editorial** (`Vault/`, páginas `/metodologia`, `/errata`, `/sobre`) | CC-BY 4.0 | Reuso livre com atribuição |
+| Camada                                                                         | Licença   | Implicação                                       |
+| ------------------------------------------------------------------------------ | --------- | ------------------------------------------------ | -------------------------------------- |
+| **Código** (`src/`, `scripts/`, configs)                                       | MIT       | Reuso livre, inclusive comercial, com atribuição |
+| **Dataset** (`data/`, `dist-dataset/\*.jsonl                                   | csv`)     | CC-BY 4.0                                        | Reuso livre com atribuição obrigatória |
+| **Conteúdo editorial** (`Vault/`, páginas `/metodologia`, `/errata`, `/sobre`) | CC-BY 4.0 | Reuso livre com atribuição                       |
 
 ## Atribuição padrão
 

@@ -18,6 +18,7 @@ Fact-checkers e agregadores de vereditos que o Atlas referencia. Hierarquia em [
 ## Tier 2 (mídia jornalística com verificação)
 
 A documentar conforme aparecerem em vereditos. Exemplos prováveis:
+
 - Folha Verifica
 - Estadão Verifica
 - BBC Brasil Reality Check

@@ -22,12 +22,12 @@ Astro 5 internamente re-exporta **Zod 3** via `astro:content`. Mesmo que `packag
 
 ```typescript
 // ✅ correto
-fonte: z.string().url()
-data: z.string().datetime()
+fonte: z.string().url();
+data: z.string().datetime();
 
 // ❌ errado (Zod 4 syntax)
-fonte: z.url()
-data: z.iso.datetime()
+fonte: z.url();
+data: z.iso.datetime();
 ```
 
 **Scripts standalone** (em `scripts/`) podem usar Zod 4 nativo porque importam `zod` diretamente, não via `astro:content`.

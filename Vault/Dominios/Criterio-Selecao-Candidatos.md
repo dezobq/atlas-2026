@@ -21,19 +21,19 @@ Mecânica pública e auditável de quais candidatos entram no Atlas. Política d
 
 ## Mudança de v1.0 para v1.1
 
-| Campo | v1.0 (spec) | v1.1 (atual) |
-|-------|-------------|--------------|
-| Institutos | Datafolha + Quaest + Genial-Quaest | Datafolha + Quaest + AtlasIntel |
-| Corte temporal | 2026-05-15 | 2026-05-16 |
+| Campo          | v1.0 (spec)                        | v1.1 (atual)                    |
+| -------------- | ---------------------------------- | ------------------------------- |
+| Institutos     | Datafolha + Quaest + Genial-Quaest | Datafolha + Quaest + AtlasIntel |
+| Corte temporal | 2026-05-15                         | 2026-05-16                      |
 
 **Motivo:** durante execução do Sprint 5.1 descobriu-se que Quaest = Genial-Quaest (Banco Genial contrata todas as rodadas Quaest). E Datafolha de maio publicou em 16/05 — fora do corte original. Revisão registrada em commit `ecaec1b`.
 
 ## Resultado da aplicação (Sprint 5.1)
 
-| Candidato | Média 3 pesquisas | Posição |
-|-----------|-------------------|---------|
-| Lula (PT) | 40.53% | 1 |
-| Flávio Bolsonaro (PL) | 35.57% | 2 |
+| Candidato             | Média 3 pesquisas | Posição |
+| --------------------- | ----------------- | ------- |
+| Lula (PT)             | 40.53%            | 1       |
+| Flávio Bolsonaro (PL) | 35.57%            | 2       |
 
 ## Onde vive no código
 
@@ -45,6 +45,7 @@ Mecânica pública e auditável de quais candidatos entram no Atlas. Política d
 ## Como evoluir
 
 Próxima atualização do critério vai requerer:
+
 1. Nova entrada em `data/criterio-selecao/` (versionar; nunca sobrescrever)
 2. Atualizar `latest.yaml` symlink/cópia
 3. Re-rodar `pnpm audit-paridade` em CI

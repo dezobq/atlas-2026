@@ -31,10 +31,10 @@ Por que esta declaração entra no Atlas (importância, especificidade, verifica
 
 ## Vereditos agregados
 
-| Fonte | Veredito | Data | Link |
-|-------|----------|------|------|
-| [[Fontes/Lupa]] | … | … | … |
-| [[Fontes/Aos-Fatos]] | … | … | … |
+| Fonte                | Veredito | Data | Link |
+| -------------------- | -------- | ---- | ---- |
+| [[Fontes/Lupa]]      | …        | …    | …    |
+| [[Fontes/Aos-Fatos]] | …        | …    | …    |
 
 ## Observações editoriais
 

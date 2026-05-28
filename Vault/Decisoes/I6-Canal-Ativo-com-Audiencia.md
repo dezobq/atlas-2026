@@ -95,7 +95,7 @@ Rejeitada: **Substack** (host político ativo, conflita com postura neutra).
 **Voz e assinatura:**
 
 - Curador permanece anônimo
-- Emails assinados *"Atlas dos Candidatos · 2026"*
+- Emails assinados _"Atlas dos Candidatos · 2026"_
 - Tom factual, sem opinativo
 - Sem call-to-action emocional ou político
 
@@ -113,7 +113,7 @@ Rejeitada: **Substack** (host político ativo, conflita com postura neutra).
 
 **Posicionamento:** apresentado em `/metodologia` como "ferramenta para fact-checkers" — reforça posicionamento de **infraestrutura upstream**, não competidor de fact-check.
 
-**Risco:** declaração no feed sendo interpretada como "Atlas considera duvidosa" — mitigar com rótulo claro no feed metadata: *"Esta lista contém declarações ainda não verificadas por fact-checker reconhecido. Atlas não emite veredito próprio."*
+**Risco:** declaração no feed sendo interpretada como "Atlas considera duvidosa" — mitigar com rótulo claro no feed metadata: _"Esta lista contém declarações ainda não verificadas por fact-checker reconhecido. Atlas não emite veredito próprio."_
 
 ## Princípios não-negociáveis
 
@@ -129,18 +129,18 @@ Rejeitada: **Substack** (host político ativo, conflita com postura neutra).
 
 ## Compatibilidade com decisões cravadas
 
-| Decisão | Compatibilidade |
-| ------- | --------------- |
-| Sem rosto público | Total (curador anônimo em todas as comunicações) |
-| **[[Sem-Veredito-Proprio]]** | Total (newsletter factual; feed claim-sem-veredito é sinal upstream, não veredito) |
-| Soft launch silencioso | Total (opt-in puro, sem push) |
-| Postura tecnicista | Total |
-| **[[Audiencia-Primaria]]** | Total (RSS serve B2B/LLM; newsletter serve mediadores; alerta serve fact-checkers) |
-| **[[I3-Metricas-de-Sucesso]]** | Reforça (P4 via anúncio de releases; P7 via RSS adoção) |
-| **[[I4-Compartilhabilidade]]** | Habilita variantes "card mensal" e "alerta claim sem veredito" |
-| **[[I2-Distribuicao]]** | Complementa (mediadores contactados em Camada 1 assinam newsletter; Camada 3+4 amplificam releases) |
-| **[[Stack-Astro-Estatico]]** | Total (RSS é build-time nativo; newsletter externa zero esforço no stack) |
-| **[[Licencas-MIT-CC-BY]]** | Total (feed CC-BY 4.0; copyright bem formatado) |
+| Decisão                        | Compatibilidade                                                                                     |
+| ------------------------------ | --------------------------------------------------------------------------------------------------- |
+| Sem rosto público              | Total (curador anônimo em todas as comunicações)                                                    |
+| **[[Sem-Veredito-Proprio]]**   | Total (newsletter factual; feed claim-sem-veredito é sinal upstream, não veredito)                  |
+| Soft launch silencioso         | Total (opt-in puro, sem push)                                                                       |
+| Postura tecnicista             | Total                                                                                               |
+| **[[Audiencia-Primaria]]**     | Total (RSS serve B2B/LLM; newsletter serve mediadores; alerta serve fact-checkers)                  |
+| **[[I3-Metricas-de-Sucesso]]** | Reforça (P4 via anúncio de releases; P7 via RSS adoção)                                             |
+| **[[I4-Compartilhabilidade]]** | Habilita variantes "card mensal" e "alerta claim sem veredito"                                      |
+| **[[I2-Distribuicao]]**        | Complementa (mediadores contactados em Camada 1 assinam newsletter; Camada 3+4 amplificam releases) |
+| **[[Stack-Astro-Estatico]]**   | Total (RSS é build-time nativo; newsletter externa zero esforço no stack)                           |
+| **[[Licencas-MIT-CC-BY]]**     | Total (feed CC-BY 4.0; copyright bem formatado)                                                     |
 
 ## Consequências
 

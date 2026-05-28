@@ -10,6 +10,7 @@ status: ativo
 ## Sintoma
 
 PR passa localmente (Windows) e quebra no CI (Ubuntu) com:
+
 - Prettier reportando "code style issues found"
 - ESLint diff
 - Falha em testes que dependem de paths

@@ -26,15 +26,15 @@ Vault dedicado em `Vault/` (versionado no git, CC-BY 4.0). Inspirado em **zettel
 
 **Estrutura semântica:**
 
-| Pasta | Conteúdo |
-|-------|----------|
-| `Dominios/` | áreas de conhecimento (postura editorial, cascata de vereditos, critério de seleção, pipeline) |
-| `Decisoes/` | decisões arquiteturais e editoriais com rationale + alternativas + sinais de revisão |
-| `Bugs/` | incidentes técnicos com causa raiz + fix + como detectar regressão |
-| `Specs/` | pointers para specs ativos em `docs/superpowers/specs/` |
-| `Fontes/` | fact-checkers (Lupa, Aos Fatos, Comprova) |
-| `Pessoas/` | curador, candidatos no MVP, stakeholders |
-| `Templates/` | frontmatter padrão para cada tipo de nota |
+| Pasta        | Conteúdo                                                                                       |
+| ------------ | ---------------------------------------------------------------------------------------------- |
+| `Dominios/`  | áreas de conhecimento (postura editorial, cascata de vereditos, critério de seleção, pipeline) |
+| `Decisoes/`  | decisões arquiteturais e editoriais com rationale + alternativas + sinais de revisão           |
+| `Bugs/`      | incidentes técnicos com causa raiz + fix + como detectar regressão                             |
+| `Specs/`     | pointers para specs ativos em `docs/superpowers/specs/`                                        |
+| `Fontes/`    | fact-checkers (Lupa, Aos Fatos, Comprova)                                                      |
+| `Pessoas/`   | curador, candidatos no MVP, stakeholders                                                       |
+| `Templates/` | frontmatter padrão para cada tipo de nota                                                      |
 
 **Regras de uso (alinhadas ao protocolo global):**
 

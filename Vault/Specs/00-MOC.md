@@ -32,6 +32,7 @@ Pointers para specs em `docs/superpowers/specs/`. Specs são **fonte da verdade 
 ## Specs arquivados
 
 Quando uma fase encerra:
+
 - Spec **fica** em `docs/superpowers/specs/` (referência histórica)
 - Plano correspondente **fica** em `docs/superpowers/plans/`
 - Checkpoint em `~/.claude/projects/.../memory/checkpoint-fase<N>-completa.md`

@@ -38,6 +38,7 @@ Os dois são compatíveis. Distinguir liberta o projeto para atingir gates de I3
 ### Camada 1 — Jornalistas técnicos e de dados (~2/mês)
 
 **Alvos prioritários:**
+
 - Núcleo Jornalismo (nucleo.jor.br)
 - Aos Fatos (aosfatos.org)
 - Comprova (projetocomprova.com.br)
@@ -66,6 +67,7 @@ Os dois são compatíveis. Distinguir liberta o projeto para atingir gates de I3
 ### Camada 2 — Pesquisadores eleitorais (~1-2/mês)
 
 **Alvos:**
+
 - FGV CPDOC, FGV DAPP, FGV ECMI
 - USP IRI, USP IEA, USP NUPRI
 - UnB IPOL, UnB CEAM
@@ -77,6 +79,7 @@ Os dois são compatíveis. Distinguir liberta o projeto para atingir gates de I3
 ### Camada 3 — Comunidade open data Brasil (envolvimento orgânico, NÃO push)
 
 **Alvos:**
+
 - Open Knowledge Brasil (okfn.org.br) — listas, Discord/Slack
 - Operação Serenata de Amor
 - Brasil.io (brasil.io)
@@ -87,6 +90,7 @@ Os dois são compatíveis. Distinguir liberta o projeto para atingir gates de I3
 ### Camada 4 — AI/LLM research community (setup + sutil)
 
 **Alvos:**
+
 - **Hugging Face Hub** — publicar dataset como "Brazilian Elections 2026 — Verified Statements Dataset" com dataset card detalhado (one-shot setup, depois atualização por release)
 - Newsletter Latent Space (swyx)
 - Comunidade NLP Brasil (NILC USP-São Carlos, comunidades NLP em Discord/Slack)
@@ -97,6 +101,7 @@ Os dois são compatíveis. Distinguir liberta o projeto para atingir gates de I3
 ### Camada 5 — Comunidades técnicas brasileiras (background, opcional, pseudônimo OK)
 
 **Alvos:**
+
 - dev.to BR
 - Hashnode
 - Reddit r/brdev (técnico, **NÃO r/brasil** que é mais político)
@@ -105,20 +110,20 @@ Os dois são compatíveis. Distinguir liberta o projeto para atingir gates de I3
 
 **Riscos e mitigações:**
 
-- *Risco:* post viralizar como "produto" e virar pressão para entrevistas
-- *Mitigação:* não responder DMs pedindo entrevista; responder apenas PRs/issues técnicas
-- *Risco:* post pseudônimo ser tratado como suspeito
-- *Mitigação:* aceitar que esta camada é opcional; só fazer se ganho técnico-pedagógico é claro
+- _Risco:_ post viralizar como "produto" e virar pressão para entrevistas
+- _Mitigação:_ não responder DMs pedindo entrevista; responder apenas PRs/issues técnicas
+- _Risco:_ post pseudônimo ser tratado como suspeito
+- _Mitigação:_ aceitar que esta camada é opcional; só fazer se ganho técnico-pedagógico é claro
 
 ## Cadência operacional
 
-| Frequência | Atividade | Tempo |
-| ---------- | --------- | ----- |
-| **Semanal** | Review de painel P1-P7 (de [[I3-Metricas-de-Sucesso]]) | 15min |
-| **Mensal** | 4-6 outreaches diretos personalizados (Camadas 1+2) | ~2h |
-| **Trimestral** | Anúncio de release em comunidades open data (Camada 3) + HF Hub update (Camada 4) | ~1h |
-| **Semestral** | Avaliação eficácia e ajuste de alvos | ~1h |
-| **Anual** (opcional) | Paper técnico descrevendo arquitetura (Camada 5) | ~4-8h |
+| Frequência           | Atividade                                                                         | Tempo |
+| -------------------- | --------------------------------------------------------------------------------- | ----- |
+| **Semanal**          | Review de painel P1-P7 (de [[I3-Metricas-de-Sucesso]])                            | 15min |
+| **Mensal**           | 4-6 outreaches diretos personalizados (Camadas 1+2)                               | ~2h   |
+| **Trimestral**       | Anúncio de release em comunidades open data (Camada 3) + HF Hub update (Camada 4) | ~1h   |
+| **Semestral**        | Avaliação eficácia e ajuste de alvos                                              | ~1h   |
+| **Anual** (opcional) | Paper técnico descrevendo arquitetura (Camada 5)                                  | ~4-8h |
 
 **Bandwidth total estimado:** ~3-4h/mês do curador. Dentro do orçamento de 8-15h/sem.
 
@@ -127,7 +132,7 @@ Os dois são compatíveis. Distinguir liberta o projeto para atingir gates de I3
 1. **Cada outreach é personalizado** — nunca template mass enviado para múltiplos destinatários
 2. **Atlas se apresenta como infraestrutura, não como opinião** — vocabulário tecnicista mantido
 3. **Curador faz outreach com nome próprio em email privado** mas SEM aparecer como rosto público
-   - OK: *"Sou o mantenedor do Atlas dos Candidatos 2026, gostaria de mencionar..."*
+   - OK: _"Sou o mantenedor do Atlas dos Candidatos 2026, gostaria de mencionar..."_
    - NÃO OK: aparecer em coluna, podcast, entrevista TV/rádio com foto/bio
 4. **Aceitar "não" graciosamente** — taxa de resposta esperada: 10-30%
 5. **Painel mensal registra outreaches feitos + respostas** — análise privada de eficácia
@@ -147,16 +152,16 @@ Os dois são compatíveis. Distinguir liberta o projeto para atingir gates de I3
 
 ## Compatibilidade com decisões cravadas
 
-| Decisão | Compatibilidade |
-| ------- | --------------- |
-| **Sem rosto público** (decisão #2 em memória) | Mantida. Outreach individual com nome de mantenedor preserva. Camada 5 permite pseudônimo. |
-| **[[Sem-Veredito-Proprio]]** | Total. Outreach apresenta Atlas como infraestrutura agregadora, não fact-checker. |
-| **Soft launch silencioso** (#8) | Reinterpretado: "sem PR mass" mantido literal; "outreach controlado individual" é categoria distinta e compatível. |
-| **Postura tecnicista** | Reforça (outreach focado em uso técnico/factual). |
-| **[[Audiencia-Primaria]]** | Total. Camadas 1+2+4 miram exatamente B2B/LLM/acadêmico. |
-| **[[I3-Metricas-de-Sucesso]]** | Total. Gera P1 (backlinks editoriais), P2 (LLM via HF Hub), P3 (citações acadêmicas). |
-| **[[I4-Compartilhabilidade]]** | Total. Embed widget (feature 3 de I4) depende de Camada 1 para validação. |
-| **[[Stack-Astro-Estatico]]** | Total. Nenhuma feature técnica nova exigida. |
+| Decisão                                       | Compatibilidade                                                                                                    |
+| --------------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+| **Sem rosto público** (decisão #2 em memória) | Mantida. Outreach individual com nome de mantenedor preserva. Camada 5 permite pseudônimo.                         |
+| **[[Sem-Veredito-Proprio]]**                  | Total. Outreach apresenta Atlas como infraestrutura agregadora, não fact-checker.                                  |
+| **Soft launch silencioso** (#8)               | Reinterpretado: "sem PR mass" mantido literal; "outreach controlado individual" é categoria distinta e compatível. |
+| **Postura tecnicista**                        | Reforça (outreach focado em uso técnico/factual).                                                                  |
+| **[[Audiencia-Primaria]]**                    | Total. Camadas 1+2+4 miram exatamente B2B/LLM/acadêmico.                                                           |
+| **[[I3-Metricas-de-Sucesso]]**                | Total. Gera P1 (backlinks editoriais), P2 (LLM via HF Hub), P3 (citações acadêmicas).                              |
+| **[[I4-Compartilhabilidade]]**                | Total. Embed widget (feature 3 de I4) depende de Camada 1 para validação.                                          |
+| **[[Stack-Astro-Estatico]]**                  | Total. Nenhuma feature técnica nova exigida.                                                                       |
 
 ## Consequências
 

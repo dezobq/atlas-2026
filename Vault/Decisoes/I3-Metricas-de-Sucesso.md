@@ -14,7 +14,7 @@ Métricas atuais (`~/.claude/projects/.../memory/criterios-sucesso-atlas.md`) ce
 
 [[Audiencia-Primaria]] (cravada 2026-05-28) reframeou audiência primária para mídia + acadêmico + LLM. [[I4-Compartilhabilidade]] (cravada 2026-05-28) introduziu cards visuais + API JSON pública + embed widget como features de produto. Métricas atuais não refletem nem a nova audiência nem as novas features. Adicionalmente, "mentions externas" é vago e não-operacional.
 
-Sem revisão de métricas: decisões de produto e distribuição posteriores ficariam medindo a coisa errada. Uniques/mês contra Folha/Estadão sem backlinks de autoridade é jogo de longo prazo que valida apenas *depois* da eleição — tarde demais para informar pivot.
+Sem revisão de métricas: decisões de produto e distribuição posteriores ficariam medindo a coisa errada. Uniques/mês contra Folha/Estadão sem backlinks de autoridade é jogo de longo prazo que valida apenas _depois_ da eleição — tarde demais para informar pivot.
 
 ## Alternativas consideradas
 
@@ -34,15 +34,15 @@ Sem revisão de métricas: decisões de produto e distribuição posteriores fic
 
 ## Métricas primárias
 
-| # | Métrica | Ferramenta de detecção | Custo de operação |
-| - | ------- | ----------------------- | ----------------- |
-| **P1** | Backlinks editoriais de domínios .com.br de mídia | Google Search Console + Ahrefs free tier | Baixo (relatório mensal) |
-| **P2** | Citações em respostas de LLM | Busca manual periódica em Perplexity / ChatGPT search / NotebookLM / Claude / Gemini por consultas-teste | Baixo (~30min/mês) |
-| **P3** | Citações em papers acadêmicos | Google Scholar alert por "Atlas dos Candidatos" + "atlas-2026.pages.dev" | Zero (notificação automática) |
-| **P4** | Downloads de dataset (JSONL/CSV) | GitHub Releases analytics | Zero (built-in) |
-| **P5** | Embeds ativos em domínios externos | 1×1 pixel opt-in no widget — agregado por referer, sem fingerprint | Baixo (logs Cloudflare) |
-| **P6** | Cards baixados | Contagem anônima de cliques em "Baixar card" | Baixo (telemetria mínima) |
-| **P7** | API consumption | Logs Cloudflare Pages por endpoint + referer | Baixo (Cloudflare Analytics free) |
+| #      | Métrica                                           | Ferramenta de detecção                                                                                   | Custo de operação                 |
+| ------ | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------- | --------------------------------- |
+| **P1** | Backlinks editoriais de domínios .com.br de mídia | Google Search Console + Ahrefs free tier                                                                 | Baixo (relatório mensal)          |
+| **P2** | Citações em respostas de LLM                      | Busca manual periódica em Perplexity / ChatGPT search / NotebookLM / Claude / Gemini por consultas-teste | Baixo (~30min/mês)                |
+| **P3** | Citações em papers acadêmicos                     | Google Scholar alert por "Atlas dos Candidatos" + "atlas-2026.pages.dev"                                 | Zero (notificação automática)     |
+| **P4** | Downloads de dataset (JSONL/CSV)                  | GitHub Releases analytics                                                                                | Zero (built-in)                   |
+| **P5** | Embeds ativos em domínios externos                | 1×1 pixel opt-in no widget — agregado por referer, sem fingerprint                                       | Baixo (logs Cloudflare)           |
+| **P6** | Cards baixados                                    | Contagem anônima de cliques em "Baixar card"                                                             | Baixo (telemetria mínima)         |
+| **P7** | API consumption                                   | Logs Cloudflare Pages por endpoint + referer                                                             | Baixo (Cloudflare Analytics free) |
 
 ## Métricas secundárias
 
@@ -53,12 +53,12 @@ Sem revisão de métricas: decisões de produto e distribuição posteriores fic
 
 ## Gates revisados
 
-| Marco | Primárias | Secundárias | Veredito |
-| ----- | --------- | ----------- | -------- |
-| **T+0 (lançamento)** | Site no ar; ≥60 declarações; cards gerados; API live; embed playground ativo | Lighthouse ≥95; MIT no GitHub | Sucesso técnico |
-| **T+3 meses** | ≥1 backlink editorial **OU** ≥1 citação acadêmica em construção **OU** ≥1 aparição em LLM detectada; ≥10 dataset downloads; ≥5 cards baixados; API consumida ≥1× por entidade externa | ≥50 uniques/mês orgânicos | Tração mínima |
-| **T+6 meses (campanha oficial)** | ≥3 backlinks editoriais; ≥1 citação acadêmica; ≥3 aparições em LLM detectadas; ≥1 embed ativo em mídia não-Atlas | ≥500 uniques/mês | Validação |
-| **T+12 meses (mês da eleição)** | ≥10 backlinks editoriais; ≥3 citações acadêmicas; aparições recorrentes em LLM; ≥3 embeds ativos em mídia | ≥2k uniques/mês durante debates | Impacto real |
+| Marco                            | Primárias                                                                                                                                                                             | Secundárias                     | Veredito        |
+| -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------- | --------------- |
+| **T+0 (lançamento)**             | Site no ar; ≥60 declarações; cards gerados; API live; embed playground ativo                                                                                                          | Lighthouse ≥95; MIT no GitHub   | Sucesso técnico |
+| **T+3 meses**                    | ≥1 backlink editorial **OU** ≥1 citação acadêmica em construção **OU** ≥1 aparição em LLM detectada; ≥10 dataset downloads; ≥5 cards baixados; API consumida ≥1× por entidade externa | ≥50 uniques/mês orgânicos       | Tração mínima   |
+| **T+6 meses (campanha oficial)** | ≥3 backlinks editoriais; ≥1 citação acadêmica; ≥3 aparições em LLM detectadas; ≥1 embed ativo em mídia não-Atlas                                                                      | ≥500 uniques/mês                | Validação       |
+| **T+12 meses (mês da eleição)**  | ≥10 backlinks editoriais; ≥3 citações acadêmicas; aparições recorrentes em LLM; ≥3 embeds ativos em mídia                                                                             | ≥2k uniques/mês durante debates | Impacto real    |
 
 ## Gates de parada/pivot honestos (revisados)
 
@@ -79,7 +79,7 @@ A premissa "arquivar dignamente é cenário aceitável" cravada em `criterios-su
 ## Operação
 
 - **Painel mensal interno** (`Vault/Pessoas/Andre-Queiroz.md` ou planilha privada com acesso só do curador) registra contagens. Não é público para evitar pressão de gamification e por privacidade de quem aparece.
-- **Atualização do `/sobre`** com seção "Estado atual" que comunica progresso *qualitativamente* (ex: "Em julho de 2026, Atlas foi citado por 2 veículos editoriais e aparece em respostas de Perplexity para queries sobre tema X") — sem expor números crus.
+- **Atualização do `/sobre`** com seção "Estado atual" que comunica progresso _qualitativamente_ (ex: "Em julho de 2026, Atlas foi citado por 2 veículos editoriais e aparece em respostas de Perplexity para queries sobre tema X") — sem expor números crus.
 - **Revisão trimestral dos gates:** se gate disparar reabertura, sessão de brainstorm aberta para [[Audiencia-Primaria]] ou [[I2-Distribuicao]] dependendo do gap.
 
 ## Consequências

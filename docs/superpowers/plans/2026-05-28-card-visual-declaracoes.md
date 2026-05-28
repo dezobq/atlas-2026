@@ -9,6 +9,7 @@
 **Tech Stack:** Astro 5 · TypeScript · Vitest · Satori 0.26 · @resvg/resvg-js 2.6 · qrcode (a instalar) · Geist Sans (Regular + Medium em `assets/fonts/`).
 
 **Specs e decisões pai:**
+
 - Spec: `docs/superpowers/specs/2026-05-28-card-visual-declaracoes-design.md`
 - Decisão de produto: `Vault/Decisoes/I4-Compartilhabilidade.md`
 - Audiência: `Vault/Decisoes/Audiencia-Primaria.md`
@@ -19,6 +20,7 @@
 ## File Structure
 
 **Criar:**
+
 - `src/lib/cards/fact-checker-palette.ts` — paleta de cores dos veículos do enum `veiculoVeredito`
 - `src/lib/cards/typography-scale.ts` — escala dinâmica 3 faixas por comprimento × multiplicador por formato
 - `src/lib/cards/truncate.ts` — truncamento com "…" preservando última palavra completa
@@ -31,10 +33,12 @@
 - `src/components/declaracoes/CardActions.astro` — UI com 3 botões (Baixar / Copiar link / Compartilhar)
 
 **Modificar:**
+
 - `src/pages/declaracoes/[id].astro` — incluir `<CardActions />`
 - `package.json` — adicionar script `generate:cards` e estender `build:full`
 
 **Testar:**
+
 - `tests/unit/cards/fact-checker-palette.test.ts`
 - `tests/unit/cards/typography-scale.test.ts`
 - `tests/unit/cards/truncate.test.ts`
@@ -49,6 +53,7 @@
 ## Task 1: Paleta de cores dos fact-checkers
 
 **Files:**
+
 - Create: `src/lib/cards/fact-checker-palette.ts`
 - Test: `tests/unit/cards/fact-checker-palette.test.ts`
 
@@ -124,6 +129,7 @@ git commit -m "feat(cards): adicionar paleta de cores por fact-checker"
 ## Task 2: Escala dinâmica de tipografia
 
 **Files:**
+
 - Create: `src/lib/cards/typography-scale.ts`
 - Test: `tests/unit/cards/typography-scale.test.ts`
 
@@ -198,6 +204,7 @@ git commit -m "feat(cards): adicionar escala dinâmica de tipografia em 3 faixas
 ## Task 3: Truncamento de declaração
 
 **Files:**
+
 - Create: `src/lib/cards/truncate.ts`
 - Test: `tests/unit/cards/truncate.test.ts`
 
@@ -214,7 +221,8 @@ describe("truncateDeclaracao", () => {
   });
 
   it("trunca em maxLength sem cortar palavra", () => {
-    const long = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor".repeat(5);
+    const long =
+      "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor".repeat(5);
     const result = truncateDeclaracao(long, 50);
     expect(result.length).toBeLessThanOrEqual(51);
     expect(result.endsWith("…")).toBe(true);
@@ -270,6 +278,7 @@ git commit -m "feat(cards): adicionar truncamento com preservação de palavra"
 ## Task 4: Configuração de formatos
 
 **Files:**
+
 - Create: `src/lib/cards/format-config.ts`
 - Test: `tests/unit/cards/format-config.test.ts`
 
@@ -344,6 +353,7 @@ git commit -m "feat(cards): adicionar configuração dos 4 formatos do card"
 ## Task 5: Ordenação + limite de vereditos
 
 **Files:**
+
 - Create: `src/lib/cards/order-vereditos.ts`
 - Test: `tests/unit/cards/order-vereditos.test.ts`
 
@@ -438,6 +448,7 @@ git commit -m "feat(cards): adicionar ordenação alfabética e limite de 3 vere
 ## Task 6: Wrapper de QR code
 
 **Files:**
+
 - Create: `src/lib/cards/generate-qr.ts`
 - Test: `tests/unit/cards/generate-qr.test.ts`
 - Modify: `package.json` (adicionar dependência `qrcode` e `@types/qrcode`)
@@ -523,6 +534,7 @@ git commit -m "feat(cards): adicionar wrapper de QR code via qrcode library"
 ## Task 7: Template do card (objeto Satori)
 
 **Files:**
+
 - Create: `src/lib/cards/card-template.ts`
 - Test: `tests/unit/cards/card-template.test.ts`
 
@@ -616,7 +628,10 @@ const TEXT_SECONDARY = "#525252";
 const DIVIDER = "#E5E5E5";
 const ATLAS_MARK = "#171717";
 
-export function buildCardTemplate(data: CardData, format: CardFormat): { type: string; props: Record<string, unknown> } {
+export function buildCardTemplate(
+  data: CardData,
+  format: CardFormat,
+): { type: string; props: Record<string, unknown> } {
   const cfg = CARD_FORMATS[format];
   const declarationTrimmed = truncateDeclaracao(data.declaracao);
   const titleSize = titleFontSize(declarationTrimmed.length, cfg.multiplier);
@@ -672,7 +687,13 @@ function body(declaracao: string, fontSize: number, data: CardData) {
   return {
     type: "div",
     props: {
-      style: { display: "flex", flexDirection: "column", gap: 24, flex: 1, justifyContent: "center" },
+      style: {
+        display: "flex",
+        flexDirection: "column",
+        gap: 24,
+        flex: 1,
+        justifyContent: "center",
+      },
       children: [
         {
           type: "div",
@@ -723,7 +744,11 @@ function vereditosBlock(vereditos: VereditoSimple[], multiplier: number) {
             {
               type: "span",
               props: {
-                style: { color: factCheckerColor(v.veiculo), fontSize: 28 * multiplier, fontWeight: 500 },
+                style: {
+                  color: factCheckerColor(v.veiculo),
+                  fontSize: 28 * multiplier,
+                  fontWeight: 500,
+                },
                 children: "●",
               },
             },
@@ -733,7 +758,10 @@ function vereditosBlock(vereditos: VereditoSimple[], multiplier: number) {
             },
             {
               type: "span",
-              props: { style: { fontWeight: 400, color: TEXT_SECONDARY }, children: v.classificacao },
+              props: {
+                style: { fontWeight: 400, color: TEXT_SECONDARY },
+                children: v.classificacao,
+              },
             },
           ],
         },
@@ -755,18 +783,28 @@ function footer(url: string, qrSvg: string, multiplier: number) {
             children: [
               {
                 type: "span",
-                props: { style: { fontSize: 20 * multiplier, fontWeight: 500, color: TEXT_PRIMARY }, children: url.replace(/^https?:\/\//, "") },
+                props: {
+                  style: { fontSize: 20 * multiplier, fontWeight: 500, color: TEXT_PRIMARY },
+                  children: url.replace(/^https?:\/\//, ""),
+                },
               },
               {
                 type: "span",
-                props: { style: { fontSize: 18 * multiplier, color: TEXT_SECONDARY }, children: "Atlas dos Candidatos · 2026 · Não emite veredito · CC-BY 4.0" },
+                props: {
+                  style: { fontSize: 18 * multiplier, color: TEXT_SECONDARY },
+                  children: "Atlas dos Candidatos · 2026 · Não emite veredito · CC-BY 4.0",
+                },
               },
             ],
           },
         },
         {
           type: "img",
-          props: { src: `data:image/svg+xml;base64,${Buffer.from(qrSvg).toString("base64")}`, width: 120, height: 120 },
+          props: {
+            src: `data:image/svg+xml;base64,${Buffer.from(qrSvg).toString("base64")}`,
+            width: 120,
+            height: 120,
+          },
         },
       ],
     },
@@ -794,6 +832,7 @@ git commit -m "feat(cards): adicionar template Satori do card visual"
 ## Task 8: Função `generateCard` (orquestrador Satori + Resvg)
 
 **Files:**
+
 - Create: `src/lib/cards/generate-card.ts`
 - Test: `tests/integration/cards/generate-card.test.ts`
 
@@ -812,7 +851,7 @@ const sampleData: CardData = {
   evento: "Evento Mock",
   vereditos: [{ veiculo: "Lupa", classificacao: "parcialmente falso" }],
   url: "https://atlas-2026.pages.dev/declaracoes/test",
-  qrSvg: "<svg width=\"120\" height=\"120\"><rect width=\"120\" height=\"120\" fill=\"#0A0A0A\"/></svg>",
+  qrSvg: '<svg width="120" height="120"><rect width="120" height="120" fill="#0A0A0A"/></svg>',
 };
 
 describe("generateCard (integration)", () => {
@@ -892,6 +931,7 @@ git commit -m "feat(cards): adicionar orquestrador generate-card via Satori + Re
 ## Task 9: Script CLI `generate-cards.ts`
 
 **Files:**
+
 - Create: `scripts/generate-cards.ts`
 - Modify: `package.json` (adicionar `"generate:cards": "tsx scripts/generate-cards.ts"`)
 
@@ -920,7 +960,13 @@ interface DeclaracaoFrontmatter {
   candidato_id: string;
   evento_id?: string;
   criado_em: string;
-  vereditos_externos?: Array<{ veiculo: string; classificacao: string; url: string; data: string; citacao_curta: string }>;
+  vereditos_externos?: Array<{
+    veiculo: string;
+    classificacao: string;
+    url: string;
+    data: string;
+    citacao_curta: string;
+  }>;
 }
 
 function contentHash(fm: DeclaracaoFrontmatter): string {
@@ -960,7 +1006,11 @@ async function main(): Promise<void> {
     const cardData = {
       declaracao: fm.texto,
       candidato: fm.candidato_id,
-      data: new Date(fm.criado_em).toLocaleDateString("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric" }),
+      data: new Date(fm.criado_em).toLocaleDateString("pt-BR", {
+        day: "2-digit",
+        month: "2-digit",
+        year: "numeric",
+      }),
       evento: fm.evento_id ?? "",
       vereditos,
       url,
@@ -1025,6 +1075,7 @@ git commit -m "feat(cards): adicionar script generate-cards.ts build-time idempo
 ## Task 10: Componente `CardActions.astro`
 
 **Files:**
+
 - Create: `src/components/declaracoes/CardActions.astro`
 - Test: `tests/unit/components/declaracoes/CardActions.test.ts` (limitado — componentes Astro testáveis via grep no build)
 
@@ -1091,10 +1142,27 @@ const shareText = encodeURIComponent(`"${shortText}" — veja vereditos em ${url
   <details class="card-actions__group">
     <summary class="card-actions__button">Compartilhar</summary>
     <ul class="card-actions__menu">
-      <li><a href={`https://wa.me/?text=${shareText}`} target="_blank" rel="noopener">WhatsApp</a></li>
-      <li><a href={`https://twitter.com/intent/tweet?text=${shareText}`} target="_blank" rel="noopener">Twitter/X</a></li>
-      <li><a href={`https://www.threads.net/intent/post?text=${shareText}`} target="_blank" rel="noopener">Threads</a></li>
-      <li><a href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${shareText}`} target="_blank" rel="noopener">Telegram</a></li>
+      <li>
+        <a href={`https://wa.me/?text=${shareText}`} target="_blank" rel="noopener">WhatsApp</a>
+      </li>
+      <li>
+        <a
+          href={`https://twitter.com/intent/tweet?text=${shareText}`}
+          target="_blank"
+          rel="noopener">Twitter/X</a>
+      </li>
+      <li>
+        <a
+          href={`https://www.threads.net/intent/post?text=${shareText}`}
+          target="_blank"
+          rel="noopener">Threads</a>
+      </li>
+      <li>
+        <a
+          href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${shareText}`}
+          target="_blank"
+          rel="noopener">Telegram</a>
+      </li>
     </ul>
   </details>
 </section>
@@ -1177,7 +1245,10 @@ import { readFileSync } from "node:fs";
 import { join } from "node:path";
 
 describe("CardActions.astro", () => {
-  const source = readFileSync(join(process.cwd(), "src/components/declaracoes/CardActions.astro"), "utf-8");
+  const source = readFileSync(
+    join(process.cwd(), "src/components/declaracoes/CardActions.astro"),
+    "utf-8",
+  );
 
   it("declara as 3 áreas de ação (Baixar / Copiar / Compartilhar)", () => {
     expect(source).toContain("Baixar card");
@@ -1218,6 +1289,7 @@ git commit -m "feat(cards): adicionar componente CardActions com 3 botões"
 ## Task 11: Integração em `/declaracoes/[id].astro`
 
 **Files:**
+
 - Modify: `src/pages/declaracoes/[id].astro`
 
 - [ ] **Step 1: Inspect current file**
@@ -1268,6 +1340,7 @@ git commit -m "feat(cards): integrar CardActions na página /declaracoes/[id]"
 ## Task 12: Integração no build (`package.json`)
 
 **Files:**
+
 - Modify: `package.json`
 
 - [ ] **Step 1: Adjust `build:full` to include cards**
@@ -1365,6 +1438,7 @@ pnpm generate:cards
 Expected: 4 PNGs criados em `public/cards/2026-04-15-mock-economia-imposto/`.
 
 Open one of them in your image viewer and verify:
+
 - Background `#FAFAFA`
 - Texto em Geist Sans com acentos PT-BR corretos
 - Lupa com borda vermelha lateral + bullet vermelho
@@ -1378,6 +1452,7 @@ pnpm dev
 ```
 
 Verify the 3 buttons render and:
+
 - "Baixar card" abre menu com 4 opções e dispara download ao clicar
 - "Copiar link da imagem" copia URL e mostra "Copiado!" por 1.5s
 - "Compartilhar" abre intent do WhatsApp em nova aba (e demais)

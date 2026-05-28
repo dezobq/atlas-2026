@@ -7,7 +7,7 @@ status: ativo
 
 # MOC · Decisões
 
-Decisões arquiteturais e editoriais com rationale registrado. Cada nota deve responder: *por que* a decisão foi tomada, *quais alternativas* foram consideradas, *quando reavaliar*.
+Decisões arquiteturais e editoriais com rationale registrado. Cada nota deve responder: _por que_ a decisão foi tomada, _quais alternativas_ foram consideradas, _quando reavaliar_.
 
 ## Arquitetura técnica
 

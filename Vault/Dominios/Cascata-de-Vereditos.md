@@ -38,7 +38,7 @@ Em `data/declaracoes/<id>.md`, campo `vereditos[]`:
 ```yaml
 vereditos:
   - fonte: lupa
-    classificacao: falso  # literal do fact-checker, sem normalizar
+    classificacao: falso # literal do fact-checker, sem normalizar
     url: https://lupa.uol.com.br/...
     arquivado: https://web.archive.org/...
     data: 2026-04-20
