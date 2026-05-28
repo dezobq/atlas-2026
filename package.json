@@ -11,7 +11,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "build:index": "pagefind --site dist --force-language pt",
-    "build:full": "pnpm build && pnpm build:index",
+    "build:full": "pnpm generate:cards && pnpm build && pnpm build:index",
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "astro check",
