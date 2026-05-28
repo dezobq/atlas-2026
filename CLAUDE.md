@@ -147,15 +147,20 @@ ID de declaração: `YYYY-MM-DD-<candidato-slug>-<tema>-<descritor>` (ex: `2026-
 
 ## Workflow do projeto
 
-Ver [[checkpoint-fase2-completa]] para entry point atual. Fases completas:
+Ver [[checkpoint-sprint4.2-completa]] para entry point atual. Fases completas:
 
-| Fase | Status | Commit | Entrega |
-|------|--------|--------|---------|
-| 1 — Fundação | ✅ | `ce6ad3d` | Astro+React+Tailwind+shadcn+layout+tokens |
-| 2 — Pipeline | ✅ | `39bd315` | 6 scripts CLI + tech debt + bug fixes |
-| 3 — SEO+Páginas | 🚧 | (em curso) | JSON-LD + sitemap + Pagefind + 9 rotas + 8 componentes |
+| Fase | Status | Commit / Branch | Entrega |
+|------|--------|-----------------|---------|
+| 1 — Fundação | ✅ | `ce6ad3d` (main) | Astro+React+Tailwind+shadcn+layout+tokens |
+| 2 — Pipeline | ✅ | `39bd315` (main) | 6 scripts CLI + tech debt + bug fixes |
+| 3.1 — SEO Foundation | ✅ | `f0d34b8` (branch) | schema-dts + 6 build-* + 5 JSONLD*.astro + SEOTags + slot head |
+| 3.2 — Discovery infra | ✅ | `d0c4bc3` (branch) | `@astrojs/sitemap` + robots.txt + Pagefind + PagefindSearch |
+| 3.3 — Páginas + Componentes | ⏳ | — | 9 rotas + 8 componentes (Tasks 13-26) |
+| 3.4 — Validação + PR | ⏳ | — | format/lint/typecheck/test/build + squash merge (Tasks 27-29) |
 | 4 — Conteúdo MVP | ⏳ | — | 2 candidatos × 30 declarações reais |
 | 5 — Polimento+launch | ⏳ | — | Zenodo DOI · soft launch silencioso |
+
+> **Sprint 4.1+4.2** estão na branch `feat/fase3-seo-paginas` (worktree `../atlas-fase3`), NÃO mergeadas em `main`. Total: 12 commits, 105 testes. Sprint 4.3 começa pela Task 13 (fixtures).
 
 **Plans em `docs/superpowers/plans/`**, specs em `docs/superpowers/specs/`. Issues abertas (`#3`-`#6`) marcadas `good first issue` — fora do escopo das fases atuais.
 
@@ -167,7 +172,7 @@ Ver [[checkpoint-fase2-completa]] para entry point atual. Fases completas:
 - **Plan atual:** `docs/superpowers/plans/2026-05-27-atlas-fase3-seo-paginas.md`
 - **Schema do dataset:** `docs/SCHEMA.md` (gerado por `pnpm export:dataset`)
 - **Pipeline operacional:** `scripts/README.md`
-- **Memórias-chave:** [[checkpoint-fase2-completa]] · [[decisoes-core-atlas]] · [[astro-content-zod3]] · [[bugs-do-plano-fase1]] · [[feedback-best-practices]]
+- **Memórias-chave:** [[checkpoint-sprint4.2-completa]] (entry point atual) · [[checkpoint-fase2-completa]] (histórico) · [[decisoes-core-atlas]] · [[astro-content-zod3]] · [[bugs-do-plano-fase1]] · [[feedback-best-practices]]
 
 ---
 
