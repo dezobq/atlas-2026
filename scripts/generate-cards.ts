@@ -3,14 +3,15 @@ import { createHash } from "node:crypto";
 import { join, basename, extname } from "node:path";
 import { pathToFileURL } from "node:url";
 import matter from "gray-matter";
-import { generateCard } from "../src/lib/cards/generate-card";
-import { generateQrSvg } from "../src/lib/cards/generate-qr";
-import { CARD_FORMATS, type CardFormat } from "../src/lib/cards/format-config";
-import { orderVereditos } from "../src/lib/cards/order-vereditos";
+import { generateCard } from "@/lib/cards/generate-card";
+import { generateQrSvg } from "@/lib/cards/generate-qr";
+import { CARD_FORMATS, type CardFormat } from "@/lib/cards/format-config";
+import { orderVereditos } from "@/lib/cards/order-vereditos";
 import { logger } from "./lib/logger";
 
 const DECLARACOES_DIR = join(process.cwd(), "data", "declaracoes");
 const CARDS_DIR = join(process.cwd(), "public", "cards");
+const CACHE_DIR = join(process.cwd(), ".cache", "cards");
 const TEMPLATE_VERSION = "v1.0.0";
 
 interface DeclaracaoFrontmatter {
@@ -48,7 +49,8 @@ async function main(): Promise<void> {
     const fm = data as DeclaracaoFrontmatter;
     const hash = contentHash(fm);
     const outDir = join(CARDS_DIR, id);
-    const hashFile = join(outDir, `.hash-${hash}`);
+    const cacheDir = join(CACHE_DIR, id);
+    const hashFile = join(cacheDir, `.hash-${hash}`);
 
     if (existsSync(hashFile)) {
       logger.debug(`[skip] ${id} (cache hit)`);
@@ -56,6 +58,7 @@ async function main(): Promise<void> {
     }
 
     mkdirSync(outDir, { recursive: true });
+    mkdirSync(cacheDir, { recursive: true });
     const url = `https://atlas-2026.pages.dev/declaracoes/${id}`;
     const qrSvg = await generateQrSvg(url, { width: 120 });
     const vereditos = orderVereditos(fm.vereditos_externos ?? []).map((v) => ({
@@ -89,7 +92,7 @@ async function main(): Promise<void> {
   logger.info("✅ Cards gerados.");
 }
 
-const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+const isMain = import.meta.url === pathToFileURL(process.argv[1] ?? "").href;
 if (isMain) {
   main().catch((err) => {
     logger.error(err instanceof Error ? err : String(err));
