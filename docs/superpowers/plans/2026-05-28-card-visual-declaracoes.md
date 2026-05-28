@@ -1149,19 +1149,22 @@ const shareText = encodeURIComponent(`"${shortText}" — veja vereditos em ${url
         <a
           href={`https://twitter.com/intent/tweet?text=${shareText}`}
           target="_blank"
-          rel="noopener">Twitter/X</a>
+          rel="noopener">Twitter/X</a
+        >
       </li>
       <li>
         <a
           href={`https://www.threads.net/intent/post?text=${shareText}`}
           target="_blank"
-          rel="noopener">Threads</a>
+          rel="noopener">Threads</a
+        >
       </li>
       <li>
         <a
           href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${shareText}`}
           target="_blank"
-          rel="noopener">Telegram</a>
+          rel="noopener">Telegram</a
+        >
       </li>
     </ul>
   </details>
