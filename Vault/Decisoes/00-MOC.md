@@ -19,6 +19,7 @@ Decisões arquiteturais e editoriais com rationale registrado. Cada nota deve re
 
 - [[Sem-Veredito-Proprio]] — Atlas nunca classifica veracidade
 - [[Licencas-MIT-CC-BY]] — código MIT, dataset/conteúdo CC-BY 4.0
+- [[Extensao-Janela-Temporal]] — janela de elegibilidade estendida p/ [2025-05-16, 2026-05-28]; seleção de candidatos segue locked (2026-05-28)
 
 ## Estratégia e posicionamento
 

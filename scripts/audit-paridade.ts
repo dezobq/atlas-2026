@@ -28,9 +28,12 @@ export interface AuditResult {
   report: string;
 }
 
-// Janela de elegibilidade da Fase 4 (spec §4.2)
+// Janela de elegibilidade da Fase 4 (spec §4.2).
+// Errata 2026-05-28: fim estendido de 2026-05-16 → 2026-05-28 (data da curadoria do
+// piloto) para capturar material saliente do pré-candidato senador imediatamente
+// posterior ao corte original. A data_corte da SELEÇÃO de candidatos permanece locked.
 const JANELA_INICIO = new Date("2025-05-16T00:00:00.000Z").getTime();
-const JANELA_FIM = new Date("2026-05-16T23:59:59.999Z").getTime();
+const JANELA_FIM = new Date("2026-05-28T23:59:59.999Z").getTime();
 
 export function auditarParidade(input: AuditInput): AuditResult {
   const { mode, candidatos, declaracoes, eventos, eventoDeDeclaracao } = input;
@@ -135,7 +138,7 @@ export function auditarParidade(input: AuditInput): AuditResult {
     }
     if (ts < JANELA_INICIO || ts > JANELA_FIM) {
       errors.push(
-        `declaração ${d.id} em evento ${evento.id} (data=${evento.data}) fora da janela [2025-05-15, 2026-05-15]`,
+        `declaração ${d.id} em evento ${evento.id} (data=${evento.data}) fora da janela [2025-05-16, 2026-05-28]`,
       );
     }
   }

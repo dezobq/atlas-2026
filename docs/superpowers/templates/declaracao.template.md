@@ -10,11 +10,13 @@
 # tipo_estrutural: array com 1+ valores do enum
 # tema_principal: slug de data/temas/ (economia, saude, etc)
 # temas_secundarios: array de slugs (pode ser vazio)
+# datas (criado_em, atualizado_em, vereditos_externos[].data): ISO 8601 em UTC
+#     com sufixo Z (ex: 2025-11-30T23:30:00.000Z). Offsets -03:00 FALHAM no schema.
 
 id: "<ID>"
 slug: "<SLUG_IGUAL_AO_ID>"
-candidato_id: "<ID_DO_CANDIDATO>"
-evento_id: "<ID_DO_EVENTO>"
+candidato_id: "<SLUG_DO_CANDIDATO>" # = nome do arquivo em data/candidatos/ (ex: lula-luiz-inacio), NÃO o ULID
+evento_id: "<ULID_DO_EVENTO>" # = nome do arquivo em data/eventos/ (o ULID de 26 chars)
 
 texto: |
   <TRECHO_LITERAL_DA_DECLARAÇÃO_REVISADO_CONTRA_O_VÍDEO>

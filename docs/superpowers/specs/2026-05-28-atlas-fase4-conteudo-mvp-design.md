@@ -121,7 +121,9 @@ Esta seção é a referência canônica do conteúdo de `/metodologia`. Mudança
 
 **Regra:**
 
-> São elegíveis declarações cujo `evento.data` cai no intervalo fechado **[2025-05-16, 2026-05-16]** (12 meses anteriores à data de corte, inclusive nas duas pontas).
+> São elegíveis declarações cujo `evento.data` cai no intervalo fechado **[2025-05-16, 2026-05-28]**, inclusive nas duas pontas.
+
+**Errata 2026-05-28 (extensão da janela):** o fim da janela foi estendido de `2026-05-16` (12 meses após o início, originalmente alinhado à data de corte da seleção) para `2026-05-28` (data da curadoria do piloto Sprint 5.2). Motivo: o material público mais saliente do pré-candidato Flávio Bolsonaro (senador) concentrou-se em 19–26/05/2026, imediatamente após o corte original; manter 16/05 distorceria a representação do discurso real por acidente de calendário. **A `data_corte` da seleção de candidatos (2026-05-16) permanece locked** — os 2 candidatos não mudam; apenas a elegibilidade temporal de declarações se estende.
 
 **Mecânica:**
 
@@ -286,7 +288,7 @@ Setup editorial         Piloto (12 itens)        Lote (48 itens)        Poliment
 
 **Mecânica:**
 
-- Para cada um dos **6 temas**, cada candidato contribui **1 declaração** dentro da janela 2025-05-15 a 2026-05-15.
+- Para cada um dos **6 temas**, cada candidato contribui **1 declaração** dentro da janela [2025-05-16, 2026-05-28] (ver Errata §4.2).
 - Total: 12 declarações + os eventos correspondentes (até 12 novos; overlap possível se ambos no mesmo debate).
 - Workflow segue pipeline §5.3 deste documento (9 passos por declaração).
 
@@ -433,7 +435,7 @@ Adicionalmente, `pnpm validate-data` (já existente) deve passar a chamar `valid
 2. Existem **≤ 60** declarações durante execução; **exatamente 60** quando `--final-mode`.
 3. Cada candidato tem **≤ 5** declarações em cada um dos 6 temas (incremental); **exatamente 5** quando `--final-mode`.
 4. **100%** das declarações têm `archive_url` Wayback não-vazio.
-5. **100%** das declarações têm `evento.data` na janela [2025-05-15, 2026-05-15].
+5. **100%** das declarações têm `evento.data` na janela [2025-05-16, 2026-05-28] (ver Errata §4.2).
 6. `log-editorial.csv` tem **exatamente 1 linha por declaração** existente (FK match).
 7. `data/criterio-selecao.yaml.selecionados[].candidato_id` corresponde aos slugs em `data/candidatos/`.
 

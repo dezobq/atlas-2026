@@ -17,7 +17,7 @@
 
 - [ ] **`fonte_primaria_url`:** URL canônica (não shortlink, não redirect).
 - [ ] **`archive_url`:** snapshot Wayback gerado pelo `pnpm archive <url>` e verificado em browser.
-- [ ] **`data`:** dentro da janela [2025-05-16, 2026-05-16].
+- [ ] **`data`:** dentro da janela [2025-05-16, 2026-05-28] (estendida — ver Errata em /metodologia).
 - [ ] **`tipo` do evento:** classificação correta (debate/entrevista/etc.).
 - [ ] **`candidatos_envolvidos[]`:** lista os candidatos relevantes (todos os candidatos do evento, não só o autor da declaração).
 - [ ] **`descricao`:** 2–3 frases factuais sem juízo.
