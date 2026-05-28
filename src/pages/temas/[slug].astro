@@ -22,7 +22,8 @@ interface Props {
 const { tema } = Astro.props;
 const declaracoes = await getDeclaracoesByTema(tema.data.slug);
 const candidatos = await getAllCandidatos();
-const candidatosPorId = new Map(candidatos.map((c: Candidato) => [c.data.id, c]));
+// DeclaracaoCard resolve o candidato por d.data.candidato_id, que é o SLUG → chavear por slug.
+const candidatosPorSlug = new Map(candidatos.map((c: Candidato) => [c.data.slug, c]));
 const canonical = new URL(`/temas/${tema.data.slug}`, Astro.site).toString();
 const description = `${tema.data.nome} — ${declaracoes.length} declarações documentadas no Atlas. ${tema.data.descricao_curta}`;
 ---
@@ -56,7 +57,7 @@ const description = `${tema.data.nome} — ${declaracoes.length} declarações d
       ) : (
         <div style="display: flex; flex-direction: column; gap: var(--space-md);">
           {declaracoes.map((d) => {
-            const cand = candidatosPorId.get(d.data.candidato_id);
+            const cand = candidatosPorSlug.get(d.data.candidato_id);
             return <DeclaracaoCard declaracao={d} {...(cand ? { candidato: cand } : {})} />;
           })}
         </div>

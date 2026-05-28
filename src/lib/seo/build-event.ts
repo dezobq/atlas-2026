@@ -14,10 +14,12 @@ export function buildEventSchema(
   candidatos: Candidato[],
   siteUrl: string,
 ): WithContext<SchemaEvent> {
-  const candidatosPorId = new Map(candidatos.map((c) => [c.data.id, c]));
+  // candidatos_envolvidos[].candidato_id é o SLUG do candidato, então o índice
+  // precisa ser chaveado por c.data.slug (não c.data.id, que é um ULID). Ver Vault/Bugs/.
+  const candidatosPorSlug = new Map(candidatos.map((c) => [c.data.slug, c]));
 
   const performer: Person[] = evento.data.candidatos_envolvidos
-    .map((c) => candidatosPorId.get(c.candidato_id))
+    .map((c) => candidatosPorSlug.get(c.candidato_id))
     .filter((c): c is Candidato => c !== undefined)
     .map((c) => ({
       "@type": "Person" as const,

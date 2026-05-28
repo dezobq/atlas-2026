@@ -254,3 +254,71 @@ describe("auditarParidade", () => {
     expect(errors.some((e) => e.toLowerCase().includes("excesso"))).toBe(true);
   });
 });
+
+describe("auditarParidade — FK candidato_id resolve por slug (regressão id≠slug)", () => {
+  // Reproduz o cenário de PRODUÇÃO: candidato tem id=ULID e slug distinto
+  // (ex: data/candidatos/lula-luiz-inacio.yaml), e as declarações referenciam
+  // o SLUG em candidato_id. O helper `cand` do bloco acima mascara o bug ao
+  // forçar id===slug. Aqui id≠slug, como nos dados reais.
+  const candComUlid = (slug: string, id: string): CandidatoYaml => ({ id, slug, nome: slug });
+  const TEMAS = [
+    "economia",
+    "saude",
+    "educacao",
+    "seguranca-publica",
+    "meio-ambiente",
+    "politica-externa",
+  ];
+
+  it("piloto-mode: aceita 12 declarações quando candidato.id (ULID) ≠ candidato_id (slug)", () => {
+    const candidatos = [
+      candComUlid("lula-luiz-inacio", "01KSQDGYBHGRTNYGSMCMPAAKH4"),
+      candComUlid("bolsonaro-flavio", "01KSQDGYBJK8N8YJAWXHXSPA33"),
+    ];
+    const declaracoes: DeclaracaoFrontmatter[] = [];
+    let n = 0;
+    for (const c of candidatos) {
+      for (const t of TEMAS) {
+        declaracoes.push(dec(`d${n++}`, c.slug, t)); // candidato_id = SLUG (como na produção)
+      }
+    }
+    const eventos = [ev("ev1", "2025-12-01T00:00:00.000Z")];
+    const eventoDeDeclaracao = new Map(declaracoes.map((d) => [d.id, "ev1"]));
+    const { ok, errors } = auditarParidade({
+      mode: "piloto",
+      candidatos,
+      declaracoes,
+      eventos,
+      eventoDeDeclaracao,
+    });
+    expect(errors).toEqual([]);
+    expect(ok).toBe(true);
+  });
+
+  it("final-mode: aceita 60 declarações quando candidato.id (ULID) ≠ candidato_id (slug)", () => {
+    const candidatos = [
+      candComUlid("lula-luiz-inacio", "01KSQDGYBHGRTNYGSMCMPAAKH4"),
+      candComUlid("bolsonaro-flavio", "01KSQDGYBJK8N8YJAWXHXSPA33"),
+    ];
+    const declaracoes: DeclaracaoFrontmatter[] = [];
+    let n = 0;
+    for (const c of candidatos) {
+      for (const t of TEMAS) {
+        for (let i = 0; i < 5; i++) {
+          declaracoes.push(dec(`d${n++}`, c.slug, t));
+        }
+      }
+    }
+    const eventos = [ev("ev1", "2025-12-01T00:00:00.000Z")];
+    const eventoDeDeclaracao = new Map(declaracoes.map((d) => [d.id, "ev1"]));
+    const { ok, errors } = auditarParidade({
+      mode: "final",
+      candidatos,
+      declaracoes,
+      eventos,
+      eventoDeDeclaracao,
+    });
+    expect(errors).toEqual([]);
+    expect(ok).toBe(true);
+  });
+});

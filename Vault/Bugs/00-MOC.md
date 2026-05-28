@@ -17,6 +17,10 @@ Registro de bugs com causa raiz e fix. Protocolo anti-regressão: antes de tocar
 - [[Astro-Zod3-vs-Zod4]] — `astro:content` re-exporta Zod 3, sintaxe Zod 4 quebra
 - [[pnpm-CI-vs-Local]] — diferenças Windows/Ubuntu, mitigadas por `.gitattributes`
 
+### Dados e modelagem
+
+- [[Candidato-FK-Slug-vs-ULID]] — FK de candidato resolvida por ULID `data.id` em vez do slug; perfil do candidato e `audit:paridade --piloto-mode` quebram em silêncio (invisível ao CI)
+
 ## Como adicionar novo bug
 
 1. Copiar [[../Templates/Template-Bug]] para esta pasta

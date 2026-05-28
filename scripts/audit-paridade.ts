@@ -85,21 +85,24 @@ export function auditarParidade(input: AuditInput): AuditResult {
     matriz.set(key, (matriz.get(key) ?? 0) + 1);
   }
 
+  // A matriz é chaveada por d.candidato_id, que é o SLUG do candidato (= nome do
+  // arquivo em data/candidatos/). Por isso a verificação usa c.slug, NÃO c.id
+  // (o id é um ULID que não aparece em nenhuma FK). Ver Vault/Bugs/.
   if (mode === "final") {
     for (const c of candidatos) {
       for (const t of ENUM_VALIDOS.TEMA_VALIDOS) {
-        const count = matriz.get(`${c.id}::${t}`) ?? 0;
+        const count = matriz.get(`${c.slug}::${t}`) ?? 0;
         if (count !== 5) {
-          errors.push(`final-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 5`);
+          errors.push(`final-mode: ${c.slug} tem ${count} declaração(ões) em ${t}, esperado 5`);
         }
       }
     }
   } else if (mode === "piloto") {
     for (const c of candidatos) {
       for (const t of ENUM_VALIDOS.TEMA_VALIDOS) {
-        const count = matriz.get(`${c.id}::${t}`) ?? 0;
+        const count = matriz.get(`${c.slug}::${t}`) ?? 0;
         if (count !== 1) {
-          errors.push(`piloto-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 1`);
+          errors.push(`piloto-mode: ${c.slug} tem ${count} declaração(ões) em ${t}, esperado 1`);
         }
       }
     }

@@ -22,8 +22,9 @@ interface Props {
 }
 
 const { candidato } = Astro.props;
-const declaracoes = await getDeclaracoesByCandidato(candidato.data.id);
-const eventos = await getEventosByCandidato(candidato.data.id);
+// candidato_id nas declarações/eventos é o SLUG (= nome do arquivo), não o ULID data.id.
+const declaracoes = await getDeclaracoesByCandidato(candidato.data.slug);
+const eventos = await getEventosByCandidato(candidato.data.slug);
 const canonical = new URL(`/candidatos/${candidato.data.slug}`, Astro.site).toString();
 const description = `${candidato.data.nome} — ${candidato.data.partido}. ${declaracoes.length} declarações documentadas no Atlas.`;
 ---

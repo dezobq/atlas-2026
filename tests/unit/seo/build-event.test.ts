@@ -144,4 +144,43 @@ describe("buildEventSchema", () => {
     expect(performer).toHaveLength(1);
     expect(performer[0]).toMatchObject({ name: "Candidato A" });
   });
+
+  it("resolve performer por slug quando candidato.data.id (ULID) difere do slug", () => {
+    // Reproduz produção: candidato.data.id = ULID, slug distinto; o evento
+    // referencia o SLUG em candidato_id. As fixtures acima mascaram o bug com id===slug.
+    const candidatosComUlid = [
+      {
+        id: "lula-luiz-inacio",
+        collection: "candidatos",
+        data: {
+          id: "01KSQDGYBHGRTNYGSMCMPAAKH4",
+          slug: "lula-luiz-inacio",
+          nome: "Luiz Inácio Lula da Silva",
+          partido: "PT",
+          biografia_minima: "Bio.",
+          contas_oficiais: [],
+          criado_em: "2026-01-01T00:00:00Z",
+          atualizado_em: "2026-04-01T00:00:00Z",
+        },
+      },
+    ] as Candidato[];
+    const eventoComSlug = {
+      ...fakeEvento,
+      data: {
+        ...fakeEvento.data,
+        candidatos_envolvidos: [{ candidato_id: "lula-luiz-inacio" }],
+      },
+    } as Evento;
+    const schema = buildEventSchema(
+      eventoComSlug,
+      candidatosComUlid,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
+    const performer = schema.performer as Array<{ name: string; url: string }>;
+    expect(performer).toHaveLength(1);
+    expect(performer[0]).toMatchObject({
+      name: "Luiz Inácio Lula da Silva",
+      url: "https://atlas-2026.pages.dev/candidatos/lula-luiz-inacio",
+    });
+  });
 });

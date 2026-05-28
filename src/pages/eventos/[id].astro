@@ -25,7 +25,8 @@ interface Props {
 
 const { evento, candidatos } = Astro.props;
 const declaracoes = await getDeclaracoesByEvento(evento.data.id);
-const candidatosPorId = new Map(candidatos.map((c) => [c.data.id, c]));
+// DeclaracaoCard resolve o candidato por d.data.candidato_id, que é o SLUG → chavear por slug.
+const candidatosPorSlug = new Map(candidatos.map((c) => [c.data.slug, c]));
 
 const candidatosPresentes = await Promise.all(
   evento.data.candidatos_envolvidos.map((c) => getCandidatoById(c.candidato_id)),
@@ -98,8 +99,8 @@ const description = `${evento.data.titulo} — ${declaracoes.length} declaraçõ
           {declaracoes.map((d) => (
             <DeclaracaoCard
               declaracao={d}
-              {...(candidatosPorId.get(d.data.candidato_id) !== undefined
-                ? { candidato: candidatosPorId.get(d.data.candidato_id)! }
+              {...(candidatosPorSlug.get(d.data.candidato_id) !== undefined
+                ? { candidato: candidatosPorSlug.get(d.data.candidato_id)! }
                 : {})}
             />
           ))}

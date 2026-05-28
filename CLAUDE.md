@@ -151,6 +151,7 @@ Estas constraints foram descobertas via incidentes nas Fases 1-2. **Documentadas
 6. **Path alias único**: `@/*` → `src/*`. Configurado em `tsconfig.json`, `astro.config.mjs` e `vitest.config.ts`. **Não criar outros aliases.**
 7. **pnpm v10 local · v9 CI** — lockfile 9.0 compatível. Sempre `--frozen-lockfile` no CI.
 8. **CI Ubuntu vs Windows local**: rodar `pnpm format:check && pnpm lint && pnpm typecheck && pnpm test && pnpm build` localmente antes de push. Diferenças de fim de linha já estão mitigadas pelo `.gitattributes`, mas Prettier ainda pode ver formatação diferente.
+9. **FK de candidato = `slug`, nunca o ULID `data.id`**. Declarações (`candidato_id`) e eventos (`candidatos_envolvidos[].candidato_id`) referenciam o candidato pelo **slug** (= nome do arquivo); os loaders resolvem via `getEntry("candidatos", slug)`. O campo `data.id` (ULID) **não é FK** — chavear joins por ele dá miss silencioso (build não falha, página fica vazia). Ver [[Candidato-FK-Slug-vs-ULID]]. Detectado por: testes com `id ≠ slug` em `audit-paridade.test.ts` e `build-event.test.ts`.
 
 ---
 
