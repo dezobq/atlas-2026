@@ -1,0 +1,108 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Sobre"
+  description="O Atlas dos Candidatos 2026 é infraestrutura factual pública para a eleição presidencial brasileira. Quem mantém, por que existe, licenças."
+>
+  <article class="container-text" style="padding-block: var(--space-3xl);">
+    <header style="margin-bottom: var(--space-2xl);">
+      <p
+        class="eyebrow"
+        style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);"
+      >
+        Sobre
+      </p>
+      <h1
+        style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);"
+      >
+        Infraestrutura factual da eleição 2026
+      </h1>
+      <p style="color: var(--color-text-body); font-size: var(--text-body-lg);">
+        Base pública, aberta e indexável de declarações documentadas de candidatos à presidência do
+        Brasil em 2026.
+      </p>
+    </header>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>O que é</h2>
+      <p>
+        Cada declaração no Atlas tem fonte primária verificável: vídeo timestamped, transcrição
+        oficial, link arquivado no Wayback Machine. O dataset completo é publicado em
+        <a href="/dataset">/dataset</a> sob licença CC-BY 4.0.
+      </p>
+      <p>
+        Quando há veredito de fact-checker reconhecido (Lupa, Aos Fatos, Comprova, Estadão
+        Verifica), agregamos com atribuição transparente. <strong>
+          O Atlas não emite veredito próprio.
+        </strong>
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>Postura editorial</h2>
+      <p>
+        <strong>Tecnicista neutro radical, sem rosto.</strong> Mesma régua editorial para cada candidato,
+        sem exceção ideológica. Critério público auditável em
+        <a href="/metodologia">/metodologia</a>.
+      </p>
+      <p>Não somos fact-checker. Somos infraestrutura de fontes primárias.</p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>Quem mantém</h2>
+      <p>
+        Projeto solo mantido por <strong>André Queiroz</strong>. Curadoria editorial humana +
+        ferramentas de IA auxiliares (sem geração de conteúdo). Ver
+        <a href="/metodologia#uso-de-inteligência-artificial-no-atlas">política de IA</a>.
+      </p>
+      <p>
+        Contato: via
+        <a href="https://github.com/dezobq/atlas-2026/issues" rel="noopener external">
+          issues do GitHub
+        </a>.
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>Licenças</h2>
+      <ul>
+        <li>
+          <strong>Código:</strong> MIT — veja
+          <a href="https://github.com/dezobq/atlas-2026/blob/main/LICENSE" rel="noopener external">
+            LICENSE
+          </a>
+        </li>
+        <li>
+          <strong>Dataset:</strong> CC-BY 4.0 — reutilizável com atribuição
+        </li>
+        <li>
+          <strong>Conteúdo editorial:</strong> CC-BY 4.0
+        </li>
+      </ul>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>Como contribuir</h2>
+      <p>
+        Encontrou um erro factual? Veja o processo em <a href="/errata">/errata</a>.
+      </p>
+      <p>
+        Quer propor melhorias técnicas ou editoriais? Issues e PRs no
+        <a href="https://github.com/dezobq/atlas-2026" rel="noopener external">
+          repositório público
+        </a>.
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>Limites assumidos</h2>
+      <p>
+        O Atlas cobre <strong>2 candidatos</strong> à presidência no MVP — os top-2 da média das principais
+        pesquisas até 2026-05-16. Cobertura adicional fica para versões post-MVP.
+      </p>
+      <p>Não cobrimos candidatos a outros cargos (governadores, senadores etc.) no MVP.</p>
+    </section>
+  </article>
+</BaseLayout>
