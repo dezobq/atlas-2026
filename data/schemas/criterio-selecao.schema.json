@@ -28,7 +28,7 @@
             "enum": [
               "Datafolha",
               "Quaest",
-              "Genial-Quaest"
+              "AtlasIntel"
             ]
           },
           "url": {

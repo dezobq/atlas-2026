@@ -2,7 +2,7 @@
 título: "Atlas dos Candidatos · 2026 — Fase 4: Conteúdo MVP"
 versão: "1.1"
 status: "design aprovado · plan Sprint 5.1 em execução"
-autor: "André Dezob (curador) + Claude (rascunho)"
+autor: "André Queiroz (curador) + Claude (rascunho)"
 data_criação: "2026-05-28"
 spec_pai: "docs/superpowers/specs/2026-05-27-atlas-design.md"
 licença_conteúdo: "CC-BY 4.0"
@@ -342,7 +342,7 @@ Setup editorial         Piloto (12 itens)        Lote (48 itens)        Poliment
 ```yaml
 data_corte: "2026-05-15"                    # ISO 8601 (string)
 criado_em: ISO 8601                          # quando o critério foi aplicado
-curador: "André Dezob"
+curador: "André Queiroz"
 pesquisas:
   - instituto: "Datafolha"
     url: string                              # URL canônica do relatório

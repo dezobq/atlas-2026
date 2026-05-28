@@ -165,7 +165,7 @@ const criterioSelecao = defineCollection({
     pesquisas: z
       .array(
         z.object({
-          instituto: z.enum(["Datafolha", "Quaest", "Genial-Quaest"]),
+          instituto: z.enum(["Datafolha", "Quaest", "AtlasIntel"]),
           url: z.string().url(),
           archive_url: z.string().url(),
           data_publicacao: z.string().datetime(),

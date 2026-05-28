@@ -145,7 +145,7 @@ const criterioSelecaoSchema = z.object({
   pesquisas: z
     .array(
       z.object({
-        instituto: z.enum(["Datafolha", "Quaest", "Genial-Quaest"]),
+        instituto: z.enum(["Datafolha", "Quaest", "AtlasIntel"]),
         url: z.url(),
         archive_url: z.url(),
         data_publicacao: z.iso.datetime(),
