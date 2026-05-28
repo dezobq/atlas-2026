@@ -185,4 +185,76 @@ describe("auditarParidade", () => {
     expect(ok).toBe(false);
     expect(errors.some((e) => e.toLowerCase().includes("12"))).toBe(true);
   });
+
+  it("setup-mode: aceita 0 candidatos (estado inicial pré-Sprint 5.1)", () => {
+    const { ok, errors } = auditarParidade(setup("setup"));
+    expect(ok).toBe(true);
+    expect(errors).toEqual([]);
+  });
+
+  it("rejeita declaração sem evento_id mapeado", () => {
+    const candidatos = [cand("a"), cand("b")];
+    const declaracoes = [dec("d1", "a", "economia")];
+    const eventos = [ev("ev1", "2025-12-01T00:00:00.000Z")];
+    const eventoDeDeclaracao = new Map<string, string>(); // sem mapeamento
+    const { ok, errors } = auditarParidade({
+      mode: "final",
+      candidatos,
+      declaracoes,
+      eventos,
+      eventoDeDeclaracao,
+    });
+    expect(ok).toBe(false);
+    expect(errors.some((e) => e.includes("sem evento_id mapeado"))).toBe(true);
+  });
+
+  it("rejeita declaração com evento_id inexistente", () => {
+    const candidatos = [cand("a"), cand("b")];
+    const declaracoes = [dec("d1", "a", "economia")];
+    const eventos: EventoYaml[] = []; // nenhum evento
+    const eventoDeDeclaracao = new Map([["d1", "ev-fantasma"]]);
+    const { ok, errors } = auditarParidade({
+      mode: "final",
+      candidatos,
+      declaracoes,
+      eventos,
+      eventoDeDeclaracao,
+    });
+    expect(ok).toBe(false);
+    expect(errors.some((e) => e.includes("ev-fantasma") && e.includes("inexistente"))).toBe(true);
+  });
+
+  it("rejeita evento com data ISO inválida", () => {
+    const candidatos = [cand("a"), cand("b")];
+    const declaracoes = [dec("d1", "a", "economia")];
+    const eventos = [ev("ev1", "data-quebrada-nao-iso")];
+    const eventoDeDeclaracao = new Map([["d1", "ev1"]]);
+    const { ok, errors } = auditarParidade({
+      mode: "final",
+      candidatos,
+      declaracoes,
+      eventos,
+      eventoDeDeclaracao,
+    });
+    expect(ok).toBe(false);
+    expect(errors.some((e) => e.toLowerCase().includes("data inválida"))).toBe(true);
+  });
+
+  it("rejeita mais de 60 declarações (limite máximo da Fase 4)", () => {
+    const candidatos = [cand("a"), cand("b")];
+    const declaracoes = Array.from({ length: 61 }).map((_, i) =>
+      dec(`d${i}`, "a", "economia"),
+    );
+    const eventos = [ev("ev1", "2025-12-01T00:00:00.000Z")];
+    const eventoDeDeclaracao = new Map(declaracoes.map((d) => [d.id, "ev1"]));
+    const { ok, errors } = auditarParidade({
+      mode: "setup",
+      candidatos,
+      declaracoes,
+      eventos,
+      eventoDeDeclaracao,
+    });
+    expect(ok).toBe(false);
+    expect(errors.some((e) => e.toLowerCase().includes("excesso"))).toBe(true);
+  });
 });
