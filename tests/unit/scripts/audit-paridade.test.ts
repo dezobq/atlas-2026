@@ -170,9 +170,7 @@ describe("auditarParidade", () => {
 
   it("piloto-mode: rejeita 13 declarações (uma a mais)", () => {
     const candidatos = [cand("a"), cand("b")];
-    const declaracoes = Array.from({ length: 13 }).map((_, i) =>
-      dec(`d${i}`, "a", "economia"),
-    );
+    const declaracoes = Array.from({ length: 13 }).map((_, i) => dec(`d${i}`, "a", "economia"));
     const eventos = [ev("ev1", "2025-12-01T00:00:00.000Z")];
     const eventoDeDeclaracao = new Map(declaracoes.map((d) => [d.id, "ev1"]));
     const { ok, errors } = auditarParidade({
@@ -242,9 +240,7 @@ describe("auditarParidade", () => {
 
   it("rejeita mais de 60 declarações (limite máximo da Fase 4)", () => {
     const candidatos = [cand("a"), cand("b")];
-    const declaracoes = Array.from({ length: 61 }).map((_, i) =>
-      dec(`d${i}`, "a", "economia"),
-    );
+    const declaracoes = Array.from({ length: 61 }).map((_, i) => dec(`d${i}`, "a", "economia"));
     const eventos = [ev("ev1", "2025-12-01T00:00:00.000Z")];
     const eventoDeDeclaracao = new Map(declaracoes.map((d) => [d.id, "ev1"]));
     const { ok, errors } = auditarParidade({

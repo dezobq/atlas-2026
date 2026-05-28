@@ -72,9 +72,7 @@ export function auditarParidade(input: AuditInput): AuditResult {
     );
   }
   if (declaracoes.length > 60) {
-    errors.push(
-      `declarações em excesso: ${declaracoes.length} (máximo permitido na Fase 4: 60)`,
-    );
+    errors.push(`declarações em excesso: ${declaracoes.length} (máximo permitido na Fase 4: 60)`);
   }
 
   // 3. Distribuição por (candidato × tema)
@@ -89,9 +87,7 @@ export function auditarParidade(input: AuditInput): AuditResult {
       for (const t of ENUM_VALIDOS.TEMA_VALIDOS) {
         const count = matriz.get(`${c.id}::${t}`) ?? 0;
         if (count !== 5) {
-          errors.push(
-            `final-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 5`,
-          );
+          errors.push(`final-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 5`);
         }
       }
     }
@@ -100,9 +96,7 @@ export function auditarParidade(input: AuditInput): AuditResult {
       for (const t of ENUM_VALIDOS.TEMA_VALIDOS) {
         const count = matriz.get(`${c.id}::${t}`) ?? 0;
         if (count !== 1) {
-          errors.push(
-            `piloto-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 1`,
-          );
+          errors.push(`piloto-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 1`);
         }
       }
     }
@@ -131,9 +125,7 @@ export function auditarParidade(input: AuditInput): AuditResult {
     }
     const evento = eventos.find((e) => e.id === evId);
     if (!evento) {
-      errors.push(
-        `declaração ${d.id} referencia evento_id=${evId} inexistente`,
-      );
+      errors.push(`declaração ${d.id} referencia evento_id=${evId} inexistente`);
       continue;
     }
     const ts = Date.parse(evento.data);
@@ -155,9 +147,7 @@ export function auditarParidade(input: AuditInput): AuditResult {
   } else {
     lines.push(`## ✅ PASS`);
     lines.push(``);
-    lines.push(
-      `Todas as invariantes da Fase 4 satisfeitas para o modo "${mode}".`,
-    );
+    lines.push(`Todas as invariantes da Fase 4 satisfeitas para o modo "${mode}".`);
   }
 
   return { ok: errors.length === 0, errors, report: lines.join("\n") };
@@ -213,14 +203,10 @@ if (isMain()) {
   writeFileSync(outPath, report + "\n", "utf-8");
 
   if (ok) {
-    console.log(
-      `✅ Auditoria de paridade (${mode}) PASS — relatório em docs/audit-fase4.md`,
-    );
+    console.log(`✅ Auditoria de paridade (${mode}) PASS — relatório em docs/audit-fase4.md`);
     process.exit(0);
   } else {
-    console.error(
-      `❌ Auditoria de paridade (${mode}) falhou com ${errors.length} problema(s):`,
-    );
+    console.error(`❌ Auditoria de paridade (${mode}) falhou com ${errors.length} problema(s):`);
     for (const e of errors) console.error(`  - ${e}`);
     console.error(`\nRelatório completo: docs/audit-fase4.md`);
     process.exit(1);

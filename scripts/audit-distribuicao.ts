@@ -15,13 +15,10 @@ function pct(n: number, total: number): number {
   return Math.round((n / total) * 100);
 }
 
-export function calcularDistribuicao(
-  declaracoes: DeclaracaoFrontmatter[],
-): DistribuicaoResult {
+export function calcularDistribuicao(declaracoes: DeclaracaoFrontmatter[]): DistribuicaoResult {
   const total = declaracoes.length;
   const comVeredito = declaracoes.filter(
-    (d) =>
-      Array.isArray(d.vereditos_externos) && d.vereditos_externos.length > 0,
+    (d) => Array.isArray(d.vereditos_externos) && d.vereditos_externos.length > 0,
   ).length;
 
   const tiposPorCandidato = new Map<string, Set<string>>();
@@ -36,10 +33,7 @@ export function calcularDistribuicao(
 
   const fonteCount = new Map<string, number>();
   for (const d of declaracoes) {
-    fonteCount.set(
-      d.fonte_primaria_tipo,
-      (fonteCount.get(d.fonte_primaria_tipo) ?? 0) + 1,
-    );
+    fonteCount.set(d.fonte_primaria_tipo, (fonteCount.get(d.fonte_primaria_tipo) ?? 0) + 1);
   }
   const distribuicaoFonte = new Map<string, number>();
   for (const [k, v] of fonteCount) {
@@ -67,9 +61,7 @@ function renderMarkdown(r: DistribuicaoResult): string {
   lines.push(`| Candidato | Tipos distintos | Tipos |`);
   lines.push(`|---|---|---|`);
   for (const [cand, tipos] of r.tiposPorCandidato) {
-    lines.push(
-      `| ${cand} | ${tipos.size}/8 | ${Array.from(tipos).join(", ")} |`,
-    );
+    lines.push(`| ${cand} | ${tipos.size}/8 | ${Array.from(tipos).join(", ")} |`);
   }
   lines.push(``);
 
