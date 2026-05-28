@@ -46,10 +46,7 @@ const fakeEvento: Evento = {
     fonte_primaria_url: "https://youtube.com/watch?v=abc123",
     fonte_primaria_tipo: "youtube_oficial",
     archive_url: "https://web.archive.org/web/2026/https://youtube.com/watch?v=abc123",
-    candidatos_envolvidos: [
-      { candidato_id: "candidato-a" },
-      { candidato_id: "candidato-b" },
-    ],
+    candidatos_envolvidos: [{ candidato_id: "candidato-a" }, { candidato_id: "candidato-b" }],
     descricao: "Debate entre candidatos sobre economia e saúde.",
     criado_em: "2026-04-15T00:00:00Z",
     atualizado_em: "2026-04-15T00:00:00Z",
@@ -58,24 +55,40 @@ const fakeEvento: Evento = {
 
 describe("buildEventSchema", () => {
   it("retorna Event com @context e @type", () => {
-    const schema = buildEventSchema(fakeEvento, fakeCandidatos, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildEventSchema(
+      fakeEvento,
+      fakeCandidatos,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Event");
   });
 
   it("usa título como name e descrição como description", () => {
-    const schema = buildEventSchema(fakeEvento, fakeCandidatos, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildEventSchema(
+      fakeEvento,
+      fakeCandidatos,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.name).toBe("Debate Presidencial - Rede TV 15/04/2026");
     expect(schema.description).toBe("Debate entre candidatos sobre economia e saúde.");
   });
 
   it("usa data como startDate", () => {
-    const schema = buildEventSchema(fakeEvento, fakeCandidatos, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildEventSchema(
+      fakeEvento,
+      fakeCandidatos,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.startDate).toBe("2026-04-15T20:00:00Z");
   });
 
   it("inclui location quando físico existe", () => {
-    const schema = buildEventSchema(fakeEvento, fakeCandidatos, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildEventSchema(
+      fakeEvento,
+      fakeCandidatos,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.location).toEqual({
       "@type": "Place",
       name: "Estúdio Rede TV - São Paulo",
@@ -83,7 +96,11 @@ describe("buildEventSchema", () => {
   });
 
   it("inclui performer com todos os candidatos envolvidos", () => {
-    const schema = buildEventSchema(fakeEvento, fakeCandidatos, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildEventSchema(
+      fakeEvento,
+      fakeCandidatos,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.performer).toEqual([
       {
         "@type": "Person",
@@ -99,7 +116,11 @@ describe("buildEventSchema", () => {
   });
 
   it("inclui url canônica do evento", () => {
-    const schema = buildEventSchema(fakeEvento, fakeCandidatos, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildEventSchema(
+      fakeEvento,
+      fakeCandidatos,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.url).toBe("https://atlas-2026.pages.dev/eventos/2026-04-15-debate-rede-tv");
   });
 
@@ -114,7 +135,11 @@ describe("buildEventSchema", () => {
         ],
       },
     } as Evento;
-    const schema = buildEventSchema(eventoComOrfao, fakeCandidatos, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildEventSchema(
+      eventoComOrfao,
+      fakeCandidatos,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     const performer = schema.performer as Array<{ name: string }>;
     expect(performer).toHaveLength(1);
     expect(performer[0]).toMatchObject({ name: "Candidato A" });

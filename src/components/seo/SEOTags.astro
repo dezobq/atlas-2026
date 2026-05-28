@@ -37,5 +37,13 @@ const {
 <meta name="twitter:description" content={description} />
 {ogImage && <meta name="twitter:image" content={ogImage} />}
 
-{ogType === "article" && publishedTime && <meta property="article:published_time" content={publishedTime} />}
-{ogType === "article" && modifiedTime && <meta property="article:modified_time" content={modifiedTime} />}
+{
+  ogType === "article" && publishedTime && (
+    <meta property="article:published_time" content={publishedTime} />
+  )
+}
+{
+  ogType === "article" && modifiedTime && (
+    <meta property="article:modified_time" content={modifiedTime} />
+  )
+}

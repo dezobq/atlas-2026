@@ -47,18 +47,30 @@ const fakeDeclaracao: Declaracao = {
 
 describe("buildQuotationSchema", () => {
   it("retorna Quotation com @context e @type", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Quotation");
   });
 
   it("usa o texto da declaração como text", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.text).toBe("Vou reduzir o imposto de renda em 30% no primeiro ano.");
   });
 
   it("inclui spokenByCharacter referenciando o candidato", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.spokenByCharacter).toEqual({
       "@type": "Person",
       name: "Candidato A",
@@ -67,19 +79,31 @@ describe("buildQuotationSchema", () => {
   });
 
   it("inclui citation com URL da fonte primária", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.citation).toBe("https://youtube.com/watch?v=abc123");
   });
 
   it("inclui url canônica da declaração no site", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.url).toBe(
       "https://atlas-2026.pages.dev/declaracoes/2026-04-15-candidato-a-economia-imposto",
     );
   });
 
   it("inclui dateCreated com criado_em", () => {
-    const schema = buildQuotationSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildQuotationSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.dateCreated).toBe("2026-04-15T00:00:00Z");
   });
 });

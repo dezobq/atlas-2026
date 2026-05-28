@@ -23,7 +23,10 @@ const contasVerificadas = data.contas_oficiais.filter((c) => c.verificada);
           class="candidato-header__avatar"
         />
       ) : (
-        <div class="candidato-header__avatar candidato-header__avatar--placeholder" aria-hidden="true">
+        <div
+          class="candidato-header__avatar candidato-header__avatar--placeholder"
+          aria-hidden="true"
+        >
           {data.nome.charAt(0)}
         </div>
       )

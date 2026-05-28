@@ -47,13 +47,21 @@ const fakeDeclaracao: Declaracao = {
 
 describe("buildArticleSchema", () => {
   it("retorna Article com @context e @type", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Article");
   });
 
   it("usa nome do candidato e texto truncado como headline", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.headline).toBe(
       'Candidato A: "Vou reduzir o imposto de renda em 30% no primeiro ano."',
     );
@@ -65,14 +73,22 @@ describe("buildArticleSchema", () => {
       ...fakeDeclaracao,
       data: { ...fakeDeclaracao.data, texto: longText },
     } as Declaracao;
-    const schema = buildArticleSchema(declaracaoLonga, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildArticleSchema(
+      declaracaoLonga,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     const headline = schema.headline;
     expect(String(headline).length).toBeLessThanOrEqual(140);
     expect(headline).toContain("…");
   });
 
   it("inclui author como Organization Atlas", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.author).toEqual({
       "@type": "Organization",
       name: "Atlas dos Candidatos 2026",
@@ -81,13 +97,21 @@ describe("buildArticleSchema", () => {
   });
 
   it("usa criado_em como datePublished e atualizado_em como dateModified", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.datePublished).toBe("2026-04-15T00:00:00Z");
     expect(schema.dateModified).toBe("2026-04-20T00:00:00Z");
   });
 
   it("inclui mainEntityOfPage com URL da declaração", () => {
-    const schema = buildArticleSchema(fakeDeclaracao, fakeCandidato, "https://atlas-2026.pages.dev") as unknown as Record<string, unknown>;
+    const schema = buildArticleSchema(
+      fakeDeclaracao,
+      fakeCandidato,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.mainEntityOfPage).toEqual({
       "@type": "WebPage",
       "@id": "https://atlas-2026.pages.dev/declaracoes/2026-04-15-candidato-a-economia-imposto",

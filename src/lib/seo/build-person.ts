@@ -11,9 +11,7 @@ import type { Candidato } from "@/types";
  */
 export function buildPersonSchema(candidato: Candidato, siteUrl: string): WithContext<Person> {
   const { data } = candidato;
-  const sameAs = data.contas_oficiais
-    .filter((c) => c.verificada)
-    .map((c) => c.url);
+  const sameAs = data.contas_oficiais.filter((c) => c.verificada).map((c) => c.url);
 
   const schema: WithContext<Person> = {
     "@context": "https://schema.org",

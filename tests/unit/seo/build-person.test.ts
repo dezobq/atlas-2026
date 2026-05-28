@@ -36,7 +36,9 @@ describe("buildPersonSchema", () => {
 
   it("inclui url canônica do candidato no site", () => {
     const schema = buildPersonSchema(fakeCandidato, "https://atlas-2026.pages.dev") as unknown;
-    expect((schema as Record<string, unknown>).url).toBe("https://atlas-2026.pages.dev/candidatos/candidato-a");
+    expect((schema as Record<string, unknown>).url).toBe(
+      "https://atlas-2026.pages.dev/candidatos/candidato-a",
+    );
   });
 
   it("inclui memberOf com partido", () => {

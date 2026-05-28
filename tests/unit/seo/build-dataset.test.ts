@@ -4,7 +4,10 @@ import { buildDatasetSchema } from "@/lib/seo/build-dataset";
 const testMeta = {
   version: "0.1.0",
   downloads: [
-    { format: "application/x-ndjson", url: "https://atlas-2026.pages.dev/dataset/declaracoes.jsonl" },
+    {
+      format: "application/x-ndjson",
+      url: "https://atlas-2026.pages.dev/dataset/declaracoes.jsonl",
+    },
     { format: "text/csv", url: "https://atlas-2026.pages.dev/dataset/declaracoes.csv" },
   ],
   totalDeclaracoes: 60,
@@ -12,10 +15,10 @@ const testMeta = {
 
 describe("buildDatasetSchema", () => {
   it("retorna Dataset com @context e @type", () => {
-    const schema = buildDatasetSchema(testMeta, "https://atlas-2026.pages.dev") as unknown as Record<
-      string,
-      unknown
-    >;
+    const schema = buildDatasetSchema(
+      testMeta,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema["@context"]).toBe("https://schema.org");
     expect(schema["@type"]).toBe("Dataset");
   });
@@ -47,10 +50,10 @@ describe("buildDatasetSchema", () => {
   });
 
   it("inclui distribution[] com cada download", () => {
-    const schema = buildDatasetSchema(testMeta, "https://atlas-2026.pages.dev") as unknown as Record<
-      string,
-      unknown
-    >;
+    const schema = buildDatasetSchema(
+      testMeta,
+      "https://atlas-2026.pages.dev",
+    ) as unknown as Record<string, unknown>;
     expect(schema.distribution).toEqual([
       {
         "@type": "DataDownload",

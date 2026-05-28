@@ -29,10 +29,10 @@ const description = `Lista de ${candidatos.length} candidatos à presidência do
       candidatos.length === 0 ? (
         <p style="color: var(--color-text-mute);">Nenhum candidato registrado ainda.</p>
       ) : (
-        <div
-          style="display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"
-        >
-          {candidatos.map((c) => <CandidatoCard candidato={c} />)}
+        <div style="display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));">
+          {candidatos.map((c) => (
+            <CandidatoCard candidato={c} />
+          ))}
         </div>
       )
     }
