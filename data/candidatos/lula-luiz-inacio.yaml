@@ -10,8 +10,8 @@ biografia_minima: >
   e 2010.
 contas_oficiais:
   - plataforma: "youtube"
-    handle: "@canalLulaOficial"
-    url: "https://www.youtube.com/@canalLulaOficial"
+    handle: "@LulaOficial"
+    url: "https://www.youtube.com/@LulaOficial"
     verificada: true
   - plataforma: "x"
     handle: "@LulaOficial"
@@ -22,4 +22,4 @@ contas_oficiais:
     url: "https://www.instagram.com/lulaoficial/"
     verificada: true
 criado_em: "2026-05-28T13:50:00.000Z"
-atualizado_em: "2026-05-28T13:50:00.000Z"
+atualizado_em: "2026-05-28T14:10:00.000Z"
