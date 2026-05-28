@@ -1,0 +1,22 @@
+# Template de evento — copiar para data/eventos/<id>.yaml e preencher.
+#
+# id: formato ULID (gerar via Apêndice B do plan Sprint 5.2) — 26 chars alfanuméricos.
+# Campos com <PLACEHOLDER_X> precisam ser preenchidos.
+# Datas: ISO 8601 com timezone (ex: 2025-08-15T20:30:00-03:00).
+
+id: "<ULID_DE_26_CHARS>"
+titulo: "<TÍTULO_DESCRITIVO_DO_EVENTO>"
+data: "<DATA_ISO_8601_COM_TZ>"
+tipo: "<debate|entrevista|comicio|post_rede_social|sabatina|declaracao_oficial>"
+local:
+  fisico: "<CIDADE_UF_OU_NULL>" # ex: "São Paulo, SP" ou null
+  digital: "<PLATAFORMA_OU_NULL>" # ex: "YouTube ao vivo" ou null
+duracao_minutos: <NUMERO_OU_NULL> # int positivo ou null
+fonte_primaria_url: "<URL_CANÔNICA>" # ex: https://www.youtube.com/watch?v=...
+fonte_primaria_tipo: "<youtube_oficial|tse|camara|senado|diario_oficial|midia_consolidada|rede_social_oficial>"
+archive_url: "<WAYBACK_URL>" # https://web.archive.org/web/<timestamp>/<URL>
+candidatos_envolvidos:
+  - candidato_id: "<ID_DO_CANDIDATO>" # ex: 01KSQDGYBHGRTNYGSMCMPAAKH4 (Lula)
+descricao: "<2_A_3_FRASES_FACTUAIS>" # ≥ 10 chars, sem juízo de valor
+criado_em: "<ISO_8601>"
+atualizado_em: "<ISO_8601>"
