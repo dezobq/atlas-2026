@@ -1,0 +1,85 @@
+---
+import type { Declaracao } from "@/types";
+import { formatDateBR } from "@/lib/utils/format-date";
+
+interface Props {
+  contexto: NonNullable<Declaracao["data"]["contexto_adicional"]>;
+}
+
+const { contexto } = Astro.props;
+---
+
+<section class="contexto-adicional" aria-labelledby="contexto-adicional-heading">
+  <h2 id="contexto-adicional-heading" class="contexto-adicional__heading">Contexto adicional</h2>
+  <p class="contexto-adicional__nota">
+    Informação editorial neutra para situar a declaração — sem juízo de valor.
+  </p>
+  <p class="contexto-adicional__texto">{contexto.texto}</p>
+
+  <h3 class="contexto-adicional__fontes-heading">Fontes do contexto</h3>
+  <ul class="contexto-adicional__fontes">
+    {
+      contexto.fontes.map((f) => (
+        <li>
+          <a href={f.url} rel="external noopener" target="_blank">
+            <span class="contexto-adicional__fonte-tipo">{f.tipo}</span>
+            <time datetime={f.data}>{formatDateBR(f.data)}</time>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</section>
+
+<style>
+  .contexto-adicional {
+    margin-block: var(--space-2xl);
+    padding: var(--space-lg);
+    border-left: 4px solid var(--color-hairline-strong);
+    background: var(--color-canvas-soft);
+  }
+  .contexto-adicional__heading {
+    font-size: var(--text-display-sm);
+    margin-block: 0 var(--space-xs);
+  }
+  .contexto-adicional__nota {
+    font-size: var(--text-body-sm);
+    color: var(--color-text-mute);
+    margin-block: 0 var(--space-md);
+  }
+  .contexto-adicional__texto {
+    font-size: var(--text-body-md);
+    line-height: var(--leading-body);
+    color: var(--color-text-body);
+    margin-block: 0 var(--space-md);
+  }
+  .contexto-adicional__fontes-heading {
+    font-size: var(--text-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-mute);
+    margin-block: var(--space-md) var(--space-xs);
+  }
+  .contexto-adicional__fontes {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-xs);
+  }
+  .contexto-adicional__fontes a {
+    display: inline-flex;
+    gap: var(--space-sm);
+    align-items: baseline;
+    color: var(--color-link);
+    text-decoration: none;
+    font-size: var(--text-body-sm);
+  }
+  .contexto-adicional__fontes a:hover {
+    color: var(--color-link-deep);
+  }
+  .contexto-adicional__fonte-tipo {
+    font-weight: var(--weight-medium);
+  }
+</style>
