@@ -56,3 +56,6 @@ public/og/
 
 # MCP Serena cache (índice LSP local, não versionar)
 .serena/
+
+# Pagefind build artifacts
+.pagefind/
