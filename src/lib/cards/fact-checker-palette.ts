@@ -1,6 +1,14 @@
 export const FALLBACK_COLOR = "#737373";
 
-const PALETTE: Record<string, string> = {
+type KnownFactChecker =
+  | "Lupa"
+  | "Aos Fatos"
+  | "Comprova"
+  | "Estadão Verifica"
+  | "Agência Pública"
+  | "BBC Verify";
+
+const PALETTE: Record<KnownFactChecker, string> = {
   Lupa: "#E20E0E",
   "Aos Fatos": "#1A9E5E",
   Comprova: "#1E5AAF",
@@ -10,5 +18,5 @@ const PALETTE: Record<string, string> = {
 };
 
 export function factCheckerColor(veiculo: string): string {
-  return PALETTE[veiculo] ?? FALLBACK_COLOR;
+  return (PALETTE as Record<string, string>)[veiculo] ?? FALLBACK_COLOR;
 }

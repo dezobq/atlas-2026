@@ -385,4 +385,4 @@ Manual:
 - Postura editorial: `Vault/Dominios/Postura-Editorial.md`
 - Cascata de vereditos: `Vault/Dominios/Cascata-de-Vereditos.md`
 - Spec mestre: `docs/superpowers/specs/2026-05-27-atlas-design.md`
-- Próximo passo: `docs/superpowers/plans/2026-XX-XX-card-visual-declaracoes-plan.md` (a ser gerado por writing-plans)
+- Próximo passo: `docs/superpowers/plans/2026-05-28-card-visual-declaracoes.md` (a ser gerado por writing-plans)

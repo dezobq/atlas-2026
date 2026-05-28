@@ -1030,7 +1030,7 @@ async function main(): Promise<void> {
   logger.info("✅ Cards gerados.");
 }
 
-const isMain = process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href;
+const isMain = import.meta.url === pathToFileURL(process.argv[1] ?? "").href;
 if (isMain) {
   main().catch((err) => {
     logger.error("Erro:", err);
