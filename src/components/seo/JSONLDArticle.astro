@@ -1,0 +1,17 @@
+---
+import type { Candidato, Declaracao } from "@/types";
+import { buildArticleSchema } from "@/lib/seo/build-article";
+import { safeJsonLd } from "@/lib/seo/safe-json-ld";
+
+interface Props {
+  declaracao: Declaracao;
+  candidato: Candidato;
+}
+
+const { declaracao, candidato } = Astro.props;
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://atlas-2026.pages.dev";
+const schema = buildArticleSchema(declaracao, candidato, siteUrl);
+const json = safeJsonLd(schema);
+---
+
+<script type="application/ld+json" is:inline set:html={json} />
