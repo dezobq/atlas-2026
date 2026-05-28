@@ -1,0 +1,60 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import { getAllEventos } from "@/lib/data/eventos";
+import { formatDateBR } from "@/lib/utils/format-date";
+
+const eventos = await getAllEventos();
+const canonical = new URL("/eventos", Astro.site).toString();
+const description = `Lista de ${eventos.length} eventos (debates, entrevistas, sabatinas) documentados no Atlas dos Candidatos 2026.`;
+---
+
+<BaseLayout title="Eventos" description={description}>
+  <SEOTags
+    slot="head"
+    title="Eventos · Atlas dos Candidatos 2026"
+    description={description}
+    canonical={canonical}
+    ogType="website"
+  />
+
+  <section class="container-default" style="padding-block: var(--space-3xl);">
+    <p class="eyebrow" style="margin-bottom: var(--space-sm);">EVENTOS</p>
+    <h1 style="margin-bottom: var(--space-lg);">Eventos documentados</h1>
+    <p style="color: var(--color-text-body); max-width: 60ch; margin-bottom: var(--space-2xl);">
+      {description}
+    </p>
+
+    {
+      eventos.length === 0 ? (
+        <p style="color: var(--color-text-mute);">Nenhum evento registrado ainda.</p>
+      ) : (
+        <ul style="list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: var(--space-md);">
+          {eventos.map((ev) => (
+            <li>
+              <a
+                href={`/eventos/${ev.data.id}`}
+                style="display: block; padding: var(--space-lg); border: 1px solid var(--color-hairline); border-radius: var(--radius-md); color: var(--color-text-primary); text-decoration: none; transition: var(--transition-base);"
+              >
+                <time
+                  datetime={ev.data.data}
+                  style="font-family: var(--font-mono); font-size: var(--text-caption); color: var(--color-text-mute); text-transform: uppercase;"
+                >
+                  {formatDateBR(ev.data.data)} · {ev.data.tipo}
+                </time>
+                <h3 style="margin-block: var(--space-xs) 0; font-size: var(--text-display-sm);">
+                  {ev.data.titulo}
+                </h3>
+                {ev.data.local.fisico && (
+                  <p style="margin: var(--space-xs) 0 0; color: var(--color-text-mute); font-size: var(--text-body-sm);">
+                    {ev.data.local.fisico}
+                  </p>
+                )}
+              </a>
+            </li>
+          ))}
+        </ul>
+      )
+    }
+  </section>
+</BaseLayout>

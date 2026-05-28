@@ -1,0 +1,110 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import JSONLDEvent from "@/components/seo/JSONLDEvent.astro";
+import DeclaracaoCard from "@/components/declaracao/DeclaracaoCard.astro";
+import { getAllEventos } from "@/lib/data/eventos";
+import { getAllCandidatos, getCandidatoById } from "@/lib/data/candidatos";
+import { getDeclaracoesByEvento } from "@/lib/data/declaracoes";
+import { formatDateBR } from "@/lib/utils/format-date";
+import type { Candidato, Evento } from "@/types";
+
+export async function getStaticPaths() {
+  const eventos = await getAllEventos();
+  const candidatos = await getAllCandidatos();
+  return eventos.map((evento) => ({
+    params: { id: evento.data.id },
+    props: { evento, candidatos },
+  }));
+}
+
+interface Props {
+  evento: Evento;
+  candidatos: Candidato[];
+}
+
+const { evento, candidatos } = Astro.props;
+const declaracoes = await getDeclaracoesByEvento(evento.data.id);
+const candidatosPorId = new Map(candidatos.map((c) => [c.data.id, c]));
+
+const candidatosPresentes = await Promise.all(
+  evento.data.candidatos_envolvidos.map((c) => getCandidatoById(c.candidato_id)),
+);
+const candidatosValidos = candidatosPresentes.filter((c): c is Candidato => c !== undefined);
+
+const canonical = new URL(`/eventos/${evento.data.id}`, Astro.site).toString();
+const description = `${evento.data.titulo} — ${declaracoes.length} declarações documentadas no Atlas.`;
+---
+
+<BaseLayout title={evento.data.titulo} description={description}>
+  <SEOTags
+    slot="head"
+    title={`${evento.data.titulo} · Atlas dos Candidatos 2026`}
+    description={description}
+    canonical={canonical}
+    ogType="website"
+  />
+  <JSONLDEvent slot="head" evento={evento} candidatos={candidatosValidos} />
+
+  <section class="container-default" style="padding-block: var(--space-xl);">
+    <p class="eyebrow">EVENTO · {evento.data.tipo}</p>
+    <h1 style="margin-block: var(--space-xs) var(--space-md);">{evento.data.titulo}</h1>
+
+    <dl
+      style="display: flex; gap: var(--space-xl); margin-block: var(--space-md) var(--space-xl); flex-wrap: wrap;"
+    >
+      <div>
+        <dt
+          style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;"
+        >
+          Data
+        </dt>
+        <dd style="margin: var(--space-xxs) 0 0; font-family: var(--font-mono);">
+          <time datetime={evento.data.data}>{formatDateBR(evento.data.data)}</time>
+        </dd>
+      </div>
+      {
+        evento.data.local.fisico && (
+          <div>
+            <dt style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;">
+              Local
+            </dt>
+            <dd style="margin: var(--space-xxs) 0 0;">{evento.data.local.fisico}</dd>
+          </div>
+        )
+      }
+      {
+        evento.data.duracao_minutos && (
+          <div>
+            <dt style="font-size: var(--text-caption); text-transform: uppercase; color: var(--color-text-mute); letter-spacing: 0.05em;">
+              Duração
+            </dt>
+            <dd style="margin: var(--space-xxs) 0 0;">{evento.data.duracao_minutos} minutos</dd>
+          </div>
+        )
+      }
+    </dl>
+
+    <p style="color: var(--color-text-body); max-width: 70ch; line-height: var(--leading-body);">
+      {evento.data.descricao}
+    </p>
+
+    <h2 style="margin-block: var(--space-2xl) var(--space-lg);">Declarações deste evento</h2>
+    {
+      declaracoes.length === 0 ? (
+        <p style="color: var(--color-text-mute);">Nenhuma declaração documentada ainda.</p>
+      ) : (
+        <div style="display: flex; flex-direction: column; gap: var(--space-md);">
+          {declaracoes.map((d) => (
+            <DeclaracaoCard
+              declaracao={d}
+              {...(candidatosPorId.get(d.data.candidato_id) !== undefined
+                ? { candidato: candidatosPorId.get(d.data.candidato_id)! }
+                : {})}
+            />
+          ))}
+        </div>
+      )
+    }
+  </section>
+</BaseLayout>
