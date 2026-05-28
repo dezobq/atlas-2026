@@ -156,9 +156,66 @@ const declaracoes = defineCollection({
   }),
 });
 
+const criterioSelecao = defineCollection({
+  loader: glob({ base: "./data/criterio-selecao", pattern: "*.yaml" }),
+  schema: z.object({
+    data_corte: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+    criado_em: z.string().datetime(),
+    curador: z.string().min(1),
+    pesquisas: z
+      .array(
+        z.object({
+          instituto: z.enum(["Datafolha", "Quaest", "Genial-Quaest"]),
+          url: z.string().url(),
+          archive_url: z.string().url(),
+          data_publicacao: z.string().datetime(),
+          amostra: z.number().int().positive(),
+          margem_erro_pp: z.number().positive(),
+          metodologia: z.enum(["presencial domiciliar", "telefônica", "online"]),
+          intencao_estimulada: z
+            .array(
+              z.object({
+                candidato_nome: z.string().min(1),
+                percentual: z.number().min(0).max(100),
+              }),
+            )
+            .min(1),
+        }),
+      )
+      .length(3),
+    calculo: z
+      .array(
+        z.object({
+          candidato_nome: z.string().min(1),
+          media_simples: z.number().min(0).max(100),
+        }),
+      )
+      .min(2),
+    selecionados: z
+      .array(
+        z.object({
+          posicao: z.number().int().min(1).max(2),
+          candidato_id: z.string().regex(/^[a-z0-9-]+$/),
+          nome: z.string().min(1),
+          media: z.number().min(0).max(100),
+        }),
+      )
+      .length(2),
+    linha_de_empate: z.object({
+      candidato_nome: z.string().min(1),
+      media: z.number().min(0).max(100),
+      distancia_pp: z.number().min(0),
+      desempate_aplicado: z.boolean(),
+      desempate_criterio: z.enum(["maior amostra", "menor margem", "tempo no cargo"]).nullable(),
+    }),
+    versao: z.number().int().positive(),
+  }),
+});
+
 export const collections = {
   candidatos,
   temas,
   eventos,
   declaracoes,
+  criterioSelecao,
 };

@@ -17,6 +17,7 @@ const collections = [
   { dir: "temas", ext: ".yaml", schema: "tema.schema.json" },
   { dir: "eventos", ext: ".yaml", schema: "evento.schema.json" },
   { dir: "declaracoes", ext: ".md", schema: "declaracao.schema.json" },
+  { dir: "criterio-selecao", ext: ".yaml", schema: "criterio-selecao.schema.json" },
 ];
 
 function loadSchema(filename: string): ValidateFunction {
