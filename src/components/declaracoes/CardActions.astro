@@ -89,9 +89,13 @@ const shareText = encodeURIComponent(`"${shortText}" — veja vereditos em ${url
   document.querySelectorAll<HTMLButtonElement>("[data-copy-url]").forEach((btn) => {
     btn.addEventListener("click", async () => {
       const url = btn.dataset.copyUrl ?? "";
-      await navigator.clipboard.writeText(url);
       const original = btn.textContent;
-      btn.textContent = "Copiado!";
+      try {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = "Copiado!";
+      } catch {
+        btn.textContent = "Erro ao copiar";
+      }
       setTimeout(() => {
         btn.textContent = original;
       }, 1500);
