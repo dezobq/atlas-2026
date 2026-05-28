@@ -1,0 +1,24 @@
+id: "01KSQDGYBJK8N8YJAWXHXSPA33"
+slug: "bolsonaro-flavio"
+nome: "Flávio Nantes Bolsonaro"
+foto_url: "https://atlas-2026.pages.dev/img/candidatos/bolsonaro-flavio.jpg"
+partido: "PL"
+biografia_minima: >
+  Político e advogado brasileiro, senador da República pelo Rio de Janeiro
+  desde 1 de fevereiro de 2019. Filiado ao Partido Liberal (PL). Pré-candidato
+  à Presidência da República em 2026, confirmado pela direção nacional do PL.
+contas_oficiais:
+  - plataforma: "youtube"
+    handle: "@flaviobolsonaro"
+    url: "https://www.youtube.com/flaviobolsonaro"
+    verificada: true
+  - plataforma: "x"
+    handle: "@FlavioBolsonaro"
+    url: "https://x.com/FlavioBolsonaro"
+    verificada: true
+  - plataforma: "instagram"
+    handle: "@flaviobolsonaro"
+    url: "https://www.instagram.com/flaviobolsonaro/"
+    verificada: true
+criado_em: "2026-05-28T13:50:00.000Z"
+atualizado_em: "2026-05-28T13:50:00.000Z"
