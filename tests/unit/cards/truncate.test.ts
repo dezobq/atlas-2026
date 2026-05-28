@@ -7,7 +7,8 @@ describe("truncateDeclaracao", () => {
   });
 
   it("trunca em maxLength sem cortar palavra", () => {
-    const long = "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor".repeat(5);
+    const long =
+      "Lorem ipsum dolor sit amet consectetur adipiscing elit sed do eiusmod tempor".repeat(5);
     const result = truncateDeclaracao(long, 50);
     expect(result.length).toBeLessThanOrEqual(51);
     expect(result.endsWith("…")).toBe(true);
