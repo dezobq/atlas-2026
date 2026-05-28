@@ -1,0 +1,88 @@
+---
+import type { Candidato } from "@/types";
+
+interface Props {
+  candidato: Candidato;
+}
+
+const { candidato } = Astro.props;
+const { data } = candidato;
+---
+
+<a
+  href={`/candidatos/${data.slug}`}
+  class="candidato-card"
+  aria-label={`Ver perfil de ${data.nome}`}
+>
+  <div class="candidato-card__header">
+    {
+      data.foto_url ? (
+        <img src={data.foto_url} alt="" width="48" height="48" class="candidato-card__avatar" />
+      ) : (
+        <div class="candidato-card__avatar candidato-card__avatar--placeholder" aria-hidden="true">
+          {data.nome.charAt(0)}
+        </div>
+      )
+    }
+    <div class="candidato-card__identidade">
+      <h3 class="candidato-card__nome">{data.nome}</h3>
+      <p class="candidato-card__partido">{data.partido}</p>
+    </div>
+  </div>
+  <p class="candidato-card__bio">{data.biografia_minima}</p>
+</a>
+
+<style>
+  .candidato-card {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-md);
+    background: var(--color-canvas);
+    color: var(--color-text-primary);
+    text-decoration: none;
+    transition: var(--transition-base);
+  }
+  .candidato-card:hover {
+    border-color: var(--color-hairline-strong);
+    box-shadow: var(--shadow-3-soft);
+  }
+  .candidato-card__header {
+    display: flex;
+    gap: var(--space-md);
+    align-items: center;
+  }
+  .candidato-card__avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+  .candidato-card__avatar--placeholder {
+    display: grid;
+    place-items: center;
+    background: var(--color-bg-muted);
+    color: var(--color-text-mute);
+    font-weight: var(--weight-semibold);
+    font-size: var(--text-body-lg);
+  }
+  .candidato-card__nome {
+    margin: 0;
+    font-size: var(--text-display-sm);
+    font-weight: var(--weight-semibold);
+    letter-spacing: var(--tracking-display-sm);
+  }
+  .candidato-card__partido {
+    margin: 0;
+    font-size: var(--text-body-sm);
+    color: var(--color-text-mute);
+  }
+  .candidato-card__bio {
+    margin: 0;
+    font-size: var(--text-body-sm);
+    color: var(--color-text-body);
+    line-height: var(--leading-body);
+  }
+</style>
