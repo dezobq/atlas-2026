@@ -77,6 +77,7 @@ data/eventos/2026-04-15-debate-rede-tv.yaml
 ### Task 1: Schema Zod e JSON Schema para `criterio-selecao`
 
 **Files:**
+
 - Modify: `src/content/config.ts` — adicionar collection `criterioSelecao`
 - Modify: `scripts/generate-json-schemas.ts` — adicionar `write("criterio-selecao", ...)`
 - Modify: `scripts/validate-data.ts` — adicionar entry na lista `collections`
@@ -151,9 +152,7 @@ const criterioSelecaoSchema = z.object({
     media: z.number().min(0).max(100),
     distancia_pp: z.number().min(0),
     desempate_aplicado: z.boolean(),
-    desempate_criterio: z
-      .enum(["maior amostra", "menor margem", "tempo no cargo"])
-      .nullable(),
+    desempate_criterio: z.enum(["maior amostra", "menor margem", "tempo no cargo"]).nullable(),
   }),
   versao: z.number().int().positive(),
 });
@@ -244,10 +243,7 @@ describe("criterio-selecao schema", () => {
   it("rejeita posicao fora do intervalo 1-2", () => {
     const invalido = {
       ...validExample,
-      selecionados: [
-        { ...validExample.selecionados[0], posicao: 3 },
-        validExample.selecionados[1],
-      ],
+      selecionados: [{ ...validExample.selecionados[0], posicao: 3 }, validExample.selecionados[1]],
     };
     expect(() => criterioSelecaoSchema.parse(invalido)).toThrow();
   });
@@ -317,9 +313,7 @@ const criterioSelecao = defineCollection({
       media: z.number().min(0).max(100),
       distancia_pp: z.number().min(0),
       desempate_aplicado: z.boolean(),
-      desempate_criterio: z
-        .enum(["maior amostra", "menor margem", "tempo no cargo"])
-        .nullable(),
+      desempate_criterio: z.enum(["maior amostra", "menor margem", "tempo no cargo"]).nullable(),
     }),
     versao: z.number().int().positive(),
   }),
@@ -391,9 +385,7 @@ const criterioSelecaoSchema = z.object({
     media: z.number().min(0).max(100),
     distancia_pp: z.number().min(0),
     desempate_aplicado: z.boolean(),
-    desempate_criterio: z
-      .enum(["maior amostra", "menor margem", "tempo no cargo"])
-      .nullable(),
+    desempate_criterio: z.enum(["maior amostra", "menor margem", "tempo no cargo"]).nullable(),
   }),
   versao: z.number().int().positive(),
 });
@@ -471,6 +463,7 @@ EOF
 ### Task 2: Script `scripts/validate-log.ts` (FK match CSV ↔ declarações)
 
 **Files:**
+
 - Create: `scripts/lib/data-loaders.ts` — funções `loadDeclaracoes()` e `loadLogEditorial()` puras, reutilizadas por outros audits
 - Create: `scripts/validate-log.ts` — entry CLI
 - Create: `tests/unit/scripts/validate-log.test.ts`
@@ -700,10 +693,7 @@ export interface ValidationResult {
   errors: string[];
 }
 
-export function validarLog(
-  declaracoes: DeclaracaoFrontmatter[],
-  log: LogLine[],
-): ValidationResult {
+export function validarLog(declaracoes: DeclaracaoFrontmatter[], log: LogLine[]): ValidationResult {
   const errors: string[] = [];
   const declSet = new Set(declaracoes.map((d) => d.id));
   const logSet = new Set<string>();
@@ -768,7 +758,9 @@ if (isMain()) {
   const { ok, errors } = validarLog(declaracoes, log);
 
   if (ok) {
-    console.log(`✅ log-editorial.csv: ${log.length} linhas, FK match 100% (${declaracoes.length} declarações).`);
+    console.log(
+      `✅ log-editorial.csv: ${log.length} linhas, FK match 100% (${declaracoes.length} declarações).`,
+    );
     process.exit(0);
   } else {
     console.error(`❌ log-editorial.csv tem ${errors.length} problema(s):`);
@@ -813,6 +805,7 @@ EOF
 ### Task 3: Script `scripts/audit-paridade.ts` (CI bloqueante)
 
 **Files:**
+
 - Create: `scripts/audit-paridade.ts`
 - Create: `tests/unit/scripts/audit-paridade.test.ts`
 
@@ -993,9 +986,7 @@ describe("auditarParidade", () => {
 
   it("piloto-mode: rejeita 13 declarações (uma a mais)", () => {
     const candidatos = [cand("a"), cand("b")];
-    const declaracoes = Array.from({ length: 13 }).map((_, i) =>
-      dec(`d${i}`, "a", "economia"),
-    );
+    const declaracoes = Array.from({ length: 13 }).map((_, i) => dec(`d${i}`, "a", "economia"));
     const eventos = [ev("ev1", "2025-12-01T00:00:00.000Z")];
     const eventoDeDeclaracao = new Map(declaracoes.map((d) => [d.id, "ev1"]));
     const { ok, errors } = auditarParidade({
@@ -1076,16 +1067,22 @@ export function auditarParidade(input: AuditInput): AuditResult {
     }
   } else {
     if (candidatos.length !== 2) {
-      errors.push(`${mode}-mode: esperado exatamente 2 candidatos, encontrado ${candidatos.length}`);
+      errors.push(
+        `${mode}-mode: esperado exatamente 2 candidatos, encontrado ${candidatos.length}`,
+      );
     }
   }
 
   // 2. Número de declarações
   if (mode === "piloto" && declaracoes.length !== 12) {
-    errors.push(`piloto-mode: esperado exatamente 12 declarações (1 × 6 temas × 2 candidatos), encontrado ${declaracoes.length}`);
+    errors.push(
+      `piloto-mode: esperado exatamente 12 declarações (1 × 6 temas × 2 candidatos), encontrado ${declaracoes.length}`,
+    );
   }
   if (mode === "final" && declaracoes.length !== 60) {
-    errors.push(`final-mode: esperado exatamente 60 declarações (5 × 6 temas × 2 candidatos), encontrado ${declaracoes.length}`);
+    errors.push(
+      `final-mode: esperado exatamente 60 declarações (5 × 6 temas × 2 candidatos), encontrado ${declaracoes.length}`,
+    );
   }
   if (declaracoes.length > 60) {
     errors.push(`declarações em excesso: ${declaracoes.length} (máximo permitido na Fase 4: 60)`);
@@ -1103,9 +1100,7 @@ export function auditarParidade(input: AuditInput): AuditResult {
       for (const t of ENUM_VALIDOS.TEMA_VALIDOS) {
         const count = matriz.get(`${c.id}::${t}`) ?? 0;
         if (count !== 5) {
-          errors.push(
-            `final-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 5`,
-          );
+          errors.push(`final-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 5`);
         }
       }
     }
@@ -1114,9 +1109,7 @@ export function auditarParidade(input: AuditInput): AuditResult {
       for (const t of ENUM_VALIDOS.TEMA_VALIDOS) {
         const count = matriz.get(`${c.id}::${t}`) ?? 0;
         if (count !== 1) {
-          errors.push(
-            `piloto-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 1`,
-          );
+          errors.push(`piloto-mode: ${c.id} tem ${count} declaração(ões) em ${t}, esperado 1`);
         }
       }
     }
@@ -1264,6 +1257,7 @@ EOF
 ### Task 4: Script `scripts/audit-distribuicao.ts` (observabilidade)
 
 **Files:**
+
 - Create: `scripts/audit-distribuicao.ts`
 - Create: `tests/unit/scripts/audit-distribuicao.test.ts`
 
@@ -1438,7 +1432,9 @@ if (isMain()) {
   mkdirSync(join(process.cwd(), "docs"), { recursive: true });
   writeFileSync(outPath, md + "\n", "utf-8");
 
-  console.log(`✅ Distribuição calculada para ${result.totalDeclaracoes} declarações — docs/distribuicao-fase4.md`);
+  console.log(
+    `✅ Distribuição calculada para ${result.totalDeclaracoes} declarações — docs/distribuicao-fase4.md`,
+  );
   process.exit(0);
 }
 ```
@@ -1478,6 +1474,7 @@ EOF
 ### Task 5: Script `scripts/check-archive-urls.ts`
 
 **Files:**
+
 - Create: `scripts/check-archive-urls.ts`
 - Create: `tests/unit/scripts/check-archive-urls.test.ts`
 
@@ -1636,7 +1633,9 @@ if (isMain()) {
     process.exit(0);
   }
 
-  console.log(`🔍 Checando ${urls.length} URL(s) Wayback (modo: ${isRecent ? "--recent" : "--all"})...`);
+  console.log(
+    `🔍 Checando ${urls.length} URL(s) Wayback (modo: ${isRecent ? "--recent" : "--all"})...`,
+  );
   const { ok, total, failures } = await verificarArchiveUrls(urls);
 
   if (ok) {
@@ -1684,6 +1683,7 @@ EOF
 ### Task 6: Atualizar `package.json` com 4 scripts novos + ajustar `validate-data`
 
 **Files:**
+
 - Modify: `package.json` — adicionar 4 entries em `scripts`
 - Modify: `scripts/validate-data.ts` — chamar `validate-log.ts` ao final
 
@@ -1786,6 +1786,7 @@ EOF
 ### Task 7: Atualizar workflow CI com step `audit:paridade`
 
 **Files:**
+
 - Modify: `.github/workflows/ci.yml`
 
 - [ ] **Step 1: Adicionar step após "Validate data" e antes de "Run tests"**
@@ -1793,14 +1794,14 @@ EOF
 Modificar `.github/workflows/ci.yml`, inserindo entre os steps existentes:
 
 ```yaml
-      - name: Validate data
-        run: pnpm validate-data
+- name: Validate data
+  run: pnpm validate-data
 
-      - name: Auditoria de paridade Fase 4
-        run: pnpm audit:paridade
+- name: Auditoria de paridade Fase 4
+  run: pnpm audit:paridade
 
-      - name: Run tests
-        run: pnpm test
+- name: Run tests
+  run: pnpm test
 ```
 
 - [ ] **Step 2: Verificar localmente que `pnpm audit:paridade` passa no estado atual (setup-mode com 2 demos)**
@@ -1836,6 +1837,7 @@ EOF
 ### Task 8: Criar `data/log-editorial.csv` vazio com header
 
 **Files:**
+
 - Create: `data/log-editorial.csv`
 
 - [ ] **Step 1: Criar arquivo com apenas o header**
@@ -1891,6 +1893,7 @@ EOF
 ### Task 9: Criar template de PR específico para Fase 4
 
 **Files:**
+
 - Create: `.github/PULL_REQUEST_TEMPLATE/fase4.md`
 
 - [ ] **Step 1: Criar diretório e arquivo**
@@ -1903,32 +1906,39 @@ Criar `.github/PULL_REQUEST_TEMPLATE/fase4.md`:
 
 ```markdown
 ## Sprint
+
 <!-- Marque um -->
+
 - [ ] 5.1 Setup
 - [ ] 5.2 Piloto
 - [ ] 5.3 Lote
 - [ ] 5.4 Polimento
 
 ## Mudança editorial
-- [ ] N declarações novas: ___
-- [ ] N entradas em log-editorial.csv: ___
-- [ ] Candidatos envolvidos: ___
+
+- [ ] N declarações novas: \_\_\_
+- [ ] N entradas em log-editorial.csv: \_\_\_
+- [ ] Candidatos envolvidos: \_\_\_
 
 ## Auditoria automatizada
+
 - [ ] `pnpm validate-data`: PASS
 - [ ] `pnpm audit:paridade`: PASS — output:
-  ```
+```
+
   <colar output>
   ```
 - [ ] `pnpm audit:distribuicao`: rodado (link para `docs/distribuicao-fase4.md`)
 - [ ] `pnpm check:archive-urls --recent`: PASS
 
 ## Auditoria humana
-- [ ] Sign-off por declaração: ___/___ (checklist do §5.5 do design marcada)
+
+- [ ] Sign-off por declaração: **_/_** (checklist do §5.5 do design marcada)
 - [ ] Wayback abre para todas as N URLs
 - [ ] Transcrição confere com fonte primária (integral em 5.1/5.2/5.4; amostral em 5.3)
 
 ## Build
+
 - [ ] `pnpm format:check`: PASS
 - [ ] `pnpm lint`: PASS
 - [ ] `pnpm typecheck`: PASS
@@ -1936,12 +1946,15 @@ Criar `.github/PULL_REQUEST_TEMPLATE/fase4.md`:
 - [ ] `pnpm build:full`: PASS (N páginas no dist)
 
 ## Risco residual conhecido
+
 <!-- vazio | descreve riscos aceitos conscientemente -->
 
 ## Referências
+
 - Spec: `docs/superpowers/specs/2026-05-28-atlas-fase4-conteudo-mvp-design.md`
 - Plan: `docs/superpowers/plans/2026-05-28-atlas-fase4-sprint5-1-setup-editorial.md`
-```
+
+````
 
 - [ ] **Step 2: Commit**
 
@@ -1957,13 +1970,14 @@ automatizada, auditoria humana (sign-off), build e risco residual.
 Ref: docs/superpowers/specs/2026-05-28-atlas-fase4-conteudo-mvp-design.md §8.4
 EOF
 )"
-```
+````
 
 ---
 
 ### Task 10: [EDITORIAL] Pesquisar 3 pesquisas eleitorais + arquivar no Wayback
 
 **Files:**
+
 - Nenhum arquivo criado nesta task — output é a longlist de URLs + arquivamentos no Wayback. Será usada na Task 11.
 
 **Workflow (co-curadoria assistida):**
@@ -1971,11 +1985,13 @@ EOF
 - [ ] **Step 1: Claude — pesquisar via WebFetch a pesquisa mais recente de cada instituto até 2026-05-15**
 
 Para cada instituto:
+
 1. **Datafolha** — buscar em `https://datafolha.folha.uol.com.br/` (filtrar "intenção de voto presidente 2026")
 2. **Quaest** — buscar em `https://www.quaest.com.br/`
 3. **Genial-Quaest** — buscar em `https://www.quaest.com.br/categoria-pesquisas/`
 
 Coletar para cada:
+
 - URL canônica do relatório (estimulado, 1º turno)
 - Data de publicação
 - Tamanho da amostra
@@ -1986,6 +2002,7 @@ Coletar para cada:
 **Critério de seleção da pesquisa:** mais recente do instituto que foi publicada **até** 2026-05-15 inclusive.
 
 Apresentar resumo ao André com:
+
 ```
 DATAFOLHA: <url> | <data> | amostra <N> | margem <p.p.>
 QUAEST:    <url> | <data> | amostra <N> | margem <p.p.>
@@ -1999,6 +2016,7 @@ Candidatos presentes nas 3 pesquisas:
 - [ ] **Step 2: André — validar a longlist de pesquisas**
 
 Confirmar que:
+
 - Datas estão corretas e ≤ 2026-05-15
 - Pesquisas são "estimuladas, 1º turno"
 - Não há pesquisa MAIS recente que foi pulada por engano
@@ -2013,6 +2031,7 @@ curl -s -X GET "https://web.archive.org/save/<URL_ENCODED>"
 ```
 
 Capturar a `archive_url` final retornada no header `Content-Location` ou na URL final pós-redirect:
+
 - Formato: `https://web.archive.org/web/YYYYMMDDhhmmss/<URL>`
 
 Verificar HTTP 200 OK em cada `archive_url` arquivada.
@@ -2020,19 +2039,21 @@ Verificar HTTP 200 OK em cada `archive_url` arquivada.
 - [ ] **Step 4: Salvar resumo em scratchpad temporário**
 
 Não commitar ainda. Output para Task 11:
+
 - 3 URLs canônicas
 - 3 URLs Wayback
 - 3 datas de publicação
 - 3 amostras + 3 margens + 3 metodologias
 - Listagem completa dos percentuais por candidato
 
-Nota: não criar nenhum arquivo nesta task. Output é a *informação* para Task 11.
+Nota: não criar nenhum arquivo nesta task. Output é a _informação_ para Task 11.
 
 ---
 
 ### Task 11: [EDITORIAL] Aplicar critério + preencher `data/criterio-selecao/latest.yaml`
 
 **Files:**
+
 - Create: `data/criterio-selecao/latest.yaml`
 
 **Workflow:**
@@ -2040,11 +2061,13 @@ Nota: não criar nenhum arquivo nesta task. Output é a *informação* para Task
 - [ ] **Step 1: Claude — calcular média simples e ordenar**
 
 Para cada candidato presente nas 3 pesquisas:
+
 ```
 media_simples = (datafolha + quaest + genial) / 3
 ```
 
 Ordenar descendente. Identificar:
+
 - Posição 1: maior média
 - Posição 2: 2ª maior média
 - Linha de empate: 3º colocado
@@ -2055,6 +2078,7 @@ Se `distancia_pp ≤ 2`: aplicar desempate em cascata (maior amostra agregada �
 - [ ] **Step 2: André — validar a decisão**
 
 Confirmar:
+
 - Cálculo da média está correto
 - Linha de empate não foi inadvertidamente excluída
 - Se houve desempate, está documentado
@@ -2169,6 +2193,7 @@ EOF
 ### Task 12: [EDITORIAL] Criar 2 candidatos reais (`<slug1>.yaml`, `<slug2>.yaml` + fotos)
 
 **Files:**
+
 - Create: `data/candidatos/<slug1>.yaml`
 - Create: `data/candidatos/<slug2>.yaml`
 - Create: `public/img/candidatos/<slug1>.jpg`
@@ -2179,6 +2204,7 @@ EOF
 - [ ] **Step 1: Claude — pesquisar dados oficiais dos 2 candidatos**
 
 Para cada candidato:
+
 1. **Nome completo** (forma usada no TSE)
 2. **Partido** (com filiação atual confirmada)
 3. **Biografia mínima** (2-3 frases factuais, sem opinião editorial)
@@ -2195,6 +2221,7 @@ Apresentar resumo ao André para validação.
 - [ ] **Step 2: André — validar dados**
 
 Confirmar:
+
 - Nome exato como TSE
 - Partido atual (não histórico)
 - Biografia factual sem julgamento
@@ -2210,6 +2237,7 @@ curl -o public/img/candidatos/<slug2>.jpg "<URL_FOTO_OFICIAL_2>"
 ```
 
 Verificar:
+
 - Dimensão razoável (mínimo 400×400 px)
 - Formato JPEG ou PNG
 - Tamanho < 500KB cada
@@ -2245,6 +2273,7 @@ atualizado_em: "2026-05-28T<HH:MM:SS>.000Z"
 ```
 
 Gerar ULID via:
+
 ```bash
 node -e "import('ulid').then(m => console.log(m.ulid()))"
 ```
@@ -2290,6 +2319,7 @@ EOF
 ### Task 13: Remover demos (candidatos a/b, declarações, evento)
 
 **Files:**
+
 - Remove: `data/candidatos/candidato-a.yaml`
 - Remove: `data/candidatos/candidato-b.yaml`
 - Remove: `data/declaracoes/2026-04-15-candidato-a-economia-imposto.md`
@@ -2343,6 +2373,7 @@ EOF
 ### Task 14: Criar página `/metodologia` v1
 
 **Files:**
+
 - Create: `src/pages/metodologia.astro`
 
 - [ ] **Step 1: Criar `src/pages/metodologia.astro`**
@@ -2371,10 +2402,15 @@ const linhaEmpate = criterio?.data.linha_de_empate;
 >
   <article class="container-text" style="padding-block: var(--space-3xl);">
     <header style="margin-bottom: var(--space-2xl);">
-      <p class="eyebrow" style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);">
+      <p
+        class="eyebrow"
+        style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);"
+      >
         Metodologia
       </p>
-      <h1 style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);">
+      <h1
+        style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);"
+      >
         Como decidimos o que entra no Atlas
       </h1>
       <p style="color: var(--color-text-body); font-size: var(--text-body-lg);">
@@ -2386,42 +2422,50 @@ const linhaEmpate = criterio?.data.linha_de_empate;
       <h2>1. Seleção dos 2 candidatos cobertos no MVP</h2>
       <p>
         Os 2 candidatos com maior <strong>média simples</strong> de intenção de voto
-        <em>estimulada</em> (1º turno) nas <strong>3 últimas pesquisas</strong> publicadas pelos
-        institutos <strong>Datafolha</strong>, <strong>Quaest</strong> e <strong>Genial-Quaest</strong>
+        <em>estimulada</em> (1º turno) nas <strong>3 últimas pesquisas</strong> publicadas pelos institutos
+        <strong>Datafolha</strong>, <strong>Quaest</strong> e <strong>Genial-Quaest</strong>
         até a <strong>data de corte de 2026-05-15</strong>.
       </p>
       <p>
         Critério público auditável em
-        <a href="https://github.com/atlas2026/blob/main/data/criterio-selecao/latest.yaml" rel="noopener external">
+        <a
+          href="https://github.com/atlas2026/blob/main/data/criterio-selecao/latest.yaml"
+          rel="noopener external"
+        >
           <code>data/criterio-selecao/latest.yaml</code>
         </a>.
       </p>
 
-      {criterio && (
-        <>
-          <p><strong>Critério aplicado em {dataAplicacao}:</strong></p>
-          <ul>
-            {selecionados.map((s) => (
-              <li>
-                Posição {s.posicao}: <strong>{s.nome}</strong> (média {s.media}%)
-              </li>
-            ))}
-          </ul>
-          {linhaEmpate && (
-            <p style="color: var(--color-text-body); font-size: var(--text-body-sm);">
-              <strong>Linha de empate (3º colocado, transparência):</strong>{" "}
-              {linhaEmpate.candidato_nome} (média {linhaEmpate.media}%, distância {linhaEmpate.distancia_pp} p.p. para o 2º).
-              {linhaEmpate.desempate_aplicado && (
-                <> Desempate aplicado: {linhaEmpate.desempate_criterio}.</>
-              )}
+      {
+        criterio && (
+          <>
+            <p>
+              <strong>Critério aplicado em {dataAplicacao}:</strong>
             </p>
-          )}
-        </>
-      )}
+            <ul>
+              {selecionados.map((s) => (
+                <li>
+                  Posição {s.posicao}: <strong>{s.nome}</strong> (média {s.media}%)
+                </li>
+              ))}
+            </ul>
+            {linhaEmpate && (
+              <p style="color: var(--color-text-body); font-size: var(--text-body-sm);">
+                <strong>Linha de empate (3º colocado, transparência):</strong>{" "}
+                {linhaEmpate.candidato_nome} (média {linhaEmpate.media}%, distância{" "}
+                {linhaEmpate.distancia_pp} p.p. para o 2º).
+                {linhaEmpate.desempate_aplicado && (
+                  <> Desempate aplicado: {linhaEmpate.desempate_criterio}.</>
+                )}
+              </p>
+            )}
+          </>
+        )
+      }
 
       <p>
-        <strong>Lock total:</strong> uma vez aplicado o critério, os 2 candidatos não mudam durante
-        a Fase 4. Revisão do critério fica para versões pós-MVP, com Errata documentando a mudança.
+        <strong>Lock total:</strong> uma vez aplicado o critério, os 2 candidatos não mudam durante a
+        Fase 4. Revisão do critério fica para versões pós-MVP, com Errata documentando a mudança.
       </p>
     </section>
 
@@ -2437,8 +2481,8 @@ const linhaEmpate = criterio?.data.linha_de_empate;
       <h2>3. Distribuição temática (paridade rígida)</h2>
       <p>
         Cada candidato terá <strong>exatamente 5 declarações por tema</strong> nos 6 temas primários:
-        economia, saúde, segurança pública, educação, meio-ambiente, política externa.
-        Total invariante: <strong>30 declarações por candidato</strong>.
+        economia, saúde, segurança pública, educação, meio-ambiente, política externa. Total invariante:
+        <strong>30 declarações por candidato</strong>.
       </p>
       <p>
         Se um candidato emitiu menos de 5 declarações relevantes em um tema dentro da janela,
@@ -2454,13 +2498,13 @@ const linhaEmpate = criterio?.data.linha_de_empate;
       </p>
       <ol>
         <li>
-          <strong>Cobertura estrutural</strong> — priorizar diversidade dos 8 tipos estruturais
-          (promessa, dado_numerico, atribuição a terceiro, afirmação histórica, comparação,
-          afirmação sobre pesquisa, compromisso político, interpretação pessoal).
+          <strong>Cobertura estrutural</strong> — priorizar diversidade dos 8 tipos estruturais (promessa,
+          dado_numerico, atribuição a terceiro, afirmação histórica, comparação, afirmação sobre pesquisa,
+          compromisso político, interpretação pessoal).
         </li>
         <li>
-          <strong>Veredito externo existente</strong> — entre candidatas do mesmo tipo estrutural,
-          prioriza as que já têm verificação publicada por Lupa, Aos Fatos, Comprova ou Estadão Verifica.
+          <strong>Veredito externo existente</strong> — entre candidatas do mesmo tipo estrutural, prioriza
+          as que já têm verificação publicada por Lupa, Aos Fatos, Comprova ou Estadão Verifica.
         </li>
         <li>
           <strong>Fonte com timestamp de vídeo oficial</strong> — prefere YouTube oficial, TSE, Câmara,
@@ -2476,7 +2520,10 @@ const linhaEmpate = criterio?.data.linha_de_empate;
       </ol>
       <p>
         Cada inclusão registra <code>motivo_inclusao</code> em
-        <a href="https://github.com/atlas2026/blob/main/data/log-editorial.csv" rel="noopener external">
+        <a
+          href="https://github.com/atlas2026/blob/main/data/log-editorial.csv"
+          rel="noopener external"
+        >
           <code>data/log-editorial.csv</code>
         </a>{" "}
         no formato <code>cascata-N: &lt;justificação&gt;</code>.
@@ -2486,8 +2533,9 @@ const linhaEmpate = criterio?.data.linha_de_empate;
     <section style="margin-bottom: var(--space-2xl);">
       <h2>5. Fontes primárias e Wayback obrigatório</h2>
       <p>
-        Toda declaração tem <strong>URL de fonte primária + timestamp (quando aplicável) + snapshot
-        Wayback Machine</strong>. Sem os três, não publicamos.
+        Toda declaração tem <strong
+          >URL de fonte primária + timestamp (quando aplicável) + snapshot Wayback Machine</strong
+        >. Sem os três, não publicamos.
       </p>
       <p>
         Snapshots Wayback protegem contra remoção de fontes — princípio §3.5 do Atlas (permanência).
@@ -2497,13 +2545,13 @@ const linhaEmpate = criterio?.data.linha_de_empate;
     <section style="margin-bottom: var(--space-2xl);">
       <h2>6. Sem veredito próprio</h2>
       <p>
-        O Atlas <strong>não emite veredito de verdade/mentira</strong>. Quando fact-checker reconhecido
-        (Lupa, Aos Fatos, Comprova, Estadão Verifica) avalia uma declaração, agregamos a citação
-        literal com atribuição clara à fonte original e link para o veredito completo.
+        O Atlas <strong>não emite veredito de verdade/mentira</strong>. Quando fact-checker
+        reconhecido (Lupa, Aos Fatos, Comprova, Estadão Verifica) avalia uma declaração, agregamos a
+        citação literal com atribuição clara à fonte original e link para o veredito completo.
       </p>
       <p>
-        Não classificamos automaticamente. Não inferimos. Não interpretamos. Apresentamos a evidência
-        e o leitor conclui.
+        Não classificamos automaticamente. Não inferimos. Não interpretamos. Apresentamos a
+        evidência e o leitor conclui.
       </p>
     </section>
 
@@ -2519,16 +2567,16 @@ const linhaEmpate = criterio?.data.linha_de_empate;
           Toda transcrição é revisada e corrigida por curador humano antes de virar declaração publicada.
         </li>
         <li>
-          <strong>Pesquisa de longlist:</strong> assistente IA (Claude, Anthropic) ajuda a localizar
-          declarações candidatas e fontes primárias. Decisão de inclusão é sempre humana.
+          <strong>Pesquisa de longlist:</strong> assistente IA (Claude, Anthropic) ajuda a localizar declarações
+          candidatas e fontes primárias. Decisão de inclusão é sempre humana.
         </li>
         <li>
           <strong>Estruturação de dados:</strong> assistente IA preenche campos derivados (IDs, slugs,
           timestamps) seguindo schemas fixos.
         </li>
         <li>
-          <strong>O que NÃO fazemos:</strong> geração automática de texto/contexto editorial; resumo
-          automático; classificação automática de "veracidade".
+          <strong>O que NÃO fazemos:</strong> geração automática de texto/contexto editorial; resumo automático;
+          classificação automática de "veracidade".
         </li>
       </ul>
       <p>
@@ -2540,8 +2588,8 @@ const linhaEmpate = criterio?.data.linha_de_empate;
       <h2>8. Auditabilidade total</h2>
       <p>
         Critério, código, dataset e log editorial são públicos no GitHub. Erros são corrigíveis via
-        Pull Request. Cada correção é documentada em <a href="/errata">/errata</a> com versão
-        incrementada da declaração (nada é deletado).
+        Pull Request. Cada correção é documentada em <a href="/errata">/errata</a> com versão incrementada
+        da declaração (nada é deletado).
       </p>
     </section>
   </article>
@@ -2556,6 +2604,7 @@ pnpm build
 ```
 
 Verificar:
+
 ```bash
 ls dist/metodologia/
 ```
@@ -2563,6 +2612,7 @@ ls dist/metodologia/
 Expected: `dist/metodologia/index.html` existe.
 
 Inspecionar conteúdo:
+
 ```bash
 grep -i "metodologia\|criterio\|cascata" dist/metodologia/index.html | head -20
 ```
@@ -2608,6 +2658,7 @@ EOF
 ### Task 15: Criar página `/errata` v1
 
 **Files:**
+
 - Create: `src/pages/errata.astro`
 
 - [ ] **Step 1: Criar `src/pages/errata.astro`**
@@ -2633,10 +2684,15 @@ const erratas: Array<{
 >
   <article class="container-text" style="padding-block: var(--space-3xl);">
     <header style="margin-bottom: var(--space-2xl);">
-      <p class="eyebrow" style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);">
+      <p
+        class="eyebrow"
+        style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);"
+      >
         Errata
       </p>
-      <h1 style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);">
+      <h1
+        style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);"
+      >
         Correções publicadas
       </h1>
       <p style="color: var(--color-text-body); font-size: var(--text-body-lg);">
@@ -2649,13 +2705,18 @@ const erratas: Array<{
       <ol>
         <li>
           Encontrou um erro factual?
-          <a href="https://github.com/atlas2026/issues/new?labels=errata-fase4" rel="noopener external">
+          <a
+            href="https://github.com/atlas2026/issues/new?labels=errata-fase4"
+            rel="noopener external"
+          >
             Abra uma issue no GitHub
           </a>
           com label <code>errata</code> descrevendo o erro e a fonte da correção.
         </li>
         <li>
-          Um PR de correção atualiza o YAML/MD afetado e <strong>incrementa o número de versão</strong>
+          Um PR de correção atualiza o YAML/MD afetado e <strong
+            >incrementa o número de versão</strong
+          >
           da declaração (campo <code>versao</code>).
         </li>
         <li>
@@ -2670,28 +2731,34 @@ const erratas: Array<{
     <section style="margin-bottom: var(--space-2xl);">
       <h2>Erratas publicadas</h2>
 
-      {erratas.length === 0 ? (
-        <p style="color: var(--color-text-mute); font-style: italic;">
-          Nenhuma errata registrada ainda. Esta página será populada conforme correções forem
-          publicadas.
-        </p>
-      ) : (
-        <ul>
-          {erratas.map((e) => (
-            <li>
-              <strong>{new Date(e.data).toLocaleDateString("pt-BR")}</strong> —
-              <code>{e.declaracao_id}</code>: {e.descricao}
-              <a href={e.pr_url} rel="noopener external">PR</a>
-              {e.issue_url && (
-                <>
-                  {" "}
-                  <a href={e.issue_url} rel="noopener external">Issue</a>
-                </>
-              )}
-            </li>
-          ))}
-        </ul>
-      )}
+      {
+        erratas.length === 0 ? (
+          <p style="color: var(--color-text-mute); font-style: italic;">
+            Nenhuma errata registrada ainda. Esta página será populada conforme correções forem
+            publicadas.
+          </p>
+        ) : (
+          <ul>
+            {erratas.map((e) => (
+              <li>
+                <strong>{new Date(e.data).toLocaleDateString("pt-BR")}</strong> —
+                <code>{e.declaracao_id}</code>: {e.descricao}
+                <a href={e.pr_url} rel="noopener external">
+                  PR
+                </a>
+                {e.issue_url && (
+                  <>
+                    {" "}
+                    <a href={e.issue_url} rel="noopener external">
+                      Issue
+                    </a>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        )
+      }
     </section>
 
     <section style="margin-bottom: var(--space-2xl);">
@@ -2702,7 +2769,8 @@ const erratas: Array<{
       </p>
       <p>
         Esta página garante que cada correção é <strong>documentada publicamente</strong> e
-        <strong>versionada em git</strong>, conforme o princípio §3.4 do Atlas (auditabilidade total).
+        <strong>versionada em git</strong>, conforme o princípio §3.4 do Atlas (auditabilidade
+        total).
       </p>
     </section>
   </article>
@@ -2742,6 +2810,7 @@ EOF
 ### Task 16: Criar página `/sobre` v1
 
 **Files:**
+
 - Create: `src/pages/sobre.astro`
 
 - [ ] **Step 1: Criar `src/pages/sobre.astro`**
@@ -2757,15 +2826,20 @@ import BaseLayout from "@/components/layout/BaseLayout.astro";
 >
   <article class="container-text" style="padding-block: var(--space-3xl);">
     <header style="margin-bottom: var(--space-2xl);">
-      <p class="eyebrow" style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);">
+      <p
+        class="eyebrow"
+        style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);"
+      >
         Sobre
       </p>
-      <h1 style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);">
+      <h1
+        style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);"
+      >
         Infraestrutura factual da eleição 2026
       </h1>
       <p style="color: var(--color-text-body); font-size: var(--text-body-lg);">
-        Base pública, aberta e indexável de declarações documentadas de candidatos à presidência
-        do Brasil em 2026.
+        Base pública, aberta e indexável de declarações documentadas de candidatos à presidência do
+        Brasil em 2026.
       </p>
     </header>
 
@@ -2777,32 +2851,34 @@ import BaseLayout from "@/components/layout/BaseLayout.astro";
         <a href="/dataset">/dataset</a> sob licença CC-BY 4.0.
       </p>
       <p>
-        Quando há veredito de fact-checker reconhecido (Lupa, Aos Fatos, Comprova, Estadão Verifica),
-        agregamos com atribuição transparente. <strong>O Atlas não emite veredito próprio.</strong>
+        Quando há veredito de fact-checker reconhecido (Lupa, Aos Fatos, Comprova, Estadão
+        Verifica), agregamos com atribuição transparente. <strong
+          >O Atlas não emite veredito próprio.</strong
+        >
       </p>
     </section>
 
     <section style="margin-bottom: var(--space-2xl);">
       <h2>Postura editorial</h2>
       <p>
-        <strong>Tecnicista neutro radical, sem rosto.</strong> Mesma régua editorial para cada
-        candidato, sem exceção ideológica. Critério público auditável em
+        <strong>Tecnicista neutro radical, sem rosto.</strong> Mesma régua editorial para cada candidato,
+        sem exceção ideológica. Critério público auditável em
         <a href="/metodologia">/metodologia</a>.
       </p>
-      <p>
-        Não somos fact-checker. Somos infraestrutura de fontes primárias.
-      </p>
+      <p>Não somos fact-checker. Somos infraestrutura de fontes primárias.</p>
     </section>
 
     <section style="margin-bottom: var(--space-2xl);">
       <h2>Quem mantém</h2>
       <p>
-        Projeto solo mantido por <strong>André Dezob</strong>. Curadoria editorial humana
-        + ferramentas de IA auxiliares (sem geração de conteúdo). Ver
+        Projeto solo mantido por <strong>André Dezob</strong>. Curadoria editorial humana +
+        ferramentas de IA auxiliares (sem geração de conteúdo). Ver
         <a href="/metodologia#7-uso-de-inteligência-artificial-no-atlas">política de IA</a>.
       </p>
       <p>
-        Contato: via <a href="https://github.com/atlas2026/issues" rel="noopener external">issues do GitHub</a>.
+        Contato: via <a href="https://github.com/atlas2026/issues" rel="noopener external"
+          >issues do GitHub</a
+        >.
       </p>
     </section>
 
@@ -2811,7 +2887,9 @@ import BaseLayout from "@/components/layout/BaseLayout.astro";
       <ul>
         <li>
           <strong>Código:</strong> MIT — veja
-          <a href="https://github.com/atlas2026/blob/main/LICENSE" rel="noopener external">LICENSE</a>
+          <a href="https://github.com/atlas2026/blob/main/LICENSE" rel="noopener external"
+            >LICENSE</a
+          >
         </li>
         <li>
           <strong>Dataset:</strong> CC-BY 4.0 — reutilizável com atribuição
@@ -2836,12 +2914,10 @@ import BaseLayout from "@/components/layout/BaseLayout.astro";
     <section style="margin-bottom: var(--space-2xl);">
       <h2>Limites assumidos</h2>
       <p>
-        O Atlas cobre <strong>2 candidatos</strong> à presidência no MVP — os top-2 da média das
-        principais pesquisas até 2026-05-15. Cobertura adicional fica para versões post-MVP.
+        O Atlas cobre <strong>2 candidatos</strong> à presidência no MVP — os top-2 da média das principais
+        pesquisas até 2026-05-15. Cobertura adicional fica para versões post-MVP.
       </p>
-      <p>
-        Não cobrimos candidatos a outros cargos (governadores, senadores etc.) no MVP.
-      </p>
+      <p>Não cobrimos candidatos a outros cargos (governadores, senadores etc.) no MVP.</p>
     </section>
   </article>
 </BaseLayout>
@@ -2907,6 +2983,7 @@ pnpm build:full
 ```
 
 Expected:
+
 - `format:check`: All matched files use Prettier code style!
 - `lint`: 0 problems
 - `typecheck`: 0 errors / 0 warnings / 0 hints
@@ -2936,6 +3013,7 @@ pnpm dlx lighthouse http://localhost:4321/metodologia --only-categories=accessib
 ```
 
 Verificar:
+
 ```bash
 cat docs/lighthouse-metodologia.json | grep -o '"score":[0-9.]*' | head -5
 ```
@@ -2943,6 +3021,7 @@ cat docs/lighthouse-metodologia.json | grep -o '"score":[0-9.]*' | head -5
 Expected: scores ≥ 0.95 para accessibility e seo.
 
 Matar processo preview:
+
 ```bash
 pkill -f "astro preview" || true
 ```
@@ -3085,6 +3164,7 @@ Expected: HEAD é o squash commit `feat(fase4): Sprint 5.1 — Setup editorial..
 ### Task 19: Atualizar checkpoint do Vault
 
 **Files:**
+
 - Create: `C:/Users/dezob/.claude/projects/C--Users-dezob-Projects-atlas/memory/checkpoint-fase4-sprint5-1-completa.md`
 - Modify: `C:/Users/dezob/.claude/projects/C--Users-dezob-Projects-atlas/memory/MEMORY.md`
 
@@ -3106,9 +3186,10 @@ metadata:
 **Why:** Encerra o setup editorial da Fase 4. A partir deste merge, a infra para receber declarações reais está pronta e o critério público está em git.
 
 **How to apply:** Em nova sessão:
+
 1. `cd C:/Users/dezob/Projects/atlas`
 2. `git log --oneline -3` deve mostrar o squash commit no topo
-3. `git branch -a` deve mostrar apenas main local; remotos: histórico de feat/* + main
+3. `git branch -a` deve mostrar apenas main local; remotos: histórico de feat/\* + main
 4. Próximo passo: **Sprint 5.2 — Piloto (12 declarações)**. Brainstorming não necessário (o critério já está aprovado); ir direto para writing-plans criando `2026-XX-XX-atlas-fase4-sprint5-2-piloto.md`.
 
 ## Estado do dataset após Sprint 5.1
@@ -3138,6 +3219,7 @@ Total novos testes: 25-30 (depende de small variations) — passando todos.
 ## Constraints permanentes ainda ativas
 
 (ver §10 do spec Fase 4)
+
 1. `src/content/config.ts` mantém Zod 3 (astro:content)
 2. Scripts standalone podem usar Zod 4 nativo
 3. CLI scripts usam `pathToFileURL(process.argv[1] ?? "").href` para isMain
@@ -3183,27 +3265,28 @@ Nota: o Vault não é parte do repo do Atlas; é versionado separadamente. Esta 
 
 **1. Spec coverage:**
 
-| Spec § | Requisito | Coberto em |
-|---|---|---|
-| §2.2 (DONE Fase 4 inteira) | n/a aqui — esta é só a 5.1 | — |
-| §4.1 critério candidatos | Tasks 10, 11 (aplicar) + Task 14 (publicar em /metodologia) |
-| §4.2 janela temporal | Task 3 (audit-paridade verifica), Task 14 (publica) |
-| §4.3 distribuição rígida | Task 3, Task 14 |
-| §4.4 cascata de saliência | Task 2 (validate-log valida formato cascata-N:), Task 14 (publica) |
-| §5.1 AI policy | Task 14 |
-| §5.2 RACI | Tasks 10, 11, 12 (workflow Claude+André) |
-| §5.5 checklist sign-off | Task 18 (PR template menciona) |
-| §6.2 Sprint 5.1 entregáveis | Tasks 1-16 (cobrem 1-8 entregáveis listados) |
-| §7.1 criterio-selecao schema | Task 1 |
-| §7.2 log-editorial.csv | Task 8 |
-| §7.3 4 scripts auditoria | Tasks 2, 3, 4, 5 |
-| §7.4 CI integration | Task 7 |
-| §7.5 páginas institucionais | Tasks 14, 15, 16 |
-| §8.4 PR template | Task 9 |
+| Spec §                       | Requisito                                                          | Coberto em |
+| ---------------------------- | ------------------------------------------------------------------ | ---------- |
+| §2.2 (DONE Fase 4 inteira)   | n/a aqui — esta é só a 5.1                                         | —          |
+| §4.1 critério candidatos     | Tasks 10, 11 (aplicar) + Task 14 (publicar em /metodologia)        |
+| §4.2 janela temporal         | Task 3 (audit-paridade verifica), Task 14 (publica)                |
+| §4.3 distribuição rígida     | Task 3, Task 14                                                    |
+| §4.4 cascata de saliência    | Task 2 (validate-log valida formato cascata-N:), Task 14 (publica) |
+| §5.1 AI policy               | Task 14                                                            |
+| §5.2 RACI                    | Tasks 10, 11, 12 (workflow Claude+André)                           |
+| §5.5 checklist sign-off      | Task 18 (PR template menciona)                                     |
+| §6.2 Sprint 5.1 entregáveis  | Tasks 1-16 (cobrem 1-8 entregáveis listados)                       |
+| §7.1 criterio-selecao schema | Task 1                                                             |
+| §7.2 log-editorial.csv       | Task 8                                                             |
+| §7.3 4 scripts auditoria     | Tasks 2, 3, 4, 5                                                   |
+| §7.4 CI integration          | Task 7                                                             |
+| §7.5 páginas institucionais  | Tasks 14, 15, 16                                                   |
+| §8.4 PR template             | Task 9                                                             |
 
 **2. Placeholder scan:** o plan tem placeholders intencionais marcados `<slug1>`, `<URL_REAL>`, `<NOME>` etc. nas tarefas editoriais (10, 11, 12) — esses são preenchidos no momento da execução com dados reais coletados, não são "TODOs" no sentido proibido pelo skill. Todos os campos têm formato/contexto suficiente para o executor saber o que preencher.
 
 **3. Type consistency:**
+
 - `DeclaracaoFrontmatter`, `LogLine`, `CandidatoYaml`, `EventoYaml` definidos em `scripts/lib/data-loaders.ts` (Task 2) e usados consistentemente em Tasks 3, 4, 5.
 - `AuditMode`, `AuditInput`, `AuditResult` definidos em Task 3 e exportados.
 - `ENUM_VALIDOS` exportado de `data-loaders.ts` e usado em `validate-log.ts` e `audit-paridade.ts`.
@@ -3229,4 +3312,3 @@ O plan tem **3 tasks "EDITORIAL"** (10, 11, 12) que dependem de pesquisa web rea
 2. **Inline Execution** — Executar tasks na sessão atual com checkpoints. Permite naturalmente intercalar tasks editoriais (pausas para validação humana) com tasks de código. Mais natural para o workflow co-curadoria.
 
 **Recomendação:** **Inline para Tasks 10-12** + **Subagent-driven para 1-9, 13-19**. Híbrido.
-

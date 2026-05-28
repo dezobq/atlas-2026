@@ -21,12 +21,12 @@ A Fase 4 transforma o site técnico (Fase 1-3) em um produto público funcional.
 
 Quatro sprints sequenciais (≈ 8-10 semanas a 8-15h/sem):
 
-| Sprint | Foco | Duração | Entrega |
-|---|---|---|---|
-| **5.1** | Setup editorial | 1 sem | 2 candidatos reais, `/metodologia`, `/errata`, `/sobre`, `criterio-selecao.yaml`, demos removidos |
-| **5.2** | Piloto | 1-2 sem | 12 declarações (1 por tema × 2 candidatos) + relatório de aprendizados |
-| **5.3** | Lote principal | 4-6 sem | 48 declarações restantes (4 por tema × 2 candidatos) |
-| **5.4** | Polimento + release | 1 sem | Auditoria final, dataset `v0.1.0`, GitHub Release, checkpoint |
+| Sprint  | Foco                | Duração | Entrega                                                                                           |
+| ------- | ------------------- | ------- | ------------------------------------------------------------------------------------------------- |
+| **5.1** | Setup editorial     | 1 sem   | 2 candidatos reais, `/metodologia`, `/errata`, `/sobre`, `criterio-selecao.yaml`, demos removidos |
+| **5.2** | Piloto              | 1-2 sem | 12 declarações (1 por tema × 2 candidatos) + relatório de aprendizados                            |
+| **5.3** | Lote principal      | 4-6 sem | 48 declarações restantes (4 por tema × 2 candidatos)                                              |
+| **5.4** | Polimento + release | 1 sem   | Auditoria final, dataset `v0.1.0`, GitHub Release, checkpoint                                     |
 
 **Estado final:** 2 candidatos × 30 declarações cada (paridade 5×6 rígida) com fonte primária + Wayback + sign-off humano em 100% dos itens, dataset CC-BY 4.0 publicado, Lighthouse SEO+A11y ≥ 95.
 
@@ -74,16 +74,16 @@ A Fase 4 **deve parar e ser re-planejada** (não declarada falha) se qualquer co
 
 Os princípios §3 do spec mestre permanecem inviolados. Esta seção apenas explicita como cada um se aplica especificamente à curadoria editorial da Fase 4:
 
-| # spec mestre | Princípio | Aplicação na Fase 4 |
-|---|---|---|
-| §3.1 | Toda declaração tem fonte primária ou não existe | 100% das 60 declarações têm URL + timestamp + Wayback funcionando |
-| §3.2 | Sem rótulo de verdade/mentira | Nenhum campo de "veracidade" é preenchido pelo curador |
-| §3.3 | Igual rigor para todos | Mesma quota (5×6), mesma janela (12 meses), mesmo workflow para ambos candidatos |
-| §3.4 | Auditabilidade total | `criterio-selecao.yaml` + `log-editorial.csv` + `/metodologia` + `/errata` versionados |
-| §3.5 | Permanência | Wayback obrigatório, `versao` incrementa em correções, nada é deletado |
-| §3.6 | Não emitimos veredito | `vereditos_externos[]` agrega Lupa/Aos Fatos/Comprova com `citacao_curta` literal + atribuição |
-| §3.7 | Contexto adicional documentável | `contexto_adicional` só preenchido quando há fonte rigorosa; em dúvida, omite |
-| §3.8 | Disclaimer prominente em toda página | Componentes `VereditosExternos.astro` e `ContextoAdicional.astro` já exibem (Fase 3) |
+| # spec mestre | Princípio                                        | Aplicação na Fase 4                                                                            |
+| ------------- | ------------------------------------------------ | ---------------------------------------------------------------------------------------------- |
+| §3.1          | Toda declaração tem fonte primária ou não existe | 100% das 60 declarações têm URL + timestamp + Wayback funcionando                              |
+| §3.2          | Sem rótulo de verdade/mentira                    | Nenhum campo de "veracidade" é preenchido pelo curador                                         |
+| §3.3          | Igual rigor para todos                           | Mesma quota (5×6), mesma janela (12 meses), mesmo workflow para ambos candidatos               |
+| §3.4          | Auditabilidade total                             | `criterio-selecao.yaml` + `log-editorial.csv` + `/metodologia` + `/errata` versionados         |
+| §3.5          | Permanência                                      | Wayback obrigatório, `versao` incrementa em correções, nada é deletado                         |
+| §3.6          | Não emitimos veredito                            | `vereditos_externos[]` agrega Lupa/Aos Fatos/Comprova com `citacao_curta` literal + atribuição |
+| §3.7          | Contexto adicional documentável                  | `contexto_adicional` só preenchido quando há fonte rigorosa; em dúvida, omite                  |
+| §3.8          | Disclaimer prominente em toda página             | Componentes `VereditosExternos.astro` e `ContextoAdicional.astro` já exibem (Fase 3)           |
 
 Adicionalmente, do spec mestre §7.1: **AI não gera conteúdo.** Esta regra é o pilar da AI policy da Fase 4 (§5.4 abaixo).
 
@@ -160,23 +160,23 @@ Aplicado à Fase 4: **nenhuma declaração publicada terá `texto`, `contexto` o
 
 ### 5.2 RACI por atividade
 
-| Atividade | Claude | André | Validação automatizada |
-|---|---|---|---|
-| Pesquisar pesquisas eleitorais e calcular média | rascunho | aprova | schema Zod |
-| Decidir 2 candidatos finais | propõe | **aprova** | — |
-| Escrever `criterio-selecao.yaml` | rascunho | aprova | schema Zod + Ajv |
-| Escrever `/metodologia`, `/errata`, `/sobre` | rascunho | **aprova final** | build estático |
-| Identificar longlist de declarações por (tema, candidato) | rascunho | aprova | — |
-| Escolher 1-N declarações da longlist | propõe | **decide** | — |
-| Rodar `pnpm scrape:youtube/transcribe/archive` | executa | — | Wayback HTTP 200 |
-| Revisar transcrição Whisper bruta vs vídeo | — | **executa** | — |
-| Decidir `tipo_estrutural` da declaração | propõe | **decide** | schema enum |
-| Decidir `tema_principal` + `temas_secundarios` | propõe | **decide** | FK para `data/temas/` |
-| Buscar `vereditos_externos` em Lupa/Aos Fatos/Comprova | pesquisa | aprova citação | URL HTTP 200 |
-| Escrever `contexto` e `contexto_adicional` | rascunho factual | **edita/aprova** | — |
-| Preencher campos derivados (`id`, `slug`, datas) | executa | — | schema Zod |
-| Atualizar `log-editorial.csv` | escreve linha | revisa | FK match script |
-| Commit + PR | abre PR | **sign-off** | CI verde |
+| Atividade                                                 | Claude           | André            | Validação automatizada |
+| --------------------------------------------------------- | ---------------- | ---------------- | ---------------------- |
+| Pesquisar pesquisas eleitorais e calcular média           | rascunho         | aprova           | schema Zod             |
+| Decidir 2 candidatos finais                               | propõe           | **aprova**       | —                      |
+| Escrever `criterio-selecao.yaml`                          | rascunho         | aprova           | schema Zod + Ajv       |
+| Escrever `/metodologia`, `/errata`, `/sobre`              | rascunho         | **aprova final** | build estático         |
+| Identificar longlist de declarações por (tema, candidato) | rascunho         | aprova           | —                      |
+| Escolher 1-N declarações da longlist                      | propõe           | **decide**       | —                      |
+| Rodar `pnpm scrape:youtube/transcribe/archive`            | executa          | —                | Wayback HTTP 200       |
+| Revisar transcrição Whisper bruta vs vídeo                | —                | **executa**      | —                      |
+| Decidir `tipo_estrutural` da declaração                   | propõe           | **decide**       | schema enum            |
+| Decidir `tema_principal` + `temas_secundarios`            | propõe           | **decide**       | FK para `data/temas/`  |
+| Buscar `vereditos_externos` em Lupa/Aos Fatos/Comprova    | pesquisa         | aprova citação   | URL HTTP 200           |
+| Escrever `contexto` e `contexto_adicional`                | rascunho factual | **edita/aprova** | —                      |
+| Preencher campos derivados (`id`, `slug`, datas)          | executa          | —                | schema Zod             |
+| Atualizar `log-editorial.csv`                             | escreve linha    | revisa           | FK match script        |
+| Commit + PR                                               | abre PR          | **sign-off**     | CI verde               |
 
 **Regra de ouro:** se Claude tem dúvida sobre **factualidade** de qualquer campo (data, número, nome, citação literal), **para e pergunta** ao André em vez de assumir.
 
@@ -196,11 +196,11 @@ Aplicado à Fase 4: **nenhuma declaração publicada terá `texto`, `contexto` o
 
 **Tempo estimado por declaração** (informado por spec mestre §7):
 
-| Nível | Fonte | Tempo total estimado |
-|---|---|---|
-| 1 (fácil) | YouTube oficial · TSE · Câmara/Senado | ~10-15 min |
-| 2 (médio) | Mídia consolidada com vídeo embedado | ~15-20 min |
-| 3 (difícil) | Posts X/IG/FB/TikTok oficiais | ~25-35 min |
+| Nível       | Fonte                                 | Tempo total estimado |
+| ----------- | ------------------------------------- | -------------------- |
+| 1 (fácil)   | YouTube oficial · TSE · Câmara/Senado | ~10-15 min           |
+| 2 (médio)   | Mídia consolidada com vídeo embedado  | ~15-20 min           |
+| 3 (difícil) | Posts X/IG/FB/TikTok oficiais         | ~25-35 min           |
 
 Total estimado para 60 declarações: **15-30 h de trabalho efetivo do André** (paralelo ao trabalho do Claude).
 
@@ -386,18 +386,18 @@ declaracao_id,candidato_id,tema,tipo_estrutural,fonte_tipo,tem_veredito_externo,
 
 **Colunas:**
 
-| Coluna | Tipo | Origem | Observações |
-|---|---|---|---|
-| `declaracao_id` | string (ULID) | FK | Casa com `data/declaracoes/<id>.md` |
-| `candidato_id` | string (slug) | FK | Casa com `data/candidatos/<slug>.yaml` |
-| `tema` | enum | FK | 1 dos 6 temas primários |
-| `tipo_estrutural` | enum | declaração | 1 dos 8 do schema mestre |
-| `fonte_tipo` | enum | declaração | youtube_oficial \| tse \| camara \| senado \| midia_consolidada \| rede_social_oficial |
-| `tem_veredito_externo` | boolean | declaração | `vereditos_externos[].length > 0` |
-| `motivo_inclusao` | string | curadoria | Começa com `cascata-N:` |
-| `curador` | string | fixo MVP | "Claude+André" |
-| `validador` | string | fixo MVP | "André" |
-| `data_inclusao` | ISO 8601 | timestamp | Quando o sign-off ocorreu |
+| Coluna                 | Tipo          | Origem     | Observações                                                                            |
+| ---------------------- | ------------- | ---------- | -------------------------------------------------------------------------------------- |
+| `declaracao_id`        | string (ULID) | FK         | Casa com `data/declaracoes/<id>.md`                                                    |
+| `candidato_id`         | string (slug) | FK         | Casa com `data/candidatos/<slug>.yaml`                                                 |
+| `tema`                 | enum          | FK         | 1 dos 6 temas primários                                                                |
+| `tipo_estrutural`      | enum          | declaração | 1 dos 8 do schema mestre                                                               |
+| `fonte_tipo`           | enum          | declaração | youtube_oficial \| tse \| camara \| senado \| midia_consolidada \| rede_social_oficial |
+| `tem_veredito_externo` | boolean       | declaração | `vereditos_externos[].length > 0`                                                      |
+| `motivo_inclusao`      | string        | curadoria  | Começa com `cascata-N:`                                                                |
+| `curador`              | string        | fixo MVP   | "Claude+André"                                                                         |
+| `validador`            | string        | fixo MVP   | "André"                                                                                |
+| `data_inclusao`        | ISO 8601      | timestamp  | Quando o sign-off ocorreu                                                              |
 
 CSV (não JSON) intencionalmente, para jornalistas/pesquisadores abrirem em planilha sem fricção.
 
@@ -492,12 +492,12 @@ Sem mudanças em format/lint/typecheck/test/build. Build continua independente d
 
 ### 7.5 Páginas institucionais como infraestrutura de auditoria
 
-| Página | Função auditável |
-|---|---|
-| `/metodologia` | Documenta critério → permite contestar critério, não só execução |
-| `/errata` | Registra correções publicamente → cumpre §3.4 (erros corrigíveis publicamente) |
-| `/sobre` | Identifica curadores → reduz acusação de "fonte anônima" |
-| `/dataset` (já existe) | Permite reuso por terceiros → cumpre §3.4 (dataset aberto) |
+| Página                 | Função auditável                                                               |
+| ---------------------- | ------------------------------------------------------------------------------ |
+| `/metodologia`         | Documenta critério → permite contestar critério, não só execução               |
+| `/errata`              | Registra correções publicamente → cumpre §3.4 (erros corrigíveis publicamente) |
+| `/sobre`               | Identifica curadores → reduz acusação de "fonte anônima"                       |
+| `/dataset` (já existe) | Permite reuso por terceiros → cumpre §3.4 (dataset aberto)                     |
 
 ---
 
@@ -533,53 +533,53 @@ Sem mudanças em format/lint/typecheck/test/build. Build continua independente d
 
 #### Sprint 5.1
 
-| Item | Como | Evidência | Bloqueia merge? |
-|---|---|---|---|
-| `criterio-selecao.yaml` validado pelo Zod | `pnpm validate-data` | exit 0 + log no PR | ✅ |
-| 2 candidatos novos válidos (sem demos) | `pnpm validate-data` + `pnpm audit:paridade --setup-mode` | exit 0 | ✅ |
-| Demos removidos (incluindo fotos) | `git diff --stat` mostra deleções esperadas | diff no PR | ✅ |
-| `/metodologia` renderiza com critério | `pnpm build:full` + curl `/metodologia` | response no PR | ✅ |
-| `/errata` e `/sobre` renderizam | idem | idem | ✅ |
-| `log-editorial.csv` existe com header | `cat data/log-editorial.csv` | output no PR | ✅ |
-| Lighthouse das 3 páginas novas | `pnpm dlx lighthouse <url> --only-categories=accessibility,seo` | score ≥ 95 anexado | ⚠️ alerta |
-| Wayback Snapshot das 3 pesquisas | `pnpm check:archive-urls --recent` | exit 0 | ✅ |
+| Item                                      | Como                                                            | Evidência          | Bloqueia merge? |
+| ----------------------------------------- | --------------------------------------------------------------- | ------------------ | --------------- |
+| `criterio-selecao.yaml` validado pelo Zod | `pnpm validate-data`                                            | exit 0 + log no PR | ✅              |
+| 2 candidatos novos válidos (sem demos)    | `pnpm validate-data` + `pnpm audit:paridade --setup-mode`       | exit 0             | ✅              |
+| Demos removidos (incluindo fotos)         | `git diff --stat` mostra deleções esperadas                     | diff no PR         | ✅              |
+| `/metodologia` renderiza com critério     | `pnpm build:full` + curl `/metodologia`                         | response no PR     | ✅              |
+| `/errata` e `/sobre` renderizam           | idem                                                            | idem               | ✅              |
+| `log-editorial.csv` existe com header     | `cat data/log-editorial.csv`                                    | output no PR       | ✅              |
+| Lighthouse das 3 páginas novas            | `pnpm dlx lighthouse <url> --only-categories=accessibility,seo` | score ≥ 95 anexado | ⚠️ alerta       |
+| Wayback Snapshot das 3 pesquisas          | `pnpm check:archive-urls --recent`                              | exit 0             | ✅              |
 
 #### Sprint 5.2 — Piloto
 
-| Item | Como | Evidência | Bloqueia merge? |
-|---|---|---|---|
-| 12 declarações novas válidas | `pnpm validate-data` | exit 0 | ✅ |
-| 1 declaração por (tema × candidato) | `pnpm audit:paridade --piloto-mode` | output 6+6 | ✅ |
-| 12 entradas em `log-editorial.csv` FK match | `pnpm validate:log` | exit 0 | ✅ |
-| Wayback URL válido em 100% das 12 | `pnpm check:archive-urls --recent` | exit 0 | ✅ |
-| Transcrição revisada (sign-off) | checklist §5.5 marcada por declaração | descrição do PR menciona "sign-off: 12/12" | ✅ |
-| Relatório de aprendizados commitado | arquivo presente em `docs/superpowers/specs/` | ls | ✅ |
-| Tempo médio por declaração medido | André anota nas anotações | menção no relatório | ⚠️ alerta |
+| Item                                        | Como                                          | Evidência                                  | Bloqueia merge? |
+| ------------------------------------------- | --------------------------------------------- | ------------------------------------------ | --------------- |
+| 12 declarações novas válidas                | `pnpm validate-data`                          | exit 0                                     | ✅              |
+| 1 declaração por (tema × candidato)         | `pnpm audit:paridade --piloto-mode`           | output 6+6                                 | ✅              |
+| 12 entradas em `log-editorial.csv` FK match | `pnpm validate:log`                           | exit 0                                     | ✅              |
+| Wayback URL válido em 100% das 12           | `pnpm check:archive-urls --recent`            | exit 0                                     | ✅              |
+| Transcrição revisada (sign-off)             | checklist §5.5 marcada por declaração         | descrição do PR menciona "sign-off: 12/12" | ✅              |
+| Relatório de aprendizados commitado         | arquivo presente em `docs/superpowers/specs/` | ls                                         | ✅              |
+| Tempo médio por declaração medido           | André anota nas anotações                     | menção no relatório                        | ⚠️ alerta       |
 
 #### Sprint 5.3 — Lote
 
-| Item | Como | Evidência | Bloqueia merge? |
-|---|---|---|---|
-| Cada mini-PR de 10-12 declarações válido | `pnpm validate-data` por PR | exit 0 | ✅ |
-| Auditoria paridade incremental | `pnpm audit:paridade` mostra progressão | output no PR | ✅ |
-| Wayback URL válido nas declarações do PR | `pnpm check:archive-urls --recent` | exit 0 | ✅ |
-| `log-editorial.csv` FK match continua 100% | `pnpm validate:log` | exit 0 | ✅ |
-| Diversidade de `tipo_estrutural` sendo construída | `pnpm audit:distribuicao` | tabela no PR | ⚠️ alerta |
-| Build estático funciona | `pnpm build:full` no CI | exit 0 + tamanho do dist | ✅ |
+| Item                                              | Como                                    | Evidência                | Bloqueia merge? |
+| ------------------------------------------------- | --------------------------------------- | ------------------------ | --------------- |
+| Cada mini-PR de 10-12 declarações válido          | `pnpm validate-data` por PR             | exit 0                   | ✅              |
+| Auditoria paridade incremental                    | `pnpm audit:paridade` mostra progressão | output no PR             | ✅              |
+| Wayback URL válido nas declarações do PR          | `pnpm check:archive-urls --recent`      | exit 0                   | ✅              |
+| `log-editorial.csv` FK match continua 100%        | `pnpm validate:log`                     | exit 0                   | ✅              |
+| Diversidade de `tipo_estrutural` sendo construída | `pnpm audit:distribuicao`               | tabela no PR             | ⚠️ alerta       |
+| Build estático funciona                           | `pnpm build:full` no CI                 | exit 0 + tamanho do dist | ✅              |
 
 #### Sprint 5.4 — Release
 
-| Item | Como | Evidência | Bloqueia merge? |
-|---|---|---|---|
-| 60 declarações exatas | `pnpm audit:paridade --final-mode` | "PASS: 60 declarations, 5×6×2 distribution" | ✅ |
-| Distribuição de tipos saudável | `pnpm audit:distribuicao` | `docs/distribuicao-fase4.md` versionado | ✅ |
-| Lighthouse SEO ≥ 95 em 3 URLs | `pnpm dlx lighthouse` | JSON em `docs/lighthouse-fase4.json` | ✅ |
-| Lighthouse Accessibility ≥ 95 | idem | idem | ✅ |
-| Dataset gerado | `pnpm export:dataset` | `dist-dataset/atlas-2026-v0.1.0.*` | ✅ |
-| GitHub Release v0.1.0 publicado | `gh release create` | URL no PR final | ✅ |
-| Auditoria manual de 6 declarações | André confere transcrição + Wayback | "manual audit: 6/6 OK" no PR | ✅ |
-| Checkpoint Vault registrado | `memory/checkpoint-fase4-completa.md` | ls | ✅ |
-| `MEMORY.md` aponta novo checkpoint | grep `**bold**` | diff no PR | ✅ |
+| Item                               | Como                                  | Evidência                                   | Bloqueia merge? |
+| ---------------------------------- | ------------------------------------- | ------------------------------------------- | --------------- |
+| 60 declarações exatas              | `pnpm audit:paridade --final-mode`    | "PASS: 60 declarations, 5×6×2 distribution" | ✅              |
+| Distribuição de tipos saudável     | `pnpm audit:distribuicao`             | `docs/distribuicao-fase4.md` versionado     | ✅              |
+| Lighthouse SEO ≥ 95 em 3 URLs      | `pnpm dlx lighthouse`                 | JSON em `docs/lighthouse-fase4.json`        | ✅              |
+| Lighthouse Accessibility ≥ 95      | idem                                  | idem                                        | ✅              |
+| Dataset gerado                     | `pnpm export:dataset`                 | `dist-dataset/atlas-2026-v0.1.0.*`          | ✅              |
+| GitHub Release v0.1.0 publicado    | `gh release create`                   | URL no PR final                             | ✅              |
+| Auditoria manual de 6 declarações  | André confere transcrição + Wayback   | "manual audit: 6/6 OK" no PR                | ✅              |
+| Checkpoint Vault registrado        | `memory/checkpoint-fase4-completa.md` | ls                                          | ✅              |
+| `MEMORY.md` aponta novo checkpoint | grep `**bold**`                       | diff no PR                                  | ✅              |
 
 ### 8.3 Testes unitários (Vitest) novos
 
@@ -599,25 +599,30 @@ tests/unit/scripts/check-archive-urls.test.ts   # mock fetch, retorna OK/FAIL ap
 
 ```markdown
 ## Sprint
+
 5.X (setup | piloto | lote | polimento)
 
 ## Mudança editorial
+
 - [ ] N declarações novas
 - [ ] N entradas em log-editorial.csv
 - [ ] Candidatos: <slug1>, <slug2>
 
 ## Auditoria automatizada
+
 - `pnpm validate-data`: PASS
 - `pnpm audit:paridade`: <output>
 - `pnpm audit:distribuicao`: <link para docs/distribuicao-fase4.md>
 - `pnpm check:archive-urls --recent`: PASS
 
 ## Auditoria humana
+
 - [ ] Sign-off por declaração: N/N (checklist §5.5 marcada)
 - [ ] Wayback abre para todas N URLs
 - [ ] Transcrição confere com fonte primária
 
 ## Build
+
 - `pnpm format:check`: PASS
 - `pnpm lint`: PASS
 - `pnpm typecheck`: PASS
@@ -625,6 +630,7 @@ tests/unit/scripts/check-archive-urls.test.ts   # mock fetch, retorna OK/FAIL ap
 - `pnpm build:full`: PASS (N páginas)
 
 ## Risco residual conhecido
+
 <vazio | descreve riscos aceitos conscientemente>
 ```
 
@@ -632,25 +638,25 @@ tests/unit/scripts/check-archive-urls.test.ts   # mock fetch, retorna OK/FAIL ap
 
 ## 9. Riscos e mitigações
 
-| # | Risco | Sev. | Prob. | Mitigação | Responsável |
-|---|---|---|---|---|---|
-| F4-1 | Acusação de viés político na escolha dos 2 candidatos | Alta | Alta | Critério público (§4.1) + `criterio-selecao.yaml` versionado + linha de empate divulgada + lock total | Sprint 5.1 |
-| F4-2 | Alucinação de texto/dado pelo Claude virando declaração publicada | Alta | Média | RACI §5.2 com "validador: André" obrigatório + checklist §5.5 + AI policy §5.4 | Todos sprints |
-| F4-3 | Transcrição Whisper com erro em nome/número/citação | Alta | Alta | André revisa transcrição contra vídeo original ANTES de virar `texto` | Todos sprints |
-| F4-4 | Fonte primária deletada antes do snapshot Wayback completar | Alta | Média | Wayback Save Page Now é chamado **antes** de qualquer outro passo; HEAD check confirma 200 | Sprint 5.2/5.3 |
-| F4-5 | Candidato falou < 5 vezes de algum tema na janela (quota inviável) | Média | Média | Piloto 5.2 testa antes do lote; lacuna estrutural vira nota em `/metodologia`, não inflação artificial | Sprint 5.2 |
-| F4-6 | Falsa atribuição (declaração de outro político atribuída ao candidato) | Alta | Baixa-Média | Sign-off humano + fonte primária obrigatória + checklist | André |
-| F4-7 | Citação fora de contexto distorcendo intenção original | Alta | Média | `contexto` é factual ("Em resposta à pergunta sobre X, candidato disse Y") + linkado ao vídeo timestamped | André |
-| F4-8 | Fact-checker mudou veredito após publicação no Atlas | Média | Baixa | `versao` incrementa no PR de correção + `/errata` registra mudança + `data` do veredito no schema | Pós-publicação |
-| F4-9 | Linha de empate (3º colocado) entra forte no jornal | Média | Média | Lock total tem rationale em `criterio-selecao.yaml` + texto antecipando crítica em `/metodologia` + revisão pós-MVP | `/metodologia` |
-| F4-10 | Direitos autorais sobre foto oficial do candidato | Baixa | Média | Foto pública oficial (site do candidato) ou Wikimedia Commons CC-BY; atribuição no `<img alt>` | Sprint 5.1 |
-| F4-11 | Direitos autorais sobre trecho de citação literal | Baixa | Baixa | Fair use jornalístico (LDA Art. 46) + link para fonte completa | André + spec mestre |
-| F4-12 | LGPD: dados pessoais de candidatos | Baixa | Baixa | Cobertura limitada a fala pública em contexto público (Art. 7 §III LGPD) | spec mestre |
-| F4-13 | Burnout do solo founder na curadoria | Média | Média | Co-curadoria Claude+André + piloto antes do lote + gates de parada | Todos sprints |
-| F4-14 | Inconsistência entre 30 declarações iniciais e como curar futuro | Média | Média | `/metodologia` v1 define padrão; revisão pós-MVP só muda critério com Errata | Pós-MVP |
-| F4-15 | Erro factual descoberto após release v0.1.0 | Alta | Quase certa | §5.6 (processo de erratas) + `/errata` + git versão incrementada | Pós-Fase 4 |
-| F4-16 | Candidato processa por difamação | Baixa | Baixa | Zero veredito próprio; agrega citações literais; `vereditos_externos[]` atribuído ao fact-checker | spec mestre |
-| F4-17 | Pagamento de Whisper/Firecrawl explode em volume | Baixa | Baixa | Cache em `.cache/`; 60 declarações ≈ $0.40 total Whisper | Pipeline existente |
+| #     | Risco                                                                  | Sev.  | Prob.       | Mitigação                                                                                                           | Responsável         |
+| ----- | ---------------------------------------------------------------------- | ----- | ----------- | ------------------------------------------------------------------------------------------------------------------- | ------------------- |
+| F4-1  | Acusação de viés político na escolha dos 2 candidatos                  | Alta  | Alta        | Critério público (§4.1) + `criterio-selecao.yaml` versionado + linha de empate divulgada + lock total               | Sprint 5.1          |
+| F4-2  | Alucinação de texto/dado pelo Claude virando declaração publicada      | Alta  | Média       | RACI §5.2 com "validador: André" obrigatório + checklist §5.5 + AI policy §5.4                                      | Todos sprints       |
+| F4-3  | Transcrição Whisper com erro em nome/número/citação                    | Alta  | Alta        | André revisa transcrição contra vídeo original ANTES de virar `texto`                                               | Todos sprints       |
+| F4-4  | Fonte primária deletada antes do snapshot Wayback completar            | Alta  | Média       | Wayback Save Page Now é chamado **antes** de qualquer outro passo; HEAD check confirma 200                          | Sprint 5.2/5.3      |
+| F4-5  | Candidato falou < 5 vezes de algum tema na janela (quota inviável)     | Média | Média       | Piloto 5.2 testa antes do lote; lacuna estrutural vira nota em `/metodologia`, não inflação artificial              | Sprint 5.2          |
+| F4-6  | Falsa atribuição (declaração de outro político atribuída ao candidato) | Alta  | Baixa-Média | Sign-off humano + fonte primária obrigatória + checklist                                                            | André               |
+| F4-7  | Citação fora de contexto distorcendo intenção original                 | Alta  | Média       | `contexto` é factual ("Em resposta à pergunta sobre X, candidato disse Y") + linkado ao vídeo timestamped           | André               |
+| F4-8  | Fact-checker mudou veredito após publicação no Atlas                   | Média | Baixa       | `versao` incrementa no PR de correção + `/errata` registra mudança + `data` do veredito no schema                   | Pós-publicação      |
+| F4-9  | Linha de empate (3º colocado) entra forte no jornal                    | Média | Média       | Lock total tem rationale em `criterio-selecao.yaml` + texto antecipando crítica em `/metodologia` + revisão pós-MVP | `/metodologia`      |
+| F4-10 | Direitos autorais sobre foto oficial do candidato                      | Baixa | Média       | Foto pública oficial (site do candidato) ou Wikimedia Commons CC-BY; atribuição no `<img alt>`                      | Sprint 5.1          |
+| F4-11 | Direitos autorais sobre trecho de citação literal                      | Baixa | Baixa       | Fair use jornalístico (LDA Art. 46) + link para fonte completa                                                      | André + spec mestre |
+| F4-12 | LGPD: dados pessoais de candidatos                                     | Baixa | Baixa       | Cobertura limitada a fala pública em contexto público (Art. 7 §III LGPD)                                            | spec mestre         |
+| F4-13 | Burnout do solo founder na curadoria                                   | Média | Média       | Co-curadoria Claude+André + piloto antes do lote + gates de parada                                                  | Todos sprints       |
+| F4-14 | Inconsistência entre 30 declarações iniciais e como curar futuro       | Média | Média       | `/metodologia` v1 define padrão; revisão pós-MVP só muda critério com Errata                                        | Pós-MVP             |
+| F4-15 | Erro factual descoberto após release v0.1.0                            | Alta  | Quase certa | §5.6 (processo de erratas) + `/errata` + git versão incrementada                                                    | Pós-Fase 4          |
+| F4-16 | Candidato processa por difamação                                       | Baixa | Baixa       | Zero veredito próprio; agrega citações literais; `vereditos_externos[]` atribuído ao fact-checker                   | spec mestre         |
+| F4-17 | Pagamento de Whisper/Firecrawl explode em volume                       | Baixa | Baixa       | Cache em `.cache/`; 60 declarações ≈ $0.40 total Whisper                                                            | Pipeline existente  |
 
 ### 9.1 Riscos aceitos conscientemente (não mitigamos)
 

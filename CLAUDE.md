@@ -80,12 +80,12 @@ dist-dataset/*.{jsonl,csv}  →  GitHub Releases (CC-BY 4.0)
 
 4 coleções definidas em `src/content/config.ts`, todas com schema Zod estrito:
 
-| Collection | Arquivos | Loader | Relação |
-|------------|----------|--------|---------|
-| `candidatos` | `data/candidatos/*.yaml` | glob YAML | — |
-| `temas` | `data/temas/*.yaml` | glob YAML | taxonomia (primário ↔ secundário) |
-| `eventos` | `data/eventos/*.yaml` | glob YAML | many-to-many com candidatos via `candidatos_envolvidos[]` |
-| `declaracoes` | `data/declaracoes/*.md` | glob MD | `candidato_id` + `evento_id` + `tema_principal` + `temas_secundarios[]` |
+| Collection    | Arquivos                 | Loader    | Relação                                                                 |
+| ------------- | ------------------------ | --------- | ----------------------------------------------------------------------- |
+| `candidatos`  | `data/candidatos/*.yaml` | glob YAML | —                                                                       |
+| `temas`       | `data/temas/*.yaml`      | glob YAML | taxonomia (primário ↔ secundário)                                       |
+| `eventos`     | `data/eventos/*.yaml`    | glob YAML | many-to-many com candidatos via `candidatos_envolvidos[]`               |
+| `declaracoes` | `data/declaracoes/*.md`  | glob MD   | `candidato_id` + `evento_id` + `tema_principal` + `temas_secundarios[]` |
 
 **Acesso por loader puro** em `src/lib/data/`: `getAllCandidatos()`, `getDeclaracoesByTema(slug)`, `getEventosByCandidato(id)`, etc. Páginas `.astro` consomem esses helpers; nunca chamam `getCollection` direto.
 
@@ -149,16 +149,16 @@ ID de declaração: `YYYY-MM-DD-<candidato-slug>-<tema>-<descritor>` (ex: `2026-
 
 Ver [[checkpoint-sprint4.2-completa]] para entry point atual. Fases completas:
 
-| Fase | Status | Commit / Branch | Entrega |
-|------|--------|-----------------|---------|
-| 1 — Fundação | ✅ | `ce6ad3d` (main) | Astro+React+Tailwind+shadcn+layout+tokens |
-| 2 — Pipeline | ✅ | `39bd315` (main) | 6 scripts CLI + tech debt + bug fixes |
-| 3.1 — SEO Foundation | ✅ | `f0d34b8` (branch) | schema-dts + 6 build-* + 5 JSONLD*.astro + SEOTags + slot head |
-| 3.2 — Discovery infra | ✅ | `d0c4bc3` (branch) | `@astrojs/sitemap` + robots.txt + Pagefind + PagefindSearch |
-| 3.3 — Páginas + Componentes | ⏳ | — | 9 rotas + 8 componentes (Tasks 13-26) |
-| 3.4 — Validação + PR | ⏳ | — | format/lint/typecheck/test/build + squash merge (Tasks 27-29) |
-| 4 — Conteúdo MVP | ⏳ | — | 2 candidatos × 30 declarações reais |
-| 5 — Polimento+launch | ⏳ | — | Zenodo DOI · soft launch silencioso |
+| Fase                        | Status | Commit / Branch    | Entrega                                                        |
+| --------------------------- | ------ | ------------------ | -------------------------------------------------------------- |
+| 1 — Fundação                | ✅     | `ce6ad3d` (main)   | Astro+React+Tailwind+shadcn+layout+tokens                      |
+| 2 — Pipeline                | ✅     | `39bd315` (main)   | 6 scripts CLI + tech debt + bug fixes                          |
+| 3.1 — SEO Foundation        | ✅     | `f0d34b8` (branch) | schema-dts + 6 build-_ + 5 JSONLD_.astro + SEOTags + slot head |
+| 3.2 — Discovery infra       | ✅     | `d0c4bc3` (branch) | `@astrojs/sitemap` + robots.txt + Pagefind + PagefindSearch    |
+| 3.3 — Páginas + Componentes | ⏳     | —                  | 9 rotas + 8 componentes (Tasks 13-26)                          |
+| 3.4 — Validação + PR        | ⏳     | —                  | format/lint/typecheck/test/build + squash merge (Tasks 27-29)  |
+| 4 — Conteúdo MVP            | ⏳     | —                  | 2 candidatos × 30 declarações reais                            |
+| 5 — Polimento+launch        | ⏳     | —                  | Zenodo DOI · soft launch silencioso                            |
 
 > **Sprint 4.1+4.2** estão na branch `feat/fase3-seo-paginas` (worktree `../atlas-fase3`), NÃO mergeadas em `main`. Total: 12 commits, 105 testes. Sprint 4.3 começa pela Task 13 (fixtures).
 
@@ -178,14 +178,14 @@ Ver [[checkpoint-sprint4.2-completa]] para entry point atual. Fases completas:
 
 ## Gates de qualidade (alinhados ao spec §9.5)
 
-| Métrica | Meta |
-|---------|------|
-| Lighthouse SEO | ≥ 95 |
-| Lighthouse Acessibilidade | ≥ 95 (WCAG 2.2 AA) |
-| LCP | < 2.5s |
-| CLS | < 0.1 |
-| Cobertura testes | ≥ 80% lines (atual: 80% threshold em vitest.config.ts) |
-| Lint warnings | 0 (`--max-warnings=0`) |
-| Typecheck hints | 0 |
+| Métrica                   | Meta                                                   |
+| ------------------------- | ------------------------------------------------------ |
+| Lighthouse SEO            | ≥ 95                                                   |
+| Lighthouse Acessibilidade | ≥ 95 (WCAG 2.2 AA)                                     |
+| LCP                       | < 2.5s                                                 |
+| CLS                       | < 0.1                                                  |
+| Cobertura testes          | ≥ 80% lines (atual: 80% threshold em vitest.config.ts) |
+| Lint warnings             | 0 (`--max-warnings=0`)                                 |
+| Typecheck hints           | 0                                                      |
 
 CI bloqueia merge se `format:check`, `lint`, `typecheck`, `validate-data`, `test` ou `build` falharem em Ubuntu.
