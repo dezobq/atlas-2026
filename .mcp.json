@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "obsidian": {
+      "command": "npx",
+      "args": ["-y", "@bitbonsai/mcpvault@latest", "C:\\Users\\dezob\\Projects\\atlas\\Vault"],
+      "env": {}
+    }
+  }
+}
