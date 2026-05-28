@@ -1,0 +1,59 @@
+---
+/**
+ * Wrapper Astro para Pagefind Default UI.
+ *
+ * Carrega assets gerados por `pnpm build:full` (dist/pagefind/) e instancia
+ * PagefindUI sobre #pagefind-search após DOMContentLoaded.
+ *
+ * Padrão Context7 /cloudcannon/pagefind: assets como <link>/<script> + init em DOMContentLoaded.
+ */
+
+interface Props {
+  showSubResults?: boolean;
+  showImages?: boolean;
+}
+
+const { showSubResults = true, showImages = false } = Astro.props;
+---
+
+<link href="/pagefind/pagefind-ui.css" rel="stylesheet" />
+
+<div id="pagefind-search"></div>
+
+<script is:inline src="/pagefind/pagefind-ui.js"></script>
+
+<script is:inline define:vars={{ showSubResults, showImages }}>
+  window.addEventListener("DOMContentLoaded", () => {
+    new PagefindUI({
+      element: "#pagefind-search",
+      showSubResults,
+      showImages,
+      translations: {
+        placeholder: "Buscar declarações, candidatos, eventos...",
+        clear_search: "Limpar",
+        load_more: "Carregar mais",
+        search_label: "Pesquisar no Atlas",
+        filters_label: "Filtros",
+        zero_results: "Nenhum resultado para [SEARCH_TERM]",
+        many_results: "[COUNT] resultados para [SEARCH_TERM]",
+        one_result: "[COUNT] resultado para [SEARCH_TERM]",
+        alt_search: "Sem resultados para [SEARCH_TERM]. Mostrando [DIFFERENT_TERM]",
+        search_suggestion: "Sem resultados para [SEARCH_TERM]. Tente: [DIFFERENT_TERM]",
+        searching: "Pesquisando [SEARCH_TERM]...",
+      },
+    });
+  });
+</script>
+
+<style>
+  :global(.pagefind-ui) {
+    --pagefind-ui-primary: var(--color-text-primary, #171717);
+    --pagefind-ui-text: var(--color-text-body, #4d4d4d);
+    --pagefind-ui-background: var(--color-canvas, #ffffff);
+    --pagefind-ui-border: var(--color-hairline, #ebebeb);
+    --pagefind-ui-tag: var(--color-bg-muted, #f5f5f5);
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: var(--radius-md, 8px);
+    --pagefind-ui-font: var(--font-sans, system-ui);
+  }
+</style>
