@@ -1,7 +1,7 @@
 ---
 título: "Atlas dos Candidatos · 2026 — Fase 4: Conteúdo MVP"
-versão: "1.0"
-status: "design aprovado em brainstorming · pendente plan"
+versão: "1.1"
+status: "design aprovado · plan Sprint 5.1 em execução"
 autor: "André Dezob (curador) + Claude (rascunho)"
 data_criação: "2026-05-28"
 spec_pai: "docs/superpowers/specs/2026-05-27-atlas-design.md"
@@ -97,16 +97,21 @@ Esta seção é a referência canônica do conteúdo de `/metodologia`. Mudança
 
 **Regra:**
 
-> Os 2 candidatos com maior **média simples** de intenção de voto **estimulada (1º turno)** nas **3 últimas pesquisas** publicadas pelos institutos **Datafolha**, **Quaest** e **Genial-Quaest** até a **data de corte de 2026-05-15** (inclusive).
+> Os 2 candidatos com maior **média simples** de intenção de voto **estimulada (1º turno)** nas **3 últimas pesquisas** publicadas pelos institutos **Datafolha**, **Quaest** e **AtlasIntel** até a **data de corte de 2026-05-16** (inclusive).
 
 **Mecânica de aplicação:**
 
-1. Coletar a pesquisa mais recente de **cada** instituto publicada **até** 2026-05-15.
-2. Para cada candidato presente nas 3 pesquisas, calcular `media = (datafolha + quaest + genial) / 3`.
+1. Coletar a pesquisa mais recente de **cada** instituto publicada **até** 2026-05-16.
+2. Para cada candidato presente nas 3 pesquisas, calcular `media = (datafolha + quaest + atlasintel) / 3`.
 3. Ordenar candidatos por `media` descendente.
 4. Os 2 primeiros candidatos são selecionados para o MVP.
 5. **Empate técnico** (diferença ≤ 2 p.p. entre 2º e 3º): desempate em cascata: (a) maior amostra agregada nas 3 pesquisas, (b) menor margem de erro agregada, (c) mais antigo no cargo público (atual ou último).
 6. **Candidato ausente em alguma das 3 pesquisas:** não é elegível ao MVP. Esta lacuna é registrada como déficit metodológico em `/metodologia`.
+
+**Histórico de revisões do critério (rastreabilidade):**
+
+- **v1.0 (2026-05-28, brainstorming):** Datafolha + Quaest + Genial-Quaest até 2026-05-15.
+- **v1.1 (2026-05-28, aplicação Task 10):** Substituído Genial-Quaest → AtlasIntel (Quaest e Genial-Quaest demonstraram ser o mesmo instituto — Banco Genial contrata todas as rodadas Quaest, ficha técnica usa "Genial/Quaest"). Corte movido para 2026-05-16 (Datafolha mais recente foi publicada em 16/05, e Quaest mais recente é de abril). IPEC considerado mas não publicou pesquisa presidencial 2026.
 
 **Lock total:** uma vez aplicado o critério no Sprint 5.1, os 2 candidatos selecionados **não mudam** durante a Fase 4, independentemente de mudanças posteriores no ranking. Re-seleção fica para revisão pós-MVP (com nova Errata documentando a mudança).
 
@@ -116,7 +121,7 @@ Esta seção é a referência canônica do conteúdo de `/metodologia`. Mudança
 
 **Regra:**
 
-> São elegíveis declarações cujo `evento.data` cai no intervalo fechado **[2025-05-15, 2026-05-15]** (12 meses anteriores à data de corte, inclusive nas duas pontas).
+> São elegíveis declarações cujo `evento.data` cai no intervalo fechado **[2025-05-16, 2026-05-16]** (12 meses anteriores à data de corte, inclusive nas duas pontas).
 
 **Mecânica:**
 

@@ -29,8 +29,8 @@ export interface AuditResult {
 }
 
 // Janela de elegibilidade da Fase 4 (spec §4.2)
-const JANELA_INICIO = new Date("2025-05-15T00:00:00.000Z").getTime();
-const JANELA_FIM = new Date("2026-05-15T23:59:59.999Z").getTime();
+const JANELA_INICIO = new Date("2025-05-16T00:00:00.000Z").getTime();
+const JANELA_FIM = new Date("2026-05-16T23:59:59.999Z").getTime();
 
 export function auditarParidade(input: AuditInput): AuditResult {
   const { mode, candidatos, declaracoes, eventos, eventoDeDeclaracao } = input;
