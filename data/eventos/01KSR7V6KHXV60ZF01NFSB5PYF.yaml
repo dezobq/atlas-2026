@@ -1,0 +1,16 @@
+id: "01KSR7V6KHXV60ZF01NFSB5PYF"
+titulo: "Marcha dos Prefeitos 2026"
+data: "2026-05-19T12:00:00.000Z" # ⚠️ horário aproximado — confirmar
+tipo: "comicio"
+local:
+  fisico: null # ⚠️ confirmar (Marcha dos Prefeitos costuma ser em Brasília, DF)
+  digital: null
+duracao_minutos: null
+fonte_primaria_url: "https://www.infomoney.com.br/politica/flavio-promete-endurecer-combate-ao-crime-e-fala-em-neutralizar-faccoes/"
+fonte_primaria_tipo: "midia_consolidada"
+archive_url: "http://web.archive.org/web/20260520025254/https://www.infomoney.com.br/politica/flavio-promete-endurecer-combate-ao-crime-e-fala-em-neutralizar-faccoes/"
+candidatos_envolvidos:
+  - candidato_id: "bolsonaro-flavio"
+descricao: "Marcha dos Prefeitos de 2026, evento com lideranças municipais, em que o pré-candidato Flávio Bolsonaro discursou sobre combate ao crime organizado."
+criado_em: "2026-05-28T21:29:00.459Z"
+atualizado_em: "2026-05-28T21:29:00.459Z"

@@ -1,0 +1,16 @@
+id: "01KSR7V6KHHRHADS89BZ7KX5BT"
+titulo: "Reação de Flávio Bolsonaro à decisão do STF sobre o IOF"
+data: "2025-07-04T12:00:00.000Z" # ⚠️ horário aproximado — confirmar
+tipo: "post_rede_social"
+local:
+  fisico: null
+  digital: "X (rede social), reproduzido pela Agência Senado"
+duracao_minutos: null
+fonte_primaria_url: "https://www12.senado.leg.br/noticias/materias/2025/07/04/iof-proposta-de-conciliacao-do-stf-repercute-no-senado"
+fonte_primaria_tipo: "senado"
+archive_url: "http://web.archive.org/web/20250705205343/https://www12.senado.leg.br/noticias/materias/2025/07/04/iof-proposta-de-conciliacao-do-stf-repercute-no-senado"
+candidatos_envolvidos:
+  - candidato_id: "bolsonaro-flavio"
+descricao: "Manifestação do senador Flávio Bolsonaro em rede social sobre a decisão do STF a respeito do aumento do IOF, reproduzida pela Agência Senado em 4 de julho de 2025."
+criado_em: "2026-05-28T21:29:00.459Z"
+atualizado_em: "2026-05-28T21:29:00.459Z"

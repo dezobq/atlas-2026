@@ -1,0 +1,16 @@
+id: "01KSR7V6KHGJ4TBXAYHYW8K6FT"
+titulo: "Crítica de Flávio Bolsonaro ao gasto do governo com navios na COP30"
+data: "2026-04-22T12:00:00.000Z" # ⚠️ horário aproximado — confirmar
+tipo: "post_rede_social"
+local:
+  fisico: null
+  digital: "redes sociais"
+duracao_minutos: null
+fonte_primaria_url: "https://www.gazetadopovo.com.br/republica/flavio-e-nikolas-criticam-gasto-milionario-do-governo-lula-com-navios-na-cop30/"
+fonte_primaria_tipo: "midia_consolidada"
+archive_url: "http://web.archive.org/web/20260424070314/https://www.gazetadopovo.com.br/republica/flavio-e-nikolas-criticam-gasto-milionario-do-governo-lula-com-navios-na-cop30/"
+candidatos_envolvidos:
+  - candidato_id: "bolsonaro-flavio"
+descricao: "Publicação do senador Flávio Bolsonaro em redes sociais criticando gastos do governo federal com a locação de navios para hospedagem durante a COP30, em abril de 2026."
+criado_em: "2026-05-28T21:29:00.459Z"
+atualizado_em: "2026-05-28T21:29:00.459Z"

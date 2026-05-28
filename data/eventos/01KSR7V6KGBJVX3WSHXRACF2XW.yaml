@@ -1,0 +1,16 @@
+id: "01KSR7V6KGBJVX3WSHXRACF2XW"
+titulo: "Abertura da COP30 — Belém"
+data: "2025-11-10T13:00:00.000Z" # ⚠️ horário aproximado — confirmar
+tipo: "declaracao_oficial"
+local:
+  fisico: "Belém, PA"
+  digital: null
+duracao_minutos: null
+fonte_primaria_url: "https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2025-11/confira-integra-do-discurso-de-lula-na-abertura-da-cop30-em-belem"
+fonte_primaria_tipo: "midia_consolidada"
+archive_url: "http://web.archive.org/web/20251205111212/https://agenciabrasil.ebc.com.br/meio-ambiente/noticia/2025-11/confira-integra-do-discurso-de-lula-na-abertura-da-cop30-em-belem"
+candidatos_envolvidos:
+  - candidato_id: "lula-luiz-inacio"
+descricao: "Cerimônia de abertura da COP30, conferência do clima da ONU, realizada em Belém em novembro de 2025, com discurso do presidente Lula."
+criado_em: "2026-05-28T21:29:00.459Z"
+atualizado_em: "2026-05-28T21:29:00.459Z"

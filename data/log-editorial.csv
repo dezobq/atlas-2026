@@ -1,1 +1,5 @@
 declaracao_id,candidato_id,tema,tipo_estrutural,fonte_tipo,tem_veredito_externo,motivo_inclusao,curador,validador,data_inclusao
+2025-11-10-lula-luiz-inacio-meio-ambiente-cop30-tragedia-presente,lula-luiz-inacio,meio-ambiente,interpretacao_pessoal,midia_consolidada,false,cascata-4: discurso de abertura da COP30 (alta audiência),Claude,pendente,2026-05-28T21:29:00.459Z
+2025-07-04-bolsonaro-flavio-economia-iof-stf,bolsonaro-flavio,economia,atribuicao_a_terceiro,senado,false,cascata-3: Agência Senado reproduz declaração do pré-candidato,Claude,pendente,2026-05-28T21:29:00.459Z
+2026-05-19-bolsonaro-flavio-seguranca-publica-neutralizar-faccoes,bolsonaro-flavio,seguranca-publica,compromisso_politico,midia_consolidada,false,cascata-4: fala de alta saliência na Marcha dos Prefeitos,Claude,pendente,2026-05-28T21:29:00.459Z
+2026-04-22-bolsonaro-flavio-meio-ambiente-cop30-navios,bolsonaro-flavio,meio-ambiente,comparacao,midia_consolidada,false,cascata-1: tipo comparacao em tema de cobertura escassa,Claude,pendente,2026-05-28T21:29:00.459Z
