@@ -1,0 +1,214 @@
+---
+import type { Candidato, Declaracao, Evento } from "@/types";
+import Tag from "@/components/shared/Tag.astro";
+import VereditosExternos from "@/components/declaracao/VereditosExternos.astro";
+import ContextoAdicional from "@/components/declaracao/ContextoAdicional.astro";
+import { formatDateBR } from "@/lib/utils/format-date";
+
+interface Props {
+  declaracao: Declaracao;
+  candidato: Candidato;
+  evento: Evento | undefined;
+}
+
+const { declaracao, candidato, evento } = Astro.props;
+const { data } = declaracao;
+---
+
+<article class="declaracao-full">
+  <header class="declaracao-full__cabecalho">
+    <p class="eyebrow">DECLARAÇÃO</p>
+    <p class="declaracao-full__meta">
+      <a href={`/candidatos/${candidato.data.slug}`} class="declaracao-full__candidato">
+        {candidato.data.nome}
+      </a>
+      <span aria-hidden="true">·</span>
+      <time datetime={data.criado_em}>{formatDateBR(data.criado_em)}</time>
+      {
+        evento && (
+          <>
+            <span aria-hidden="true">·</span>
+            <a href={`/eventos/${evento.data.id}`}>{evento.data.titulo}</a>
+          </>
+        )
+      }
+    </p>
+  </header>
+
+  <blockquote class="declaracao-full__citacao">
+    <p>"{data.texto}"</p>
+    {
+      data.timestamp_no_evento && (
+        <cite class="declaracao-full__timestamp">{data.timestamp_no_evento}</cite>
+      )
+    }
+  </blockquote>
+
+  <p class="declaracao-full__contexto">{data.contexto}</p>
+
+  <dl class="declaracao-full__tags">
+    <div>
+      <dt>Tema principal</dt>
+      <dd><Tag>{data.tema_principal}</Tag></dd>
+    </div>
+    {
+      data.temas_secundarios.length > 0 && (
+        <div>
+          <dt>Temas secundários</dt>
+          <dd>
+            {data.temas_secundarios.map((t) => (
+              <Tag>{t}</Tag>
+            ))}
+          </dd>
+        </div>
+      )
+    }
+    <div>
+      <dt>Tipo estrutural</dt>
+      <dd>
+        {data.tipo_estrutural.map((t) => <Tag variant="structural">{t}</Tag>)}
+      </dd>
+    </div>
+  </dl>
+
+  <section class="declaracao-full__fontes" aria-labelledby="fontes-heading">
+    <h2 id="fontes-heading" class="declaracao-full__fontes-heading">Fontes</h2>
+    <ul>
+      <li>
+        <span class="declaracao-full__fonte-tipo">Fonte primária ({data.fonte_primaria_tipo}):</span
+        >
+        <a href={data.fonte_primaria_url} rel="external noopener" target="_blank">
+          {data.fonte_primaria_url}
+        </a>
+      </li>
+      <li>
+        <span class="declaracao-full__fonte-tipo">Arquivo permanente:</span>
+        <a href={data.archive_url} rel="external noopener" target="_blank">
+          {data.archive_url}
+        </a>
+      </li>
+      {
+        data.snapshot_interno_path && (
+          <li>
+            <span class="declaracao-full__fonte-tipo">Snapshot interno:</span>
+            <code>{data.snapshot_interno_path}</code>
+          </li>
+        )
+      }
+    </ul>
+  </section>
+
+  {data.contexto_adicional && <ContextoAdicional contexto={data.contexto_adicional} />}
+  <VereditosExternos vereditos={data.vereditos_externos} />
+</article>
+
+<style>
+  .declaracao-full {
+    max-width: var(--container-narrow);
+    margin-inline: auto;
+  }
+  .declaracao-full__cabecalho {
+    padding-block: var(--space-2xl) var(--space-md);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .declaracao-full__meta {
+    color: var(--color-text-mute);
+    font-size: var(--text-body-sm);
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+    align-items: baseline;
+  }
+  .declaracao-full__meta a {
+    color: var(--color-text-body);
+    text-decoration: none;
+  }
+  .declaracao-full__meta a:hover {
+    color: var(--color-link-deep);
+    text-decoration: underline;
+  }
+  .declaracao-full__candidato {
+    font-weight: var(--weight-medium);
+  }
+  .declaracao-full__citacao {
+    margin-block: var(--space-xl);
+    padding-left: var(--space-lg);
+    border-left: 4px solid var(--color-text-primary);
+  }
+  .declaracao-full__citacao p {
+    font-family: var(--font-mono);
+    font-size: var(--text-display-md);
+    line-height: var(--leading-display-md);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  .declaracao-full__timestamp {
+    display: block;
+    margin-top: var(--space-sm);
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-mute);
+    font-style: normal;
+  }
+  .declaracao-full__contexto {
+    color: var(--color-text-body);
+    line-height: var(--leading-body);
+    margin-block: var(--space-md) var(--space-xl);
+  }
+  .declaracao-full__tags {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+    margin-block: var(--space-xl);
+    padding-block: var(--space-md);
+    border-top: 1px solid var(--color-hairline);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .declaracao-full__tags > div {
+    display: flex;
+    gap: var(--space-md);
+    align-items: baseline;
+    flex-wrap: wrap;
+  }
+  .declaracao-full__tags dt {
+    font-size: var(--text-caption);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--color-text-mute);
+    min-width: 140px;
+    margin: 0;
+  }
+  .declaracao-full__tags dd {
+    display: flex;
+    gap: var(--space-xs);
+    flex-wrap: wrap;
+    margin: 0;
+  }
+  .declaracao-full__fontes {
+    margin-block: var(--space-xl);
+  }
+  .declaracao-full__fontes-heading {
+    font-size: var(--text-display-sm);
+    margin-block: 0 var(--space-md);
+  }
+  .declaracao-full__fontes ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-sm);
+  }
+  .declaracao-full__fonte-tipo {
+    font-weight: var(--weight-medium);
+    color: var(--color-text-body);
+    margin-right: var(--space-xs);
+  }
+  .declaracao-full__fontes a {
+    color: var(--color-link);
+    word-break: break-all;
+  }
+  .declaracao-full__fontes a:hover {
+    color: var(--color-link-deep);
+  }
+</style>
