@@ -1,3 +1,11 @@
+---
+tags: [moc, index, readme]
+created: 2026-05-28
+updated: 2026-05-28
+status: ativo
+dependencies: []
+---
+
 # Vault do Atlas dos Candidatos · 2026
 
 Knowledge base versionada deste projeto. Inspirada em **zettelkasten** e nos princípios de **Andrej Karpathy** para captura de conhecimento ("notas atômicas, alta densidade de links, evolução constante").

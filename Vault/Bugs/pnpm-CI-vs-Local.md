@@ -3,6 +3,7 @@ tags: [bug, ci, pnpm, windows]
 created: 2026-05-27
 updated: 2026-05-28
 status: ativo
+dependencies: []
 ---
 
 # Bug: pnpm v10 local vs v9 CI · LF vs CRLF

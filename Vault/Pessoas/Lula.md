@@ -3,6 +3,7 @@ tags: [pessoa, candidato, sprint-5.1]
 created: 2026-05-28
 updated: 2026-05-28
 status: ativo
+dependencies: []
 nome_completo: Luiz Inácio Lula da Silva
 partido: PT
 slug_atlas: lula-luiz-inacio

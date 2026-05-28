@@ -3,6 +3,7 @@ tags: [pessoa, candidato, sprint-5.1]
 created: 2026-05-28
 updated: 2026-05-28
 status: ativo
+dependencies: []
 nome_completo: Flávio Nantes Bolsonaro
 partido: PL
 slug_atlas: bolsonaro-flavio

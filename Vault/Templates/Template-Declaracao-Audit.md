@@ -3,6 +3,7 @@ tags: [declaracao, audit, template]
 created: YYYY-MM-DD
 updated: YYYY-MM-DD
 status: rascunho
+dependencies: []
 declaracao_id: YYYY-MM-DD-<candidato>-<tema>-<descritor>
 candidato: [[Pessoas/...]]
 tema: <tema>

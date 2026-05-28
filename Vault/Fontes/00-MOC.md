@@ -3,6 +3,7 @@ tags: [moc, fontes]
 created: 2026-05-28
 updated: 2026-05-28
 status: ativo
+dependencies: []
 ---
 
 # MOC · Fontes

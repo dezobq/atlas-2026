@@ -3,6 +3,7 @@ tags: [fonte, fact-checker, ifcn, tier-1]
 created: 2026-05-28
 updated: 2026-05-28
 status: ativo
+dependencies: []
 nome_oficial: Agência Lupa
 tier: 1
 signataria_ifcn: true

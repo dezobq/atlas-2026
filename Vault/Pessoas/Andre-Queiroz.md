@@ -3,6 +3,7 @@ tags: [pessoa, curador, mantenedor]
 created: 2026-05-28
 updated: 2026-05-28
 status: ativo
+dependencies: []
 papel: curador-mantenedor
 email: dezobq@gmail.com
 github: dezobq

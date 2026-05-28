@@ -3,6 +3,7 @@ tags: [decisao, juridico, licenca]
 created: 2026-05-27
 updated: 2026-05-28
 status: ativo
+dependencies: []
 ---
 
 # Decisão: Licenças MIT + CC-BY 4.0
