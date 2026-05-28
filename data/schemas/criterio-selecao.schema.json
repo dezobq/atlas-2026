@@ -1,0 +1,220 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "criterio-selecao",
+  "type": "object",
+  "properties": {
+    "data_corte": {
+      "type": "string",
+      "pattern": "^\\d{4}-\\d{2}-\\d{2}$"
+    },
+    "criado_em": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+    },
+    "curador": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pesquisas": {
+      "minItems": 3,
+      "maxItems": 3,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "instituto": {
+            "type": "string",
+            "enum": [
+              "Datafolha",
+              "Quaest",
+              "AtlasIntel"
+            ]
+          },
+          "url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "archive_url": {
+            "type": "string",
+            "format": "uri"
+          },
+          "data_publicacao": {
+            "type": "string",
+            "format": "date-time",
+            "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d(?::[0-5]\\d(?:\\.\\d+)?)?(?:Z))$"
+          },
+          "amostra": {
+            "type": "integer",
+            "exclusiveMinimum": 0,
+            "maximum": 9007199254740991
+          },
+          "margem_erro_pp": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          },
+          "metodologia": {
+            "type": "string",
+            "enum": [
+              "presencial domiciliar",
+              "telefônica",
+              "online"
+            ]
+          },
+          "intencao_estimulada": {
+            "minItems": 1,
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "candidato_nome": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "percentual": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 100
+                }
+              },
+              "required": [
+                "candidato_nome",
+                "percentual"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "instituto",
+          "url",
+          "archive_url",
+          "data_publicacao",
+          "amostra",
+          "margem_erro_pp",
+          "metodologia",
+          "intencao_estimulada"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "calculo": {
+      "minItems": 2,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "candidato_nome": {
+            "type": "string",
+            "minLength": 1
+          },
+          "media_simples": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "candidato_nome",
+          "media_simples"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "selecionados": {
+      "minItems": 2,
+      "maxItems": 2,
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "posicao": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 2
+          },
+          "candidato_id": {
+            "type": "string",
+            "pattern": "^[a-z0-9-]+$"
+          },
+          "nome": {
+            "type": "string",
+            "minLength": 1
+          },
+          "media": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 100
+          }
+        },
+        "required": [
+          "posicao",
+          "candidato_id",
+          "nome",
+          "media"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "linha_de_empate": {
+      "type": "object",
+      "properties": {
+        "candidato_nome": {
+          "type": "string",
+          "minLength": 1
+        },
+        "media": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "distancia_pp": {
+          "type": "number",
+          "minimum": 0
+        },
+        "desempate_aplicado": {
+          "type": "boolean"
+        },
+        "desempate_criterio": {
+          "anyOf": [
+            {
+              "type": "string",
+              "enum": [
+                "maior amostra",
+                "menor margem",
+                "tempo no cargo"
+              ]
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "candidato_nome",
+        "media",
+        "distancia_pp",
+        "desempate_aplicado",
+        "desempate_criterio"
+      ],
+      "additionalProperties": false
+    },
+    "versao": {
+      "type": "integer",
+      "exclusiveMinimum": 0,
+      "maximum": 9007199254740991
+    }
+  },
+  "required": [
+    "data_corte",
+    "criado_em",
+    "curador",
+    "pesquisas",
+    "calculo",
+    "selecionados",
+    "linha_de_empate",
+    "versao"
+  ],
+  "additionalProperties": false
+}

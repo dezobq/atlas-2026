@@ -17,6 +17,7 @@ const collections = [
   { dir: "temas", ext: ".yaml", schema: "tema.schema.json" },
   { dir: "eventos", ext: ".yaml", schema: "evento.schema.json" },
   { dir: "declaracoes", ext: ".md", schema: "declaracao.schema.json" },
+  { dir: "criterio-selecao", ext: ".yaml", schema: "criterio-selecao.schema.json" },
 ];
 
 function loadSchema(filename: string): ValidateFunction {
@@ -89,6 +90,24 @@ console.log(`Total: ${totalFiles} arquivos · Erros: ${totalErrors}`);
 
 if (totalErrors > 0) {
   console.error(`\n❌ Validação falhou.`);
+  process.exit(1);
+}
+
+// Validação do log editorial (Fase 4+)
+console.log(`\n${"=".repeat(60)}`);
+console.log(`Validando log editorial...`);
+try {
+  const { validarLog } = await import("./validate-log.js");
+  const { loadDeclaracoes, loadLogEditorial } = await import("./lib/data-loaders.js");
+  const result = validarLog(loadDeclaracoes(), loadLogEditorial());
+  if (!result.ok) {
+    console.error(`❌ log-editorial.csv tem ${result.errors.length} problema(s):`);
+    for (const e of result.errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+  console.log(`✅ log-editorial.csv: validado.`);
+} catch (e) {
+  console.error(`❌ Erro ao validar log: ${(e as Error).message}`);
   process.exit(1);
 }
 

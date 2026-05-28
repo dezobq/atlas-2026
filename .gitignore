@@ -59,3 +59,9 @@ public/og/
 
 # Pagefind build artifacts
 .pagefind/
+
+# Relatórios de auditoria regenerados (Fase 4)
+# São output das ferramentas pnpm audit:* e ficam anexados aos PRs via copy-paste
+docs/audit-fase4.md
+docs/distribuicao-fase4.md
+docs/lighthouse-*.json

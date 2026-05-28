@@ -1,0 +1,216 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import { getEntry } from "astro:content";
+
+const criterio = await getEntry("criterioSelecao", "latest");
+const dataAplicacao = criterio?.data.criado_em
+  ? new Date(criterio.data.criado_em).toLocaleDateString("pt-BR", {
+      day: "2-digit",
+      month: "long",
+      year: "numeric",
+    })
+  : null;
+
+const selecionados = criterio?.data.selecionados ?? [];
+const linhaEmpate = criterio?.data.linha_de_empate;
+---
+
+<BaseLayout
+  title="Metodologia"
+  description="Como o Atlas seleciona candidatos, declarações, fontes e vereditos externos. Critério público auditável."
+>
+  <article class="container-text" style="padding-block: var(--space-3xl);">
+    <header style="margin-bottom: var(--space-2xl);">
+      <p
+        class="eyebrow"
+        style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);"
+      >
+        Metodologia
+      </p>
+      <h1
+        style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);"
+      >
+        Como decidimos o que entra no Atlas
+      </h1>
+      <p style="color: var(--color-text-body); font-size: var(--text-body-lg);">
+        Critério editorial público. Sem juízo de valor. Sem veredito próprio.
+      </p>
+    </header>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>1. Seleção dos 2 candidatos cobertos no MVP</h2>
+      <p>
+        Os 2 candidatos com maior <strong>média simples</strong> de intenção de voto
+        <em>estimulada</em> (1º turno) nas <strong>3 últimas pesquisas</strong> publicadas pelos institutos
+        <strong>Datafolha</strong>, <strong>Quaest</strong> e
+        <strong>AtlasIntel</strong> até a <strong>data de corte de 2026-05-16</strong>.
+      </p>
+      <p>
+        Critério público auditável em
+        <a
+          href="https://github.com/dezobq/atlas-2026/blob/main/data/criterio-selecao/latest.yaml"
+          rel="noopener external"
+        >
+          <code>data/criterio-selecao/latest.yaml</code>
+        </a>.
+      </p>
+
+      {
+        criterio && (
+          <>
+            <p>
+              <strong>Critério aplicado em {dataAplicacao}:</strong>
+            </p>
+            <ul>
+              {selecionados.map((s) => (
+                <li>
+                  Posição {s.posicao}: <strong>{s.nome}</strong> (média {s.media}%)
+                </li>
+              ))}
+            </ul>
+            {linhaEmpate && (
+              <p style="color: var(--color-text-body); font-size: var(--text-body-sm);">
+                <strong>Linha de empate (3º colocado, transparência):</strong>{" "}
+                {linhaEmpate.candidato_nome} (média {linhaEmpate.media}%, distância{" "}
+                {linhaEmpate.distancia_pp} p.p. para o 2º).
+                {linhaEmpate.desempate_aplicado && (
+                  <> Desempate aplicado: {linhaEmpate.desempate_criterio}.</>
+                )}
+              </p>
+            )}
+          </>
+        )
+      }
+
+      <p>
+        <strong>Lock total:</strong> uma vez aplicado o critério, os 2 candidatos não mudam durante a
+        Fase 4. Revisão do critério fica para versões pós-MVP, com Errata documentando a mudança.
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>2. Janela temporal</h2>
+      <p>
+        São elegíveis declarações públicas dos candidatos emitidas entre
+        <strong>16/05/2025</strong> e <strong>16/05/2026</strong> (12 meses anteriores à data de corte,
+        inclusive nas duas pontas).
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>3. Distribuição temática (paridade rígida)</h2>
+      <p>
+        Cada candidato terá <strong>exatamente 5 declarações por tema</strong> nos 6 temas primários:
+        economia, saúde, segurança pública, educação, meio-ambiente, política externa. Total invariante:
+        <strong>30 declarações por candidato</strong>.
+      </p>
+      <p>
+        Se um candidato emitiu menos de 5 declarações relevantes em um tema dentro da janela,
+        registramos a lacuna abertamente em vez de inflar artificialmente.
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>4. Cascata de saliência</h2>
+      <p>
+        Quando há mais de 5 declarações elegíveis num tema, aplicamos esta cascata determinística
+        (cada nível só desempata o anterior):
+      </p>
+      <ol>
+        <li>
+          <strong>Cobertura estrutural</strong> — priorizar diversidade dos 8 tipos estruturais (promessa,
+          dado_numerico, atribuição a terceiro, afirmação histórica, comparação, afirmação sobre pesquisa,
+          compromisso político, interpretação pessoal).
+        </li>
+        <li>
+          <strong>Veredito externo existente</strong> — entre candidatas do mesmo tipo estrutural, prioriza
+          as que já têm verificação publicada por Lupa, Aos Fatos, Comprova ou Estadão Verifica.
+        </li>
+        <li>
+          <strong>Fonte com timestamp de vídeo oficial</strong> — prefere YouTube oficial, TSE, Câmara,
+          Senado sobre mídia consolidada ou rede social.
+        </li>
+        <li>
+          <strong>Audiência do evento</strong> — debate &gt; entrevista &gt; sabatina &gt; comício &gt;
+          declaração oficial &gt; post de rede social.
+        </li>
+        <li>
+          <strong>Recência</strong> — empate final: declaração mais recente vence.
+        </li>
+      </ol>
+      <p>
+        Cada inclusão registra <code>motivo_inclusao</code> em
+        <a
+          href="https://github.com/dezobq/atlas-2026/blob/main/data/log-editorial.csv"
+          rel="noopener external"
+        >
+          <code>data/log-editorial.csv</code>
+        </a>{" "}
+        no formato <code>cascata-N: &lt;justificação&gt;</code>.
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>5. Fontes primárias e Wayback obrigatório</h2>
+      <p>
+        Toda declaração tem <strong>
+          URL de fonte primária + timestamp (quando aplicável) + snapshot Wayback Machine
+        </strong>. Sem os três, não publicamos.
+      </p>
+      <p>
+        Snapshots Wayback protegem contra remoção de fontes — princípio §3.5 do Atlas (permanência).
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>6. Sem veredito próprio</h2>
+      <p>
+        O Atlas <strong>não emite veredito de verdade/mentira</strong>. Quando fact-checker
+        reconhecido (Lupa, Aos Fatos, Comprova, Estadão Verifica) avalia uma declaração, agregamos a
+        citação literal com atribuição clara à fonte original e link para o veredito completo.
+      </p>
+      <p>
+        Não classificamos automaticamente. Não inferimos. Não interpretamos. Apresentamos a
+        evidência e o leitor conclui.
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>7. Uso de Inteligência Artificial no Atlas</h2>
+      <p>
+        O Atlas usa modelos de IA apenas como ferramentas auxiliares de pesquisa e transcrição.
+        <strong>Não usamos IA generativa para criar conteúdo editorial.</strong>
+      </p>
+      <ul>
+        <li>
+          <strong>Transcrição bruta de áudio/vídeo:</strong> modelo Whisper (OpenAI) gera o texto base.
+          Toda transcrição é revisada e corrigida por curador humano antes de virar declaração publicada.
+        </li>
+        <li>
+          <strong>Pesquisa de longlist:</strong> assistente IA (Claude, Anthropic) ajuda a localizar declarações
+          candidatas e fontes primárias. Decisão de inclusão é sempre humana.
+        </li>
+        <li>
+          <strong>Estruturação de dados:</strong> assistente IA preenche campos derivados (IDs, slugs,
+          timestamps) seguindo schemas fixos.
+        </li>
+        <li>
+          <strong>O que NÃO fazemos:</strong> geração automática de texto/contexto editorial; resumo automático;
+          classificação automática de "veracidade".
+        </li>
+      </ul>
+      <p>
+        Esta política está alinhada à TSE Res. 23.732/2024 sobre uso de IA em conteúdo eleitoral.
+      </p>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>8. Auditabilidade total</h2>
+      <p>
+        Critério, código, dataset e log editorial são públicos no GitHub. Erros são corrigíveis via
+        Pull Request. Cada correção é documentada em <a href="/errata">/errata</a> com versão incrementada
+        da declaração (nada é deletado).
+      </p>
+    </section>
+  </article>
+</BaseLayout>

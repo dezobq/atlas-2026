@@ -1,0 +1,116 @@
+data_corte: "2026-05-16"
+criado_em: "2026-05-28T13:37:17.000Z"
+curador: "André Queiroz"
+
+pesquisas:
+  - instituto: "Datafolha"
+    url: "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/datafolha-presidente-maio-2026/"
+    archive_url: "https://web.archive.org/web/20260528133219/https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/datafolha-presidente-maio-2026/"
+    data_publicacao: "2026-05-16T00:00:00.000Z"
+    amostra: 2004
+    margem_erro_pp: 2
+    metodologia: "presencial domiciliar"
+    intencao_estimulada:
+      - candidato_nome: "Luiz Inácio Lula da Silva"
+        percentual: 38
+      - candidato_nome: "Flávio Bolsonaro"
+        percentual: 35
+      - candidato_nome: "Ronaldo Caiado"
+        percentual: 3
+      - candidato_nome: "Romeu Zema"
+        percentual: 3
+      - candidato_nome: "Renan Santos"
+        percentual: 2
+      - candidato_nome: "Samara Martins"
+        percentual: 2
+      - candidato_nome: "Augusto Cury"
+        percentual: 2
+      - candidato_nome: "Rui Costa Pimenta"
+        percentual: 1
+      - candidato_nome: "Cabo Daciolo"
+        percentual: 1
+
+  - instituto: "Quaest"
+    url: "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/quaest-presidente-abril-2026/"
+    archive_url: "https://web.archive.org/web/20260528133253/https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/quaest-presidente-abril-2026/"
+    data_publicacao: "2026-04-15T00:00:00.000Z"
+    amostra: 2004
+    margem_erro_pp: 2
+    metodologia: "presencial domiciliar"
+    intencao_estimulada:
+      - candidato_nome: "Luiz Inácio Lula da Silva"
+        percentual: 37
+      - candidato_nome: "Flávio Bolsonaro"
+        percentual: 32
+      - candidato_nome: "Ronaldo Caiado"
+        percentual: 6
+      - candidato_nome: "Romeu Zema"
+        percentual: 3
+      - candidato_nome: "Augusto Cury"
+        percentual: 2
+      - candidato_nome: "Renan Santos"
+        percentual: 2
+      - candidato_nome: "Cabo Daciolo"
+        percentual: 1
+      - candidato_nome: "Samara Martins"
+        percentual: 1
+
+  - instituto: "AtlasIntel"
+    url: "https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/atlasintel-presidente-abril-2026/"
+    archive_url: "https://web.archive.org/web/20260528133444/https://www.gazetadopovo.com.br/eleicoes/2026/pesquisa-eleitoral-2026/atlasintel-presidente-abril-2026/"
+    data_publicacao: "2026-04-28T00:00:00.000Z"
+    amostra: 5008
+    margem_erro_pp: 1
+    metodologia: "online"
+    intencao_estimulada:
+      - candidato_nome: "Luiz Inácio Lula da Silva"
+        percentual: 46.6
+      - candidato_nome: "Flávio Bolsonaro"
+        percentual: 39.7
+      - candidato_nome: "Renan Santos"
+        percentual: 5.3
+      - candidato_nome: "Ronaldo Caiado"
+        percentual: 3.3
+      - candidato_nome: "Romeu Zema"
+        percentual: 3.1
+      - candidato_nome: "Augusto Cury"
+        percentual: 1.1
+      - candidato_nome: "Aldo Rebelo"
+        percentual: 0.3
+
+calculo:
+  - candidato_nome: "Luiz Inácio Lula da Silva"
+    media_simples: 40.53
+  - candidato_nome: "Flávio Bolsonaro"
+    media_simples: 35.57
+  - candidato_nome: "Ronaldo Caiado"
+    media_simples: 4.10
+  - candidato_nome: "Romeu Zema"
+    media_simples: 3.03
+  - candidato_nome: "Renan Santos"
+    media_simples: 3.10
+  - candidato_nome: "Augusto Cury"
+    media_simples: 1.70
+  - candidato_nome: "Cabo Daciolo"
+    media_simples: 0.67
+  - candidato_nome: "Samara Martins"
+    media_simples: 1.00
+
+selecionados:
+  - posicao: 1
+    candidato_id: "lula-luiz-inacio"
+    nome: "Luiz Inácio Lula da Silva"
+    media: 40.53
+  - posicao: 2
+    candidato_id: "bolsonaro-flavio"
+    nome: "Flávio Bolsonaro"
+    media: 35.57
+
+linha_de_empate:
+  candidato_nome: "Ronaldo Caiado"
+  media: 4.10
+  distancia_pp: 31.47
+  desempate_aplicado: false
+  desempate_criterio: null
+
+versao: 1

@@ -1,0 +1,107 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+
+const erratas: Array<{
+  data: string;
+  declaracao_id: string;
+  descricao: string;
+  pr_url: string;
+  issue_url?: string;
+}> = [];
+---
+
+<BaseLayout
+  title="Errata"
+  description="Correções factuais publicamente registradas pelo Atlas. Histórico auditável com referências a PRs."
+>
+  <article class="container-text" style="padding-block: var(--space-3xl);">
+    <header style="margin-bottom: var(--space-2xl);">
+      <p
+        class="eyebrow"
+        style="text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-mute);"
+      >
+        Errata
+      </p>
+      <h1
+        style="font-size: var(--text-display-md); line-height: 1.15; letter-spacing: -0.02em; margin-block: var(--space-sm);"
+      >
+        Correções publicadas
+      </h1>
+      <p style="color: var(--color-text-body); font-size: var(--text-body-lg);">
+        Erros factuais descobertos no Atlas são corrigidos publicamente e registrados aqui.
+      </p>
+    </header>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>Processo de correção</h2>
+      <ol>
+        <li>
+          Encontrou um erro factual?
+          <a
+            href="https://github.com/dezobq/atlas-2026/issues/new?labels=errata"
+            rel="noopener external"
+          >
+            Abra uma issue no GitHub
+          </a>
+          com label <code>errata</code> descrevendo o erro e a fonte da correção.
+        </li>
+        <li>
+          Um PR de correção atualiza o YAML/MD afetado e
+          <strong>incrementa o número de versão</strong> da declaração (campo <code>versao</code>).
+        </li>
+        <li>
+          A correção é registrada nesta página com data, descrição em 1-2 frases e link para o PR.
+        </li>
+        <li>
+          <strong>Nada é deletado.</strong> O histórico Git preserva todas as versões para auditoria.
+        </li>
+      </ol>
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>Erratas publicadas</h2>
+
+      {
+        erratas.length === 0 ? (
+          <p style="color: var(--color-text-mute); font-style: italic;">
+            Nenhuma errata registrada ainda. Esta página será populada conforme correções forem
+            publicadas.
+          </p>
+        ) : (
+          <ul>
+            {erratas.map((e) => (
+              <li>
+                <strong>{new Date(e.data).toLocaleDateString("pt-BR")}</strong> —{" "}
+                <code>{e.declaracao_id}</code>: {e.descricao}{" "}
+                <a href={e.pr_url} rel="noopener external">
+                  PR
+                </a>
+                {e.issue_url && (
+                  <>
+                    {" "}
+                    <a href={e.issue_url} rel="noopener external">
+                      Issue
+                    </a>
+                  </>
+                )}
+              </li>
+            ))}
+          </ul>
+        )
+      }
+    </section>
+
+    <section style="margin-bottom: var(--space-2xl);">
+      <h2>Por que isto importa</h2>
+      <p>
+        O Atlas é infraestrutura factual, não fact-checker. Erros editoriais — uma transcrição
+        incorreta, um timestamp errado, uma classificação imprecisa — afetam a integridade da fonte.
+      </p>
+      <p>
+        Esta página garante que cada correção é <strong>documentada publicamente</strong> e
+        <strong>versionada em git</strong>, conforme o princípio §3.4 do Atlas (auditabilidade
+        total).
+      </p>
+    </section>
+  </article>
+</BaseLayout>

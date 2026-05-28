@@ -1,0 +1,25 @@
+id: "01KSQDGYBHGRTNYGSMCMPAAKH4"
+slug: "lula-luiz-inacio"
+nome: "Luiz Inácio Lula da Silva"
+foto_url: "https://atlas-2026.pages.dev/img/candidatos/lula-luiz-inacio.jpg"
+partido: "PT"
+biografia_minima: >
+  Político brasileiro, presidente da República do Brasil desde 1 de janeiro de
+  2023 (terceiro mandato). Filiado ao Partido dos Trabalhadores (PT) desde 1980,
+  partido do qual foi um dos fundadores. Exerceu a Presidência também entre 2003
+  e 2010.
+contas_oficiais:
+  - plataforma: "youtube"
+    handle: "@LulaOficial"
+    url: "https://www.youtube.com/@LulaOficial"
+    verificada: true
+  - plataforma: "x"
+    handle: "@LulaOficial"
+    url: "https://x.com/LulaOficial"
+    verificada: true
+  - plataforma: "instagram"
+    handle: "@lulaoficial"
+    url: "https://www.instagram.com/lulaoficial/"
+    verificada: true
+criado_em: "2026-05-28T13:50:00.000Z"
+atualizado_em: "2026-05-28T14:10:00.000Z"
