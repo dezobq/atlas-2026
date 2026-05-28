@@ -12,10 +12,7 @@ export interface ValidationResult {
   errors: string[];
 }
 
-export function validarLog(
-  declaracoes: DeclaracaoFrontmatter[],
-  log: LogLine[],
-): ValidationResult {
+export function validarLog(declaracoes: DeclaracaoFrontmatter[], log: LogLine[]): ValidationResult {
   const errors: string[] = [];
   const declSet = new Set(declaracoes.map((d) => d.id));
   const logSet = new Set<string>();
@@ -80,7 +77,9 @@ if (isMain()) {
   const { ok, errors } = validarLog(declaracoes, log);
 
   if (ok) {
-    console.log(`✅ log-editorial.csv: ${log.length} linhas, FK match 100% (${declaracoes.length} declarações).`);
+    console.log(
+      `✅ log-editorial.csv: ${log.length} linhas, FK match 100% (${declaracoes.length} declarações).`,
+    );
     process.exit(0);
   } else {
     console.error(`❌ log-editorial.csv tem ${errors.length} problema(s):`);

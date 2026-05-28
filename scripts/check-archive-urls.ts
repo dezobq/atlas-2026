@@ -70,7 +70,9 @@ if (isMain()) {
     process.exit(0);
   }
 
-  console.log(`🔍 Checando ${urls.length} URL(s) Wayback (modo: ${isRecent ? "--recent" : "--all"})...`);
+  console.log(
+    `🔍 Checando ${urls.length} URL(s) Wayback (modo: ${isRecent ? "--recent" : "--all"})...`,
+  );
   const { ok, total, failures } = await verificarArchiveUrls(urls);
 
   if (ok) {

@@ -161,7 +161,7 @@ describe("criterio-selecao schema", () => {
   const validExample = {
     data_corte: "2026-05-15",
     criado_em: "2026-05-28T10:00:00.000Z",
-    curador: "André Dezob",
+    curador: "André Queiroz",
     pesquisas: [
       {
         instituto: "Datafolha",
@@ -2090,7 +2090,7 @@ Formato (substituir valores reais):
 ```yaml
 data_corte: "2026-05-15"
 criado_em: "2026-05-28T<HH:MM:SS>.000Z"
-curador: "André Dezob"
+curador: "André Queiroz"
 
 pesquisas:
   - instituto: "Datafolha"
@@ -2871,7 +2871,7 @@ import BaseLayout from "@/components/layout/BaseLayout.astro";
     <section style="margin-bottom: var(--space-2xl);">
       <h2>Quem mantém</h2>
       <p>
-        Projeto solo mantido por <strong>André Dezob</strong>. Curadoria editorial humana +
+        Projeto solo mantido por <strong>André Queiroz</strong>. Curadoria editorial humana +
         ferramentas de IA auxiliares (sem geração de conteúdo). Ver
         <a href="/metodologia#7-uso-de-inteligência-artificial-no-atlas">política de IA</a>.
       </p>
@@ -2940,7 +2940,7 @@ git add src/pages/sobre.astro
 git commit -m "$(cat <<'EOF'
 feat(fase4): adicionar página /sobre v1
 
-Identifica curadoria (André Dezob), postura editorial neutra, licenças
+Identifica curadoria (André Queiroz), postura editorial neutra, licenças
 (MIT código + CC-BY 4.0 dataset/conteúdo), processo de contribuição e
 limites assumidos do MVP (2 candidatos).
 
