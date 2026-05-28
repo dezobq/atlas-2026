@@ -1,0 +1,158 @@
+---
+import { CARD_FORMATS, type CardFormat } from "@/lib/cards/format-config";
+
+interface Props {
+  id: string;
+  declaracao: string;
+}
+
+const { id, declaracao } = Astro.props;
+const formats = Object.keys(CARD_FORMATS) as CardFormat[];
+const labels: Record<CardFormat, string> = {
+  "1200x630": "Twitter/X · WhatsApp · OG (1200×630)",
+  "1080x1350": "Instagram Feed (1080×1350)",
+  "1080x1920": "Stories / Reels (1080×1920)",
+  "1200x1200": "LinkedIn / Threads (1200×1200)",
+};
+
+const shortText = declaracao.length > 80 ? declaracao.slice(0, 77) + "…" : declaracao;
+const url = `https://atlas-2026.pages.dev/declaracoes/${id}`;
+const shareText = encodeURIComponent(`"${shortText}" — veja vereditos em ${url}`);
+---
+
+<section class="card-actions" aria-label="Compartilhar declaração">
+  <details class="card-actions__group">
+    <summary class="card-actions__button">Baixar card</summary>
+    <ul class="card-actions__menu">
+      {
+        formats.map((fmt) => (
+          <li>
+            <a href={`/cards/${id}/${fmt}.png`} download={`atlas-${id}-${fmt}.png`}>
+              {labels[fmt]}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+
+  <details class="card-actions__group">
+    <summary class="card-actions__button">Copiar link da imagem</summary>
+    <ul class="card-actions__menu">
+      {
+        formats.map((fmt) => (
+          <li>
+            <button
+              type="button"
+              data-copy-url={`https://atlas-2026.pages.dev/cards/${id}/${fmt}.png`}
+            >
+              {labels[fmt]}
+            </button>
+          </li>
+        ))
+      }
+    </ul>
+  </details>
+
+  <details class="card-actions__group">
+    <summary class="card-actions__button">Compartilhar</summary>
+    <ul class="card-actions__menu">
+      <li>
+        <a href={`https://wa.me/?text=${shareText}`} target="_blank" rel="noopener">WhatsApp</a>
+      </li>
+      <li>
+        <a
+          href={`https://twitter.com/intent/tweet?text=${shareText}`}
+          target="_blank"
+          rel="noopener">Twitter/X</a
+        >
+      </li>
+      <li>
+        <a
+          href={`https://www.threads.net/intent/post?text=${shareText}`}
+          target="_blank"
+          rel="noopener">Threads</a
+        >
+      </li>
+      <li>
+        <a
+          href={`https://t.me/share/url?url=${encodeURIComponent(url)}&text=${shareText}`}
+          target="_blank"
+          rel="noopener">Telegram</a
+        >
+      </li>
+    </ul>
+  </details>
+</section>
+
+<script>
+  document.querySelectorAll<HTMLButtonElement>("[data-copy-url]").forEach((btn) => {
+    btn.addEventListener("click", async () => {
+      const url = btn.dataset.copyUrl ?? "";
+      const original = btn.textContent;
+      try {
+        await navigator.clipboard.writeText(url);
+        btn.textContent = "Copiado!";
+      } catch {
+        btn.textContent = "Erro ao copiar";
+      }
+      setTimeout(() => {
+        btn.textContent = original;
+      }, 1500);
+    });
+  });
+</script>
+
+<style>
+  .card-actions {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin: 24px 0;
+  }
+  .card-actions__group {
+    position: relative;
+  }
+  .card-actions__button {
+    cursor: pointer;
+    padding: 8px 16px;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    background: #fafafa;
+    font-size: 14px;
+    list-style: none;
+  }
+  .card-actions__menu {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    min-width: 280px;
+    margin: 4px 0 0;
+    padding: 8px 0;
+    background: #fff;
+    border: 1px solid #e5e5e5;
+    border-radius: 6px;
+    list-style: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    z-index: 10;
+  }
+  .card-actions__menu li {
+    padding: 0;
+  }
+  .card-actions__menu a,
+  .card-actions__menu button {
+    display: block;
+    width: 100%;
+    padding: 8px 16px;
+    text-align: left;
+    background: none;
+    border: none;
+    font-size: 14px;
+    color: #0a0a0a;
+    cursor: pointer;
+  }
+  .card-actions__menu a:hover,
+  .card-actions__menu button:hover {
+    background: #f5f5f5;
+  }
+</style>

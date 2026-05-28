@@ -16,6 +16,38 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ---
 
+## Vault do projeto
+
+Vault dedicado em `Vault/` (versionado no git, CC-BY 4.0). Inspirado em **zettelkasten** e princípios de **Andrej Karpathy** (notas atômicas, alta densidade de links, evolução constante).
+
+**Conectado via MCP:** `.mcp.json` na raiz aponta `@bitbonsai/mcpvault` para `Vault/`. Use ferramentas `mcp__obsidian__*` para read/search/write.
+
+**Entry-point:** `Vault/00-Index.md` (MOC raiz).
+
+**Estrutura semântica:**
+
+| Pasta        | Conteúdo                                                                                       |
+| ------------ | ---------------------------------------------------------------------------------------------- |
+| `Dominios/`  | áreas de conhecimento (postura editorial, cascata de vereditos, critério de seleção, pipeline) |
+| `Decisoes/`  | decisões arquiteturais e editoriais com rationale + alternativas + sinais de revisão           |
+| `Bugs/`      | incidentes técnicos com causa raiz + fix + como detectar regressão                             |
+| `Specs/`     | pointers para specs ativos em `docs/superpowers/specs/`                                        |
+| `Fontes/`    | fact-checkers (Lupa, Aos Fatos, Comprova)                                                      |
+| `Pessoas/`   | curador, candidatos no MVP, stakeholders                                                       |
+| `Templates/` | frontmatter padrão para cada tipo de nota                                                      |
+
+**Regras de uso (alinhadas ao protocolo global):**
+
+1. **Antes de feature:** consultar `Dominios/` e `Decisoes/` relevantes para mapa de impacto
+2. **Após bug:** registrar em `Bugs/` com causa raiz (não só sintoma/fix)
+3. **Após decisão:** registrar em `Decisoes/` antes de implementar
+4. **Toda nota** tem frontmatter obrigatório (`tags`, `created`, `updated`, `status`, `dependencies`)
+5. **Links bidirecionais** com `[[wiki-links]]` — conexão > hierarquia
+6. **Notas atômicas** — uma ideia por nota, ≤150 linhas; quebrar antes de crescer
+7. **Hooks específicos do vault** vivem em `.claude/settings.json` LOCAL (não global)
+
+---
+
 ## Comandos
 
 ### Desenvolvimento

@@ -11,7 +11,7 @@
     "dev": "astro dev",
     "build": "astro build",
     "build:index": "pagefind --site dist --force-language pt",
-    "build:full": "pnpm build && pnpm build:index",
+    "build:full": "pnpm generate:cards && pnpm build && pnpm build:index",
     "preview": "astro preview",
     "astro": "astro",
     "typecheck": "astro check",
@@ -32,6 +32,7 @@
     "archive": "tsx scripts/archive.ts",
     "scrape:url": "tsx scripts/scrape-url.ts",
     "generate:og": "tsx scripts/generate-og-images.ts",
+    "generate:cards": "tsx scripts/generate-cards.ts",
     "export:dataset": "tsx scripts/export-dataset.ts"
   },
   "dependencies": {
@@ -49,6 +50,7 @@
     "lucide-react": "^1.16.0",
     "openai": "^6.39.0",
     "papaparse": "^5.5.3",
+    "qrcode": "^1.5.4",
     "radix-ui": "^1.4.3",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
@@ -67,6 +69,7 @@
     "@testing-library/react": "^16.3.2",
     "@types/node": "^25.9.1",
     "@types/papaparse": "^5.5.2",
+    "@types/qrcode": "^1.5.6",
     "@types/react": "^19.0.0",
     "@types/react-dom": "^19.0.0",
     "@vitest/coverage-v8": "^2.1.9",

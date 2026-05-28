@@ -57,6 +57,9 @@ public/og/
 # MCP Serena cache (índice LSP local, não versionar)
 .serena/
 
+# Obsidian workspace state (cache, layout, plugins desativados — local-only)
+Vault/.obsidian/
+
 # Pagefind build artifacts
 .pagefind/
 

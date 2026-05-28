@@ -1,0 +1,9 @@
+{
+  "mcpServers": {
+    "obsidian": {
+      "command": "npx",
+      "args": ["-y", "@bitbonsai/mcpvault@0.11.0", "<ABSOLUTE_PATH_TO_VAULT>"],
+      "env": {}
+    }
+  }
+}
