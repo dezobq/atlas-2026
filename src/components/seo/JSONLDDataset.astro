@@ -1,0 +1,15 @@
+---
+import { buildDatasetSchema, type DatasetMeta } from "@/lib/seo/build-dataset";
+import { safeJsonLd } from "@/lib/seo/safe-json-ld";
+
+interface Props {
+  meta: DatasetMeta;
+}
+
+const { meta } = Astro.props;
+const siteUrl = Astro.site?.toString().replace(/\/$/, "") ?? "https://atlas-2026.pages.dev";
+const schema = buildDatasetSchema(meta, siteUrl);
+const json = safeJsonLd(schema);
+---
+
+<script type="application/ld+json" is:inline set:html={json} />
