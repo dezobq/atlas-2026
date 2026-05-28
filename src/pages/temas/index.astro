@@ -1,0 +1,48 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import { getCollection } from "astro:content";
+
+const temas = await getCollection("temas");
+const temasOrdenados = temas.sort((a, b) => a.data.nome.localeCompare(b.data.nome, "pt-BR"));
+const canonical = new URL("/temas", Astro.site).toString();
+const description = `Taxonomia de ${temas.length} temas que organizam as declarações no Atlas dos Candidatos 2026.`;
+---
+
+<BaseLayout title="Temas" description={description}>
+  <SEOTags
+    slot="head"
+    title="Temas · Atlas dos Candidatos 2026"
+    description={description}
+    canonical={canonical}
+    ogType="website"
+  />
+
+  <section class="container-default" style="padding-block: var(--space-3xl);">
+    <p class="eyebrow" style="margin-bottom: var(--space-sm);">TEMAS</p>
+    <h1 style="margin-bottom: var(--space-lg);">Temas documentados</h1>
+    <p style="color: var(--color-text-body); max-width: 60ch; margin-bottom: var(--space-2xl);">
+      {description}
+    </p>
+
+    <div
+      style="display: grid; gap: var(--space-md); grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));"
+    >
+      {
+        temasOrdenados.map((tema) => (
+          <a
+            href={`/temas/${tema.data.slug}`}
+            style="display: block; padding: var(--space-lg); border: 1px solid var(--color-hairline); border-radius: var(--radius-md); color: var(--color-text-primary); text-decoration: none; transition: var(--transition-base);"
+          >
+            <h3 style="margin-block: 0 var(--space-xs); font-size: var(--text-display-sm);">
+              {tema.data.nome}
+            </h3>
+            <p style="margin: 0; color: var(--color-text-body); font-size: var(--text-body-sm); line-height: var(--leading-body);">
+              {tema.data.descricao_curta}
+            </p>
+          </a>
+        ))
+      }
+    </div>
+  </section>
+</BaseLayout>

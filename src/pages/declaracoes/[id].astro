@@ -1,0 +1,63 @@
+---
+import BaseLayout from "@/components/layout/BaseLayout.astro";
+import SEOTags from "@/components/seo/SEOTags.astro";
+import JSONLDQuotation from "@/components/seo/JSONLDQuotation.astro";
+import JSONLDArticle from "@/components/seo/JSONLDArticle.astro";
+import DeclaracaoFull from "@/components/declaracao/DeclaracaoFull.astro";
+import { getAllDeclaracoes } from "@/lib/data/declaracoes";
+import { getCandidatoById } from "@/lib/data/candidatos";
+import { getEventoById } from "@/lib/data/eventos";
+import type { Candidato, Declaracao, Evento } from "@/types";
+import { truncate } from "@/lib/utils/truncate";
+
+export async function getStaticPaths() {
+  const declaracoes = await getAllDeclaracoes();
+  const paths = await Promise.all(
+    declaracoes.map(async (declaracao) => {
+      const candidato = await getCandidatoById(declaracao.data.candidato_id);
+      const evento = await getEventoById(declaracao.data.evento_id);
+      return {
+        params: { id: declaracao.data.id },
+        props: { declaracao, candidato, evento },
+      };
+    }),
+  );
+  return paths;
+}
+
+interface Props {
+  declaracao: Declaracao;
+  candidato: Candidato | undefined;
+  evento: Evento | undefined;
+}
+
+const { declaracao, candidato, evento } = Astro.props;
+
+if (!candidato) {
+  throw new Error(`Candidato não encontrado: ${declaracao.data.candidato_id}`);
+}
+
+const ogImage = new URL(`/og/${declaracao.data.id}.png`, Astro.site).toString();
+const canonical = new URL(`/declaracoes/${declaracao.data.id}`, Astro.site).toString();
+const title = `${candidato.data.nome}: "${truncate(declaracao.data.texto, 80)}"`;
+const description = declaracao.data.contexto;
+---
+
+<BaseLayout title={title} description={description}>
+  <SEOTags
+    slot="head"
+    title={`${title} · Atlas dos Candidatos 2026`}
+    description={description}
+    canonical={canonical}
+    ogImage={ogImage}
+    ogType="article"
+    publishedTime={declaracao.data.criado_em}
+    modifiedTime={declaracao.data.atualizado_em}
+  />
+  <JSONLDQuotation slot="head" declaracao={declaracao} candidato={candidato} />
+  <JSONLDArticle slot="head" declaracao={declaracao} candidato={candidato} />
+
+  <div class="container-default" style="padding-block: var(--space-xl);">
+    <DeclaracaoFull declaracao={declaracao} candidato={candidato} evento={evento} />
+  </div>
+</BaseLayout>

@@ -1,0 +1,33 @@
+---
+import type { Declaracao, Evento } from "@/types";
+import TimelineEvento from "@/components/candidato/TimelineEvento.astro";
+
+interface Props {
+  eventos: Evento[];
+  declaracoes: Declaracao[];
+}
+
+const { eventos, declaracoes } = Astro.props;
+
+const declaracoesPorEvento = new Map<string, Declaracao[]>();
+for (const d of declaracoes) {
+  const lista = declaracoesPorEvento.get(d.data.evento_id) ?? [];
+  lista.push(d);
+  declaracoesPorEvento.set(d.data.evento_id, lista);
+}
+---
+
+<section class="candidato-timeline" aria-label="Histórico de eventos e declarações">
+  <h2 style="margin-bottom: var(--space-lg);">Linha do tempo</h2>
+  {
+    eventos.length === 0 ? (
+      <p style="color: var(--color-text-mute);">Nenhum evento registrado ainda.</p>
+    ) : (
+      <div>
+        {eventos.map((ev) => (
+          <TimelineEvento evento={ev} declaracoes={declaracoesPorEvento.get(ev.data.id) ?? []} />
+        ))}
+      </div>
+    )
+  }
+</section>

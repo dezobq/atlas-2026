@@ -1,0 +1,115 @@
+---
+import type { Declaracao } from "@/types";
+import { formatDateBR } from "@/lib/utils/format-date";
+
+interface Props {
+  vereditos: Declaracao["data"]["vereditos_externos"];
+}
+
+const { vereditos } = Astro.props;
+---
+
+{
+  vereditos.length > 0 && (
+    <section class="vereditos" aria-labelledby="vereditos-heading">
+      <h2 id="vereditos-heading" class="vereditos__heading">
+        Vereditos de fact-checkers externos
+      </h2>
+      <p class="vereditos__nota">
+        O Atlas não emite veredito próprio. Esta seção agrega vereditos de fact-checkers
+        reconhecidos com atribuição transparente.
+      </p>
+      <ul class="vereditos__lista">
+        {vereditos.map((v) => (
+          <li class="vereditos__item">
+            <div class="vereditos__cabecalho">
+              <span class="vereditos__veiculo">{v.veiculo}</span>
+              <span class="vereditos__classificacao">{v.classificacao}</span>
+              <time class="vereditos__data" datetime={v.data}>
+                {formatDateBR(v.data)}
+              </time>
+            </div>
+            <blockquote class="vereditos__citacao">{v.citacao_curta}</blockquote>
+            <a href={v.url} rel="external noopener" target="_blank" class="vereditos__link">
+              Ler verificação completa →
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .vereditos {
+    margin-block: var(--space-2xl);
+    padding: var(--space-lg);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-md);
+    background: var(--color-canvas-soft);
+  }
+  .vereditos__heading {
+    font-size: var(--text-display-sm);
+    margin-block: 0 var(--space-xs);
+  }
+  .vereditos__nota {
+    font-size: var(--text-body-sm);
+    color: var(--color-text-mute);
+    margin-block: 0 var(--space-md);
+  }
+  .vereditos__lista {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-md);
+  }
+  .vereditos__item {
+    padding: var(--space-md);
+    background: var(--color-canvas);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-sm);
+  }
+  .vereditos__cabecalho {
+    display: flex;
+    gap: var(--space-sm);
+    align-items: baseline;
+    flex-wrap: wrap;
+    margin-bottom: var(--space-xs);
+  }
+  .vereditos__veiculo {
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+  }
+  .vereditos__classificacao {
+    padding: var(--space-xxs) var(--space-xs);
+    background: var(--color-bg-muted);
+    border-radius: var(--radius-xs);
+    font-size: var(--text-caption);
+    color: var(--color-text-body);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+  }
+  .vereditos__data {
+    margin-left: auto;
+    font-family: var(--font-mono);
+    font-size: var(--text-caption);
+    color: var(--color-text-mute);
+  }
+  .vereditos__citacao {
+    margin-block: var(--space-xs);
+    padding-left: var(--space-md);
+    border-left: 2px solid var(--color-hairline);
+    font-size: var(--text-body-sm);
+    color: var(--color-text-body);
+    line-height: var(--leading-body);
+  }
+  .vereditos__link {
+    font-size: var(--text-body-sm);
+    color: var(--color-link);
+  }
+  .vereditos__link:hover {
+    color: var(--color-link-deep);
+  }
+</style>

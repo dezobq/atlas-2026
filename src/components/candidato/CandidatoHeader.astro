@@ -1,0 +1,151 @@
+---
+import type { Candidato } from "@/types";
+
+interface Props {
+  candidato: Candidato;
+  totalDeclaracoes: number;
+}
+
+const { candidato, totalDeclaracoes } = Astro.props;
+const { data } = candidato;
+const contasVerificadas = data.contas_oficiais.filter((c) => c.verificada);
+---
+
+<header class="candidato-header">
+  <div class="candidato-header__identidade">
+    {
+      data.foto_url ? (
+        <img
+          src={data.foto_url}
+          alt={`Foto de ${data.nome}`}
+          width="120"
+          height="120"
+          class="candidato-header__avatar"
+        />
+      ) : (
+        <div
+          class="candidato-header__avatar candidato-header__avatar--placeholder"
+          aria-hidden="true"
+        >
+          {data.nome.charAt(0)}
+        </div>
+      )
+    }
+    <div>
+      <p class="eyebrow">CANDIDATO</p>
+      <h1 style="margin-block: var(--space-xs);">{data.nome}</h1>
+      <p style="color: var(--color-text-mute); font-size: var(--text-body-md); margin: 0;">
+        {data.partido}
+      </p>
+    </div>
+  </div>
+
+  <p class="candidato-header__bio">{data.biografia_minima}</p>
+
+  <dl class="candidato-header__stats">
+    <div>
+      <dt>Declarações documentadas</dt>
+      <dd>{totalDeclaracoes}</dd>
+    </div>
+    <div>
+      <dt>Contas oficiais verificadas</dt>
+      <dd>{contasVerificadas.length}</dd>
+    </div>
+  </dl>
+
+  {
+    contasVerificadas.length > 0 && (
+      <ul class="candidato-header__contas" aria-label="Contas oficiais verificadas">
+        {contasVerificadas.map((c) => (
+          <li>
+            <a href={c.url} rel="external nofollow noopener" target="_blank">
+              <span class="candidato-header__conta-plataforma">{c.plataforma}</span>
+              <span class="candidato-header__conta-handle">{c.handle}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</header>
+
+<style>
+  .candidato-header {
+    display: flex;
+    flex-direction: column;
+    gap: var(--space-lg);
+    padding-block: var(--space-2xl) var(--space-xl);
+    border-bottom: 1px solid var(--color-hairline);
+  }
+  .candidato-header__identidade {
+    display: flex;
+    gap: var(--space-lg);
+    align-items: center;
+  }
+  .candidato-header__avatar {
+    width: 120px;
+    height: 120px;
+    border-radius: var(--radius-full);
+    object-fit: cover;
+  }
+  .candidato-header__avatar--placeholder {
+    display: grid;
+    place-items: center;
+    background: var(--color-bg-muted);
+    color: var(--color-text-mute);
+    font-size: var(--text-display-lg);
+    font-weight: var(--weight-semibold);
+  }
+  .candidato-header__bio {
+    color: var(--color-text-body);
+    max-width: 60ch;
+    line-height: var(--leading-body);
+    margin: 0;
+  }
+  .candidato-header__stats {
+    display: flex;
+    gap: var(--space-xl);
+    margin: 0;
+  }
+  .candidato-header__stats dt {
+    font-size: var(--text-caption);
+    color: var(--color-text-mute);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0;
+  }
+  .candidato-header__stats dd {
+    font-size: var(--text-display-md);
+    font-weight: var(--weight-semibold);
+    color: var(--color-text-primary);
+    margin: 0;
+  }
+  .candidato-header__contas {
+    display: flex;
+    gap: var(--space-sm);
+    flex-wrap: wrap;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .candidato-header__contas a {
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-xs);
+    padding: var(--space-xs) var(--space-sm);
+    border: 1px solid var(--color-hairline);
+    border-radius: var(--radius-pill);
+    background: var(--color-canvas);
+    color: var(--color-text-body);
+    font-size: var(--text-body-sm);
+    text-decoration: none;
+  }
+  .candidato-header__contas a:hover {
+    border-color: var(--color-hairline-strong);
+  }
+  .candidato-header__conta-plataforma {
+    font-size: var(--text-caption);
+    text-transform: uppercase;
+    color: var(--color-text-mute);
+  }
+</style>
