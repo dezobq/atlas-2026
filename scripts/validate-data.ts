@@ -93,5 +93,23 @@ if (totalErrors > 0) {
   process.exit(1);
 }
 
+// Validação do log editorial (Fase 4+)
+console.log(`\n${"=".repeat(60)}`);
+console.log(`Validando log editorial...`);
+try {
+  const { validarLog } = await import("./validate-log.js");
+  const { loadDeclaracoes, loadLogEditorial } = await import("./lib/data-loaders.js");
+  const result = validarLog(loadDeclaracoes(), loadLogEditorial());
+  if (!result.ok) {
+    console.error(`❌ log-editorial.csv tem ${result.errors.length} problema(s):`);
+    for (const e of result.errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+  console.log(`✅ log-editorial.csv: validado.`);
+} catch (e) {
+  console.error(`❌ Erro ao validar log: ${(e as Error).message}`);
+  process.exit(1);
+}
+
 console.log(`\n✅ Todos os dados são válidos.`);
 process.exit(0);
