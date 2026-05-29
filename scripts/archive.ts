@@ -4,6 +4,7 @@ import { createHash } from "node:crypto";
 import { pathToFileURL } from "node:url";
 import { CACHE_DIR } from "./lib/paths";
 import { logger } from "./lib/logger";
+import { requireEnv } from "./lib/env";
 
 export function buildAuthHeader(accessKey: string, secret: string): string {
   return `LOW ${accessKey}:${secret}`;
@@ -161,29 +162,19 @@ async function run(): Promise<void> {
     process.exit(1);
   }
 
+  const accessKey = requireEnv("ARCHIVE_ORG_ACCESS_KEY");
+  const secret = requireEnv("ARCHIVE_ORG_SECRET_KEY");
+
   const outDir = join(CACHE_DIR, "archive");
   mkdirSync(outDir, { recursive: true });
 
-  const saveUrl = buildSaveUrl(url);
-  logger.info(`Arquivando via Wayback Machine: ${url}`);
-  logger.info(`(pode levar 30-90s para snapshot ser criado)`);
+  logger.info(`Arquivando via Wayback SPN2: ${url}`);
+  logger.info("(pode levar 30-120s; aguardando o job concluir...)");
 
-  const response = await fetch(saveUrl, {
-    method: "POST",
-    redirect: "manual",
-    headers: {
-      "User-Agent": "atlas-2026/0.1 (+https://github.com/dezobq/atlas-2026)",
-    },
-  });
+  const sleep = (ms: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, ms));
+  const fetchFn: FetchLike = (u, init) => fetch(u, init);
 
-  const archiveUrl = extractArchiveUrl(response.headers);
-  if (!archiveUrl) {
-    logger.error(
-      `Wayback não retornou URL de snapshot (status ${response.status}). ` +
-        "A página pode estar bloqueando arquivamento.",
-    );
-    process.exit(1);
-  }
+  const archiveUrl = await requestSnapshot(url, { fetchFn, sleep, accessKey, secret });
 
   const hash = hashUrl(url);
   const recordPath = join(outDir, `${hash}.txt`);
