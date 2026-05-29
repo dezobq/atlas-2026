@@ -21,6 +21,10 @@ Registro de bugs com causa raiz e fix. Protocolo anti-regressão: antes de tocar
 
 - [[Candidato-FK-Slug-vs-ULID]] — FK de candidato resolvida por ULID `data.id` em vez do slug; perfil do candidato e `audit:paridade --piloto-mode` quebram em silêncio (invisível ao CI)
 
+### Qualidade de dados / editorial
+
+- [[Auditoria-Dados-2026-05-29]] — auditoria via workflow read-only: neutralidade editorial + coerência de fonte (cross-field, não pega por schema)
+
 ## Como adicionar novo bug
 
 1. Copiar [[../Templates/Template-Bug]] para esta pasta

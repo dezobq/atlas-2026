@@ -23,6 +23,7 @@
     "test:watch": "vitest --passWithNoTests",
     "validate-data": "tsx scripts/validate-data.ts",
     "validate:log": "tsx scripts/validate-log.ts",
+    "validate:proveniencia": "tsx scripts/validate-proveniencia.ts",
     "generate-schemas": "tsx scripts/generate-json-schemas.ts",
     "audit:paridade": "tsx scripts/audit-paridade.ts",
     "audit:distribuicao": "tsx scripts/audit-distribuicao.ts",

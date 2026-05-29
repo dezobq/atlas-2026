@@ -90,7 +90,7 @@ pnpm scrape:url <url>         # Firecrawl markdown + screenshot → .cache/scrap
 pnpm generate:og              # Satori → public/og/<id>.png por declaração
 ```
 
-Workflow operacional detalhado em `scripts/README.md` (3 níveis: YouTube oficial · mídia consolidada · rede social). Credenciais necessárias em `.env` (template em `.env.example`): `OPENAI_API_KEY`, `FIRECRAWL_API_KEY`.
+Workflow operacional detalhado em `scripts/README.md` (3 níveis: YouTube oficial · mídia consolidada · rede social). Credenciais necessárias em `.env` (template em `.env.example`): `OPENAI_API_KEY`, `FIRECRAWL_API_KEY`, `ARCHIVE_ORG_ACCESS_KEY`, `ARCHIVE_ORG_SECRET_KEY`.
 
 ---
 

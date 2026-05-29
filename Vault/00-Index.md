@@ -23,6 +23,7 @@ Mapa de Conteúdos do vault. Atualizar sempre que uma nota nova for adicionada a
 - [[Decisoes/00-MOC|Visão geral das decisões]]
 - [[Decisoes/Stack-Astro-Estatico]] — por que Astro 5 estático + dados em git
 - [[Decisoes/Sem-Veredito-Proprio]] — Atlas nunca classifica veracidade
+- [[Decisoes/AI-Policy-Processo-Reproduzivel]] — IA opera o pipeline sob método público; "o processo é a autoridade" (2026-05-29)
 - [[Decisoes/Licencas-MIT-CC-BY]] — código MIT, dados/conteúdo CC-BY 4.0
 - [[Decisoes/URLs-Estaveis]] — estrutura de URLs que nunca quebra
 - [[Decisoes/Audiencia-Primaria]] — mídia + acadêmico + LLM como audiência primária (2026-05-28)
@@ -36,6 +37,7 @@ Mapa de Conteúdos do vault. Atualizar sempre que uma nota nova for adicionada a
 - [[Bugs/00-MOC|Visão geral dos bugs registrados]]
 - [[Bugs/Astro-Zod3-vs-Zod4]] — astro:content re-exporta Zod 3; não migrar
 - [[Bugs/pnpm-CI-vs-Local]] — diferenças Windows/Ubuntu mitigadas por `.gitattributes`
+- [[Bugs/Auditoria-Dados-2026-05-29]] — 1ª auditoria via workflow read-only: 2 fixes (neutralidade + coerência de fonte) + 1 falso positivo descartado
 
 ## Specs ativos
 

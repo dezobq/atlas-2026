@@ -89,6 +89,23 @@ const eventoSchema = z.object({
   atualizado_em: z.iso.datetime(),
 });
 
+const camadaProvSchemaGen = z.object({
+  id: z.string().min(1),
+  camada: z.union([z.literal(0), z.literal(1), z.literal(2)]),
+  origem: z.string().min(1),
+  ancora: z.array(z.string()).default([]),
+  verificacao: z.string().regex(/^(adversarial|humano)-\d+\/\d+$/),
+  confianca: z.number().min(0).max(1).optional(),
+});
+
+const provenienciaSchemaGen = z.object({
+  metodo: z.string().regex(/^[a-z0-9-]+@\d+\.\d+\.\d+$/),
+  fonte_ancora: z.string().min(1),
+  camadas: z.array(camadaProvSchemaGen).min(1),
+  humano_revisou: z.array(z.string()).default([]),
+  gerado_em: z.iso.datetime(),
+});
+
 const declaracaoSchema = z.object({
   id: z.string().min(1),
   slug: z.string().regex(/^[a-z0-9-]+$/),
@@ -136,6 +153,7 @@ const declaracaoSchema = z.object({
   versao: z.number().int().positive(),
   criado_em: z.iso.datetime(),
   atualizado_em: z.iso.datetime(),
+  proveniencia: provenienciaSchemaGen,
 });
 
 const criterioSelecaoSchema = z.object({

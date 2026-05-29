@@ -18,6 +18,7 @@ Decisões arquiteturais e editoriais com rationale registrado. Cada nota deve re
 ## Editorial
 
 - [[Sem-Veredito-Proprio]] — Atlas nunca classifica veracidade
+- [[AI-Policy-Processo-Reproduzivel]] — IA opera o pipeline sob método público rastreável/verificável/repetível; "o processo é a autoridade" (2026-05-29)
 - [[Licencas-MIT-CC-BY]] — código MIT, dataset/conteúdo CC-BY 4.0
 - [[Extensao-Janela-Temporal]] — janela de elegibilidade estendida p/ [2025-05-16, 2026-05-28]; seleção de candidatos segue locked (2026-05-28)
 
