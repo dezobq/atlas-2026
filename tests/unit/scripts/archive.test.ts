@@ -1,5 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { buildSaveUrl, extractArchiveUrl, hashUrl } from "../../../scripts/archive";
+import { buildAuthHeader, buildStatusUrl, buildArchiveUrl } from "../../../scripts/archive";
 
 describe("buildSaveUrl", () => {
   it("monta URL com encoding correto", () => {
@@ -50,5 +51,27 @@ describe("hashUrl", () => {
 
   it("produz hashes diferentes para URLs diferentes", () => {
     expect(hashUrl("https://a.com")).not.toBe(hashUrl("https://b.com"));
+  });
+});
+
+describe("buildAuthHeader", () => {
+  it("monta header LOW no formato access:secret", () => {
+    expect(buildAuthHeader("KEY123", "SEC456")).toBe("LOW KEY123:SEC456");
+  });
+});
+
+describe("buildStatusUrl", () => {
+  it("monta a URL de status a partir do job_id", () => {
+    expect(buildStatusUrl("ac58789b-f3ca")).toBe(
+      "https://web.archive.org/save/status/ac58789b-f3ca",
+    );
+  });
+});
+
+describe("buildArchiveUrl", () => {
+  it("monta o snapshot a partir de timestamp + original_url", () => {
+    expect(buildArchiveUrl("20180326070330", "http://example.com/")).toBe(
+      "https://web.archive.org/web/20180326070330/http://example.com/",
+    );
   });
 });

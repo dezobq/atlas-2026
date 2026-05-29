@@ -26,19 +26,19 @@
 
 **Modificados:**
 
-| Arquivo | Mudança |
-| ------- | ------- |
-| `scripts/archive.ts` | Substituir protocolo antigo pelo SPN2 autenticado: novas funções puras + orquestrador + `run()` reescrito; remover `buildSaveUrl`/`extractArchiveUrl` |
-| `tests/unit/scripts/archive.test.ts` | Adicionar testes das funções novas + orquestrador; remover testes de `buildSaveUrl`/`extractArchiveUrl` |
-| `scripts/README.md` | Documentar a nova exigência de credencial `ARCHIVE_ORG_*` |
-| `CLAUDE.md` (projeto) | Atualizar a linha de credenciais do bloco de pipeline |
+| Arquivo                              | Mudança                                                                                                                                               |
+| ------------------------------------ | ----------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `scripts/archive.ts`                 | Substituir protocolo antigo pelo SPN2 autenticado: novas funções puras + orquestrador + `run()` reescrito; remover `buildSaveUrl`/`extractArchiveUrl` |
+| `tests/unit/scripts/archive.test.ts` | Adicionar testes das funções novas + orquestrador; remover testes de `buildSaveUrl`/`extractArchiveUrl`                                               |
+| `scripts/README.md`                  | Documentar a nova exigência de credencial `ARCHIVE_ORG_*`                                                                                             |
+| `CLAUDE.md` (projeto)                | Atualizar a linha de credenciais do bloco de pipeline                                                                                                 |
 
 **Editados pelo André (deny rule — agente não toca):**
 
-| Arquivo | Mudança |
-| ------- | ------- |
+| Arquivo        | Mudança                                                                    |
+| -------------- | -------------------------------------------------------------------------- |
 | `.env.example` | Adicionar `ARCHIVE_ORG_ACCESS_KEY=` e `ARCHIVE_ORG_SECRET_KEY=` (template) |
-| `.env` | Preencher as 2 chaves reais geradas em archive.org/account/s3.php |
+| `.env`         | Preencher as 2 chaves reais geradas em archive.org/account/s3.php          |
 
 **NÃO mexer:**
 
@@ -641,14 +641,14 @@ Expected: todos exit 0. Abrir PR com Conventional Commit PT-BR no squash; corpo 
 
 ### 1. Spec coverage (contra o root-cause §5.3 do relatório)
 
-| Requisito do root-cause | Coberto em |
-| ----------------------- | ---------- |
-| Migrar para SPN2 `POST /save` com `Authorization: LOW <key>:<secret>` + `Accept: application/json` | Task 3 (`requestSnapshot`) |
-| Receber `job_id` | Task 2 (`parseJobId`) + Task 3 |
-| Polling em `/save/status/{job_id}` até obter `timestamp` | Task 3 (loop) + Task 1 (`buildStatusUrl`) |
-| Reescrever `extractArchiveUrl` (sem header de redirect) | Task 5 (remoção) + Task 1 (`buildArchiveUrl` substitui) |
-| Funções puras TDD-áveis; caminho ao vivo só com credencial | Tasks 1–3 (puras/mock) + Task 6 (ao vivo) |
-| Credencial no `.env` (`ARCHIVE_ORG_ACCESS_KEY`/`SECRET_KEY`), agente não toca `.env` | Task 4 (`requireEnv`) + Task 6 (André) |
+| Requisito do root-cause                                                                            | Coberto em                                              |
+| -------------------------------------------------------------------------------------------------- | ------------------------------------------------------- |
+| Migrar para SPN2 `POST /save` com `Authorization: LOW <key>:<secret>` + `Accept: application/json` | Task 3 (`requestSnapshot`)                              |
+| Receber `job_id`                                                                                   | Task 2 (`parseJobId`) + Task 3                          |
+| Polling em `/save/status/{job_id}` até obter `timestamp`                                           | Task 3 (loop) + Task 1 (`buildStatusUrl`)               |
+| Reescrever `extractArchiveUrl` (sem header de redirect)                                            | Task 5 (remoção) + Task 1 (`buildArchiveUrl` substitui) |
+| Funções puras TDD-áveis; caminho ao vivo só com credencial                                         | Tasks 1–3 (puras/mock) + Task 6 (ao vivo)               |
+| Credencial no `.env` (`ARCHIVE_ORG_ACCESS_KEY`/`SECRET_KEY`), agente não toca `.env`               | Task 4 (`requireEnv`) + Task 6 (André)                  |
 
 Sem gaps.
 

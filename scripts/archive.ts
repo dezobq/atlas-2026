@@ -5,6 +5,18 @@ import { pathToFileURL } from "node:url";
 import { CACHE_DIR } from "./lib/paths";
 import { logger } from "./lib/logger";
 
+export function buildAuthHeader(accessKey: string, secret: string): string {
+  return `LOW ${accessKey}:${secret}`;
+}
+
+export function buildStatusUrl(jobId: string): string {
+  return `https://web.archive.org/save/status/${jobId}`;
+}
+
+export function buildArchiveUrl(timestamp: string, originalUrl: string): string {
+  return `https://web.archive.org/web/${timestamp}/${originalUrl}`;
+}
+
 export function buildSaveUrl(url: string): string {
   return `https://web.archive.org/save/${url}`;
 }

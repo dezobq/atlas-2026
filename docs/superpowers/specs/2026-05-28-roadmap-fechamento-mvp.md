@@ -34,12 +34,12 @@ Em 2026-05-28, ao perguntar "o que falta para o MVP e o que focar", o curador cr
 
 ## 1. Estado atual (2026-05-28)
 
-| Camada do produto | Estado | Referência |
-| ----------------- | ------ | ---------- |
-| Infra técnica (Fases 1–3) | ✅ completa | SEO, páginas, busca Pagefind, componentes, JSON-LD |
-| Setup editorial (Sprint 5.1, PR #8) | ✅ completa | 2 candidatos reais, `/metodologia`, `/errata`, `/sobre`, `criterio-selecao.yaml` locked, scripts de auditoria, log header |
-| Card visual (PR #9) | ✅ completa | 4 formatos Satori; 1 de 3 features de I4 (bônus, fora do caminho crítico) |
-| Piloto (Sprint 5.2) | 🔄 **em branch, não mergeado** | 10/12 declarações em DRAFT (`validador="pendente"`); relatório de aprendizados concluído; corpo de PR pronto |
+| Camada do produto                   | Estado                         | Referência                                                                                                                |
+| ----------------------------------- | ------------------------------ | ------------------------------------------------------------------------------------------------------------------------- |
+| Infra técnica (Fases 1–3)           | ✅ completa                    | SEO, páginas, busca Pagefind, componentes, JSON-LD                                                                        |
+| Setup editorial (Sprint 5.1, PR #8) | ✅ completa                    | 2 candidatos reais, `/metodologia`, `/errata`, `/sobre`, `criterio-selecao.yaml` locked, scripts de auditoria, log header |
+| Card visual (PR #9)                 | ✅ completa                    | 4 formatos Satori; 1 de 3 features de I4 (bônus, fora do caminho crítico)                                                 |
+| Piloto (Sprint 5.2)                 | 🔄 **em branch, não mergeado** | 10/12 declarações em DRAFT (`validador="pendente"`); relatório de aprendizados concluído; corpo de PR pronto              |
 
 **Detalhe do piloto** (branch `feat/fase4-sprint5-2-piloto`):
 
@@ -79,14 +79,15 @@ Referências canônicas do estado: `docs/superpowers/research/2026-05-28-piloto-
 
 **Objetivo:** tirar as 10 declarações de DRAFT e levá-las a `main`, com a decisão dos 2 déficits registrada.
 
-| Item | Dono | Notas |
-| ---- | ---- | ----- |
-| Decidir os 2 déficits do Flávio (educação + saúde) | **André** | Recomendação C do relatório: **reduzir quota nesses 2 pares + documentar em `/metodologia`** (não inflar/misatribuir). Decisão muda o alvo final de declarações (§6). |
-| Sign-off das 10 drafts (checklist §5.5) | **André** | Conferir verbatim/datas/casing contra fonte. Opcional: elevar 🟡5 e 🟡8 a fonte oficial gov.br (depende da Camada 1 destravada). |
-| Atualizar `validador` no `log-editorial.csv` (`pendente` → `André`) | André + Claude | 1 linha por declaração assinada. |
-| Abrir/mergear o PR do piloto para `main` | **André** | Corpo de PR já pronto em `docs/superpowers/research/2026-05-28-piloto-PR-body.md`. |
+| Item                                                                | Dono           | Notas                                                                                                                                                                 |
+| ------------------------------------------------------------------- | -------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Decidir os 2 déficits do Flávio (educação + saúde)                  | **André**      | Recomendação C do relatório: **reduzir quota nesses 2 pares + documentar em `/metodologia`** (não inflar/misatribuir). Decisão muda o alvo final de declarações (§6). |
+| Sign-off das 10 drafts (checklist §5.5)                             | **André**      | Conferir verbatim/datas/casing contra fonte. Opcional: elevar 🟡5 e 🟡8 a fonte oficial gov.br (depende da Camada 1 destravada).                                      |
+| Atualizar `validador` no `log-editorial.csv` (`pendente` → `André`) | André + Claude | 1 linha por declaração assinada.                                                                                                                                      |
+| Abrir/mergear o PR do piloto para `main`                            | **André**      | Corpo de PR já pronto em `docs/superpowers/research/2026-05-28-piloto-PR-body.md`.                                                                                    |
 
 **Critério de DONE (Camada 0):**
+
 - `log-editorial.csv` com 10 linhas `validador="André"`.
 - Decisão dos déficits escrita (no relatório de aprendizados §7 + refletida em `/metodologia` se reduzir quota).
 - PR do piloto mergeado em `main`; CI verde.
@@ -103,14 +104,15 @@ Referências canônicas do estado: `docs/superpowers/research/2026-05-28-piloto-
 
 **Root-cause confirmado (relatório §5.3):** o `POST web.archive.org/save/{url}` sem auth agora devolve HTTP 200 com HTML interativo (não mais 302 com `Location`); a API JSON do SPN2 responde `401 "You need to be logged in to use Save Page Now."`. **O Wayback passou a exigir autenticação.**
 
-| Sub-tarefa | Dono | Detalhe |
-| ---------- | ---- | ------- |
-| Migrar `scripts/archive.ts` para SPN2 autenticado | **Claude (TDD)** | `POST /save` com header `Authorization: LOW <accessKey>:<secret>` + `Accept: application/json` → recebe `job_id` → polling em `/save/status/{job_id}` até obter `timestamp` → montar `archive_url`. Reescrever `extractArchiveUrl` (não há mais header de redirect). |
-| Testes unitários das funções puras | **Claude (TDD)** | Montar header de auth, parsear resposta de `job`, parsear `status`, construir URL do snapshot — todas puras e testáveis. Caminho ao vivo só roda com credencial. |
-| Gerar credencial S3 do archive.org | **André** | Logar em archive.org → gerar chaves em `archive.org/account/s3.php` → guardar no `.env` (gitignored) como `ARCHIVE_ORG_ACCESS_KEY` / `ARCHIVE_ORG_SECRET_KEY`. **Claude não acessa nem comita `.env`** (deny rule). |
-| Validar `scripts/lib/env.ts` exige as novas chaves | Claude | Adicionar ao schema de validação de `.env`. |
+| Sub-tarefa                                         | Dono             | Detalhe                                                                                                                                                                                                                                                              |
+| -------------------------------------------------- | ---------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Migrar `scripts/archive.ts` para SPN2 autenticado  | **Claude (TDD)** | `POST /save` com header `Authorization: LOW <accessKey>:<secret>` + `Accept: application/json` → recebe `job_id` → polling em `/save/status/{job_id}` até obter `timestamp` → montar `archive_url`. Reescrever `extractArchiveUrl` (não há mais header de redirect). |
+| Testes unitários das funções puras                 | **Claude (TDD)** | Montar header de auth, parsear resposta de `job`, parsear `status`, construir URL do snapshot — todas puras e testáveis. Caminho ao vivo só roda com credencial.                                                                                                     |
+| Gerar credencial S3 do archive.org                 | **André**        | Logar em archive.org → gerar chaves em `archive.org/account/s3.php` → guardar no `.env` (gitignored) como `ARCHIVE_ORG_ACCESS_KEY` / `ARCHIVE_ORG_SECRET_KEY`. **Claude não acessa nem comita `.env`** (deny rule).                                                  |
+| Validar `scripts/lib/env.ts` exige as novas chaves | Claude           | Adicionar ao schema de validação de `.env`.                                                                                                                                                                                                                          |
 
 **Critério de DONE (4.1):**
+
 - `pnpm archive <url>` gera snapshot **novo** e retorna `archive_url` que responde HTTP 200.
 - Testes unitários novos verdes; cobertura ≥ 80% nas funções novas.
 - `pnpm check:archive-urls --recent` passa nas declarações tocadas.
@@ -120,6 +122,7 @@ Referências canônicas do estado: `docs/superpowers/research/2026-05-28-piloto-
 **Problema (relatório §5.2):** gov.br bloqueia CAPTCHA em 3 caminhos (browser ao vivo, snapshot Wayback servido, WebFetch). Mitigação usada no piloto: re-sourcear o **mesmo verbatim** de mídia consolidada acessível (Agência Gov/Brasil EBC, Band, Poder360, Gazeta do Povo).
 
 **Decisão a tomar (André):** para o lote, escolher uma política e padronizá-la:
+
 - **(a)** humano resolve CAPTCHA pontualmente quando a fonte oficial gov.br for desejável, **ou**
 - **(b)** padronizar mídia consolidada acessível + **nota de fonte** em `/metodologia` explicando o trade-off.
 
@@ -131,15 +134,16 @@ Referências canônicas do estado: `docs/superpowers/research/2026-05-28-piloto-
 
 **Objetivo:** completar as declarações restantes até a contagem-alvo, com o critério já validado pelo piloto.
 
-| Item | Dono | Notas |
-| ---- | ---- | ----- |
-| Curadoria das ~40–50 declarações restantes | **André + Claude** | Pipeline de 9 passos (spec §5.3). O gargalo: 15–30h de trabalho humano (transcrição, sign-off). |
-| Snapshot Wayback em 100% (depende de 4.1) | Claude | Cada declaração nova gera snapshot fresco via `pnpm archive` corrigido. |
-| Mini-PRs de 10–12 declarações por bloco | André + Claude | Evita PR gigante; histórico incremental. Estratégia (por candidato vs por tema) decidida no início do 5.3. |
-| `audit:paridade` incremental verde a cada PR | Claude | Reflete a quota real (ajustada pelos déficits). |
-| `log-editorial.csv` FK match 100% | Claude | `validate:log` exit 0. |
+| Item                                         | Dono               | Notas                                                                                                      |
+| -------------------------------------------- | ------------------ | ---------------------------------------------------------------------------------------------------------- |
+| Curadoria das ~40–50 declarações restantes   | **André + Claude** | Pipeline de 9 passos (spec §5.3). O gargalo: 15–30h de trabalho humano (transcrição, sign-off).            |
+| Snapshot Wayback em 100% (depende de 4.1)    | Claude             | Cada declaração nova gera snapshot fresco via `pnpm archive` corrigido.                                    |
+| Mini-PRs de 10–12 declarações por bloco      | André + Claude     | Evita PR gigante; histórico incremental. Estratégia (por candidato vs por tema) decidida no início do 5.3. |
+| `audit:paridade` incremental verde a cada PR | Claude             | Reflete a quota real (ajustada pelos déficits).                                                            |
+| `log-editorial.csv` FK match 100%            | Claude             | `validate:log` exit 0.                                                                                     |
 
 **Critério de DONE (Camada 2):**
+
 - Contagem-alvo de declarações atingida (ver §6 para o número exato, função da decisão de déficit).
 - `audit:paridade` (modo final) verifica a distribuição-alvo por candidato/tema.
 - Todas as validações verdes; PRs mergeados.
@@ -152,10 +156,10 @@ Referências canônicas do estado: `docs/superpowers/research/2026-05-28-piloto-
 
 O número final **não é fixo em 60** — depende da Camada 0 (decisão dos 2 déficits do Flávio):
 
-| Cenário | Lula | Flávio | Total | Restantes a produzir (já temos 10) |
-| ------- | ---- | ------ | ----- | ---------------------------------- |
-| **Pleno** (60, paridade 5×6 rígida) | 30 (5×6) | 30 (5×6) | **60** | **50** |
-| **Recomendação C** (reduz quota Flávio educ.+saúde p/ a realidade) | 30 (5×6) | 20 + N | **50 + N** | **40 + N** |
+| Cenário                                                            | Lula     | Flávio   | Total      | Restantes a produzir (já temos 10) |
+| ------------------------------------------------------------------ | -------- | -------- | ---------- | ---------------------------------- |
+| **Pleno** (60, paridade 5×6 rígida)                                | 30 (5×6) | 30 (5×6) | **60**     | **50**                             |
+| **Recomendação C** (reduz quota Flávio educ.+saúde p/ a realidade) | 30 (5×6) | 20 + N   | **50 + N** | **40 + N**                         |
 
 Onde `N` = total de declarações reais que o Flávio tem em educação + saúde dentro da janela (provavelmente baixo, talvez 0–2 cada).
 
@@ -167,16 +171,16 @@ Onde `N` = total de declarações reais que o Flávio tem em educação + saúde
 
 **Objetivo:** auditoria final + publicação do dataset + checkpoint. Espelha o spec Fase 4 §2.2 (definição binária de DONE) e o gate T+0 do spec mestre §15.
 
-| Item | Dono | Critério |
-| ---- | ---- | -------- |
-| Auditoria manual de 6 declarações sorteadas (1/tema) | **André** | Transcrição conferida vs vídeo + Wayback abre. Erro factual → bloqueia release. |
-| `audit:paridade --final-mode` | Claude | "PASS: distribuição-alvo atingida". |
-| `audit:distribuicao` | Claude | `docs/distribuicao-fase4.md` regenerado. |
-| Lighthouse SEO ≥ 95 **e** Accessibility ≥ 95 em 3 URLs | André + Claude | 1 perfil, 1 declaração, 1 evento → `docs/lighthouse-fase4.json`. |
-| `pnpm export:dataset` | Claude | `dist-dataset/atlas-2026-v0.1.0.{jsonl,csv}` + `SCHEMA.md`. |
-| GitHub Release `v0.1.0` | André + Claude | Artefatos anexados; corpo cita commit-SHA de `criterio-selecao.yaml`. |
-| Zenodo DOI | **André** | Gerado a partir do Release (citação acadêmica). |
-| Checkpoint Vault | Claude | `memory/checkpoint-fase4-completa.md` + `MEMORY.md` aponta como entry point. |
+| Item                                                   | Dono           | Critério                                                                        |
+| ------------------------------------------------------ | -------------- | ------------------------------------------------------------------------------- |
+| Auditoria manual de 6 declarações sorteadas (1/tema)   | **André**      | Transcrição conferida vs vídeo + Wayback abre. Erro factual → bloqueia release. |
+| `audit:paridade --final-mode`                          | Claude         | "PASS: distribuição-alvo atingida".                                             |
+| `audit:distribuicao`                                   | Claude         | `docs/distribuicao-fase4.md` regenerado.                                        |
+| Lighthouse SEO ≥ 95 **e** Accessibility ≥ 95 em 3 URLs | André + Claude | 1 perfil, 1 declaração, 1 evento → `docs/lighthouse-fase4.json`.                |
+| `pnpm export:dataset`                                  | Claude         | `dist-dataset/atlas-2026-v0.1.0.{jsonl,csv}` + `SCHEMA.md`.                     |
+| GitHub Release `v0.1.0`                                | André + Claude | Artefatos anexados; corpo cita commit-SHA de `criterio-selecao.yaml`.           |
+| Zenodo DOI                                             | **André**      | Gerado a partir do Release (citação acadêmica).                                 |
+| Checkpoint Vault                                       | Claude         | `memory/checkpoint-fase4-completa.md` + `MEMORY.md` aponta como entry point.    |
 
 **Critério de DONE (Camada 3 = DONE do MVP):** todas as condições do spec Fase 4 §2.2 verdadeiras simultaneamente.
 
@@ -186,12 +190,12 @@ Onde `N` = total de declarações reais que o Flávio tem em educação + saúde
 
 Registrado para não se perder — **não bloqueia o `v0.1.0`**:
 
-| Feature | Origem | Quando |
-| ------- | ------ | ------ |
-| API JSON pública (`/api/v1/*.json`) | I4 | Pós-launch; dataset já cobre acadêmico/LLM no MVP |
-| Embed widget (web component + iframe) | I4 | Pós-launch; depende de dataset maduro |
-| RSS feeds (5 endpoints) | I6 | Pós-launch; canal de retorno, não de descoberta inicial |
-| Newsletter mensal (Buttondown) | I6 | Pós-launch; operacional |
+| Feature                               | Origem | Quando                                                  |
+| ------------------------------------- | ------ | ------------------------------------------------------- |
+| API JSON pública (`/api/v1/*.json`)   | I4     | Pós-launch; dataset já cobre acadêmico/LLM no MVP       |
+| Embed widget (web component + iframe) | I4     | Pós-launch; depende de dataset maduro                   |
+| RSS feeds (5 endpoints)               | I6     | Pós-launch; canal de retorno, não de descoberta inicial |
+| Newsletter mensal (Buttondown)        | I6     | Pós-launch; operacional                                 |
 
 Cada um terá seu próprio brainstorming → writing-plans quando chegar a hora. Detalhe em `Vault/Decisoes/I4-Compartilhabilidade.md` e `I6-Canal-Ativo-com-Audiencia.md`.
 
@@ -199,12 +203,12 @@ Cada um terá seu próprio brainstorming → writing-plans quando chegar a hora.
 
 ## 9. Riscos e bloqueios conhecidos
 
-| Risco | Severidade | Mitigação | Onde |
-| ----- | ---------- | --------- | ---- |
-| Wayback auth não destrava (chaves S3 indisponíveis/limitadas) | **Alta** | Confirmar geração de chaves cedo; fallback = API de disponibilidade para snapshots existentes (não serve para conteúdo novo) | Camada 1 |
-| Déficit estrutural se repete em outros pares no lote | Média | Piloto já validou o padrão; aplicar recomendação C consistentemente; documentar em `/metodologia` | Camada 2 |
-| Burnout na curadoria de ~40–50 itens | Média | Mini-PRs incrementais; gate honesto de 6 semanas (spec §6.3); piloto já mediu o ritmo | Camada 2 |
-| Misatribuição ao forçar cota deficitária | **Alta** | Regra dura: nunca registrar fala de terceiro como do candidato; quota reduzida > inflação | Camadas 0/2 |
+| Risco                                                         | Severidade | Mitigação                                                                                                                    | Onde        |
+| ------------------------------------------------------------- | ---------- | ---------------------------------------------------------------------------------------------------------------------------- | ----------- |
+| Wayback auth não destrava (chaves S3 indisponíveis/limitadas) | **Alta**   | Confirmar geração de chaves cedo; fallback = API de disponibilidade para snapshots existentes (não serve para conteúdo novo) | Camada 1    |
+| Déficit estrutural se repete em outros pares no lote          | Média      | Piloto já validou o padrão; aplicar recomendação C consistentemente; documentar em `/metodologia`                            | Camada 2    |
+| Burnout na curadoria de ~40–50 itens                          | Média      | Mini-PRs incrementais; gate honesto de 6 semanas (spec §6.3); piloto já mediu o ritmo                                        | Camada 2    |
+| Misatribuição ao forçar cota deficitária                      | **Alta**   | Regra dura: nunca registrar fala de terceiro como do candidato; quota reduzida > inflação                                    | Camadas 0/2 |
 
 ---
 
