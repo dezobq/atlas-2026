@@ -28,6 +28,22 @@ vereditos_externos: []
 versao: 1
 criado_em: "2026-05-28T21:29:00.459Z"
 atualizado_em: "2026-05-28T21:29:00.459Z"
+proveniencia:
+  metodo: "piloto-manual@0.1.0"
+  fonte_ancora: "senado:www12.senado.leg.br/noticias/materias/2025/07/04/iof-proposta-de-conciliacao-do-stf-repercute-no-senado"
+  camadas:
+    - id: "C0_texto"
+      camada: 0
+      origem: "webfetch-html"
+      ancora: []
+      verificacao: "humano-0/1"
+    - id: "C1_contexto"
+      camada: 1
+      origem: "claude-opus-4"
+      ancora: ["C0_texto"]
+      verificacao: "humano-0/1"
+  humano_revisou: []
+  gerado_em: "2026-05-29T00:00:00.000Z"
 ---
 
 <!-- DRAFT (branch feat/fase4-sprint5-2-piloto) — PENDENTE DE SIGN-OFF DE ANDRÉ NO PR.

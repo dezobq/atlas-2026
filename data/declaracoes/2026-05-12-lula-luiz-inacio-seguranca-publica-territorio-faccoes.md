@@ -28,6 +28,22 @@ vereditos_externos: []
 versao: 1
 criado_em: "2026-05-28T22:10:00.000Z"
 atualizado_em: "2026-05-28T22:10:00.000Z"
+proveniencia:
+  metodo: "piloto-manual@0.1.0"
+  fonte_ancora: "midia_consolidada:conexaoto.com.br/2026/05/12/em-pouco-tempo-nao-serao-donos-de-nenhum-territorio-diz-lula-sobre-o-crime-organizado"
+  camadas:
+    - id: "C0_texto"
+      camada: 0
+      origem: "webfetch-html"
+      ancora: []
+      verificacao: "humano-0/1"
+    - id: "C1_contexto"
+      camada: 1
+      origem: "claude-opus-4"
+      ancora: ["C0_texto"]
+      verificacao: "humano-0/1"
+  humano_revisou: []
+  gerado_em: "2026-05-29T00:00:00.000Z"
 ---
 
 <!-- DRAFT (branch feat/fase4-sprint5-2-piloto) — PENDENTE DE SIGN-OFF DE ANDRÉ NO PR.
