@@ -42,6 +42,21 @@ const fakeDeclaracao: Declaracao = {
     versao: 1,
     criado_em: "2026-04-15T00:00:00Z",
     atualizado_em: "2026-04-15T00:00:00Z",
+    proveniencia: {
+      metodo: "manual@1.0.0",
+      fonte_ancora: "debate-rede-tv",
+      camadas: [
+        {
+          id: "c1",
+          camada: 0 as const,
+          origem: "youtube_oficial",
+          ancora: [],
+          verificacao: "humano-1/1",
+        },
+      ],
+      humano_revisou: [],
+      gerado_em: "2026-04-15T00:00:00Z",
+    },
   },
 } as Declaracao;
 
