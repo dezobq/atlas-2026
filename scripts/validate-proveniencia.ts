@@ -20,7 +20,15 @@ export function validarProveniencia(declaracoes: DeclaracaoFrontmatter[]): Valid
 
     const ids = new Set(p.camadas.map((c) => c.id));
     if (ids.size !== p.camadas.length) {
-      errors.push(`${d.id}: proveniencia.camadas tem id duplicado`);
+      const vistos = new Set<string>();
+      const duplicados = new Set<string>();
+      for (const c of p.camadas) {
+        if (vistos.has(c.id)) duplicados.add(c.id);
+        vistos.add(c.id);
+      }
+      errors.push(
+        `${d.id}: proveniencia.camadas tem id duplicado: ${[...duplicados].join(", ")}`,
+      );
     }
     if (!p.camadas.some((c) => c.camada === 0)) {
       errors.push(`${d.id}: proveniencia precisa de ao menos uma camada factual (camada 0)`);
@@ -34,6 +42,10 @@ export function validarProveniencia(declaracoes: DeclaracaoFrontmatter[]): Valid
         errors.push(`${d.id}: camada ${c.id} (derivada/analítica) precisa de ancora`);
       }
       for (const a of c.ancora) {
+        if (a === c.id) {
+          errors.push(`${d.id}: camada ${c.id} ancora em si mesma — proibido`);
+          continue;
+        }
         const alvo = p.camadas.find((x) => x.id === a);
         if (!alvo) {
           errors.push(`${d.id}: camada ${c.id} ancora em "${a}" que não existe`);

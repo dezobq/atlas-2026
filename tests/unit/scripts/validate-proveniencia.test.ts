@@ -117,4 +117,13 @@ describe("validarProveniencia", () => {
     expect(result.ok).toBe(false);
     expect(result.errors.some((e) => e.includes("duplicado"))).toBe(true);
   });
+
+  it("rejeita camada que ancora em si mesma (auto-âncora)", () => {
+    const p = prov({
+      camadas: [cam(), cam({ id: "C1_x", camada: 1, ancora: ["C1_x"] })],
+    });
+    const result = validarProveniencia([dec({ proveniencia: p })]);
+    expect(result.ok).toBe(false);
+    expect(result.errors.some((e) => e.includes("si mesma"))).toBe(true);
+  });
 });
