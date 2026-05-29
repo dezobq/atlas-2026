@@ -4,3 +4,6 @@ node_modules/
 pnpm-lock.yaml
 data/schemas/
 *.min.*
+
+# Tooling local do Claude Code (não é código-fonte do projeto)
+.claude/

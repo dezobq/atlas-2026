@@ -62,6 +62,6 @@ export default [
     },
   },
   {
-    ignores: ["dist/", "node_modules/", ".astro/", "data/schemas/"],
+    ignores: ["dist/", "node_modules/", ".astro/", "data/schemas/", ".claude/"],
   },
 ];
