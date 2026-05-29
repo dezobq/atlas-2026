@@ -39,6 +39,44 @@ export function hashUrl(url: string): string {
   return createHash("sha256").update(url).digest("hex").slice(0, 8);
 }
 
+export function parseJobId(body: unknown): string {
+  if (typeof body === "object" && body !== null && "job_id" in body) {
+    const id = (body as Record<string, unknown>).job_id;
+    if (typeof id === "string" && id.length > 0) return id;
+  }
+  throw new Error(
+    "SPN2 /save não retornou job_id. Verifique ARCHIVE_ORG_ACCESS_KEY/ARCHIVE_ORG_SECRET_KEY no .env.",
+  );
+}
+
+export type SnapshotStatus =
+  | { state: "pending" }
+  | { state: "success"; timestamp: string; originalUrl: string }
+  | { state: "error"; message: string };
+
+export function parseStatus(body: unknown): SnapshotStatus {
+  if (typeof body !== "object" || body === null || !("status" in body)) {
+    return { state: "error", message: "Resposta de status SPN2 sem campo 'status'." };
+  }
+  const rec = body as Record<string, unknown>;
+  if (rec.status === "pending") return { state: "pending" };
+  if (rec.status === "success") {
+    const timestamp = rec.timestamp;
+    const originalUrl = rec.original_url;
+    if (typeof timestamp === "string" && typeof originalUrl === "string") {
+      return { state: "success", timestamp, originalUrl };
+    }
+    return { state: "error", message: "Status 'success' sem timestamp/original_url." };
+  }
+  const message =
+    typeof rec.message === "string"
+      ? rec.message
+      : typeof rec.status_ext === "string"
+        ? rec.status_ext
+        : "Erro desconhecido do SPN2.";
+  return { state: "error", message };
+}
+
 async function run(): Promise<void> {
   const url = process.argv[2];
   if (!url) {

@@ -1,6 +1,14 @@
 import { describe, it, expect } from "vitest";
-import { buildSaveUrl, extractArchiveUrl, hashUrl } from "../../../scripts/archive";
-import { buildAuthHeader, buildStatusUrl, buildArchiveUrl } from "../../../scripts/archive";
+import {
+  buildSaveUrl,
+  extractArchiveUrl,
+  hashUrl,
+  buildAuthHeader,
+  buildStatusUrl,
+  buildArchiveUrl,
+  parseJobId,
+  parseStatus,
+} from "../../../scripts/archive";
 
 describe("buildSaveUrl", () => {
   it("monta URL com encoding correto", () => {
@@ -73,5 +81,53 @@ describe("buildArchiveUrl", () => {
     expect(buildArchiveUrl("20180326070330", "http://example.com/")).toBe(
       "https://web.archive.org/web/20180326070330/http://example.com/",
     );
+  });
+});
+
+describe("parseJobId", () => {
+  it("extrai job_id de uma resposta válida do POST /save", () => {
+    expect(parseJobId({ url: "http://x/", job_id: "ac58789b" })).toBe("ac58789b");
+  });
+
+  it("lança quando job_id está ausente (ex.: resposta de auth)", () => {
+    expect(() => parseJobId({ message: "You need to be logged in" })).toThrow(/job_id/);
+  });
+
+  it("lança quando o corpo não é objeto (ex.: HTML)", () => {
+    expect(() => parseJobId("<html>")).toThrow();
+  });
+});
+
+describe("parseStatus", () => {
+  it("reconhece pending", () => {
+    expect(parseStatus({ status: "pending", job_id: "x" })).toEqual({ state: "pending" });
+  });
+
+  it("reconhece success com timestamp e original_url", () => {
+    expect(
+      parseStatus({
+        status: "success",
+        timestamp: "20180326070330",
+        original_url: "http://example.com/",
+      }),
+    ).toEqual({
+      state: "success",
+      timestamp: "20180326070330",
+      originalUrl: "http://example.com/",
+    });
+  });
+
+  it("reconhece error e usa a message do SPN2", () => {
+    expect(
+      parseStatus({
+        status: "error",
+        message: "Couldn't resolve host",
+        status_ext: "error:invalid-host-resolution",
+      }),
+    ).toEqual({ state: "error", message: "Couldn't resolve host" });
+  });
+
+  it("trata resposta sem campo status como erro", () => {
+    expect(parseStatus({}).state).toBe("error");
   });
 });
