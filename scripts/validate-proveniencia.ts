@@ -18,33 +18,40 @@ export function validarProveniencia(declaracoes: DeclaracaoFrontmatter[]): Valid
       continue;
     }
 
-    const ids = new Set(p.camadas.map((c) => c.id));
-    if (ids.size !== p.camadas.length) {
+    // Frontmatter cru (gray-matter) não aplica os defaults do Zod: arrays omitidos no
+    // YAML chegam como undefined. Normalizamos para [] e deixamos as regras semânticas
+    // emitirem erro — um gate de validação nunca deve lançar exceção.
+    const camadas = p.camadas ?? [];
+    const humanoRevisou = p.humano_revisou ?? [];
+
+    const ids = new Set(camadas.map((c) => c.id));
+    if (ids.size !== camadas.length) {
       const vistos = new Set<string>();
       const duplicados = new Set<string>();
-      for (const c of p.camadas) {
+      for (const c of camadas) {
         if (vistos.has(c.id)) duplicados.add(c.id);
         vistos.add(c.id);
       }
       errors.push(`${d.id}: proveniencia.camadas tem id duplicado: ${[...duplicados].join(", ")}`);
     }
-    if (!p.camadas.some((c) => c.camada === 0)) {
+    if (!camadas.some((c) => c.camada === 0)) {
       errors.push(`${d.id}: proveniencia precisa de ao menos uma camada factual (camada 0)`);
     }
 
-    for (const c of p.camadas) {
-      if (c.camada === 0 && c.ancora.length > 0) {
+    for (const c of camadas) {
+      const ancora = c.ancora ?? [];
+      if (c.camada === 0 && ancora.length > 0) {
         errors.push(`${d.id}: camada ${c.id} (C0 factual) não pode ter ancora`);
       }
-      if (c.camada > 0 && c.ancora.length === 0) {
+      if (c.camada > 0 && ancora.length === 0) {
         errors.push(`${d.id}: camada ${c.id} (derivada/analítica) precisa de ancora`);
       }
-      for (const a of c.ancora) {
+      for (const a of ancora) {
         if (a === c.id) {
           errors.push(`${d.id}: camada ${c.id} ancora em si mesma — proibido`);
           continue;
         }
-        const alvo = p.camadas.find((x) => x.id === a);
+        const alvo = camadas.find((x) => x.id === a);
         if (!alvo) {
           errors.push(`${d.id}: camada ${c.id} ancora em "${a}" que não existe`);
         } else if (alvo.camada > c.camada) {
@@ -55,7 +62,7 @@ export function validarProveniencia(declaracoes: DeclaracaoFrontmatter[]): Valid
       }
     }
 
-    for (const h of p.humano_revisou) {
+    for (const h of humanoRevisou) {
       if (!ids.has(h)) {
         errors.push(`${d.id}: humano_revisou referencia "${h}" que não é uma camada`);
       }

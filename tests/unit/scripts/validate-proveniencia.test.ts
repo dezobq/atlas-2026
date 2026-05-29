@@ -136,4 +136,14 @@ describe("validarProveniencia", () => {
     expect(result.ok).toBe(false);
     expect(result.errors.some((e) => e.includes("si mesma"))).toBe(true);
   });
+
+  it("não crasha quando arrays do bloco vêm ausentes no frontmatter cru", () => {
+    const c1 = cam({ id: "C1_x", camada: 1 });
+    delete (c1 as Partial<CamadaProv>).ancora;
+    const p = prov({ camadas: [cam(), c1] });
+    delete (p as Partial<Proveniencia>).humano_revisou;
+    const result = validarProveniencia([dec({ proveniencia: p })]);
+    expect(result.ok).toBe(false);
+    expect(result.errors.some((e) => e.includes("precisa de ancora"))).toBe(true);
+  });
 });
