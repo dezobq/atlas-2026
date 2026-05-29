@@ -18,11 +18,19 @@ export function validarProveniencia(declaracoes: DeclaracaoFrontmatter[]): Valid
       continue;
     }
 
-    // Frontmatter cru (gray-matter) não aplica os defaults do Zod: arrays omitidos no
-    // YAML chegam como undefined. Normalizamos para [] e deixamos as regras semânticas
-    // emitirem erro — um gate de validação nunca deve lançar exceção.
-    const camadas = p.camadas ?? [];
-    const humanoRevisou = p.humano_revisou ?? [];
+    // Frontmatter cru (gray-matter) não aplica os defaults do Zod: campos omitidos
+    // chegam como undefined e tipos errados (string/número) chegam intactos. Um gate
+    // de validação nunca deve lançar exceção — normaliza para [] e reporta o tipo errado.
+    const camadas = Array.isArray(p.camadas) ? p.camadas : [];
+    const humanoRevisou = Array.isArray(p.humano_revisou) ? p.humano_revisou : [];
+
+    if (!Array.isArray(p.camadas)) {
+      errors.push(`${d.id}: proveniencia.camadas precisa ser um array`);
+    }
+    // humano_revisou tem default [] no schema: omiti-lo é válido; só é erro se presente e não-array.
+    if (p.humano_revisou !== undefined && !Array.isArray(p.humano_revisou)) {
+      errors.push(`${d.id}: proveniencia.humano_revisou precisa ser um array`);
+    }
 
     const ids = new Set(camadas.map((c) => c.id));
     if (ids.size !== camadas.length) {
@@ -39,7 +47,10 @@ export function validarProveniencia(declaracoes: DeclaracaoFrontmatter[]): Valid
     }
 
     for (const c of camadas) {
-      const ancora = c.ancora ?? [];
+      const ancora = Array.isArray(c.ancora) ? c.ancora : [];
+      if (c.ancora !== undefined && !Array.isArray(c.ancora)) {
+        errors.push(`${d.id}: camada ${c.id} tem ancora que não é um array`);
+      }
       if (c.camada === 0 && ancora.length > 0) {
         errors.push(`${d.id}: camada ${c.id} (C0 factual) não pode ter ancora`);
       }

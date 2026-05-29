@@ -146,4 +146,18 @@ describe("validarProveniencia", () => {
     expect(result.ok).toBe(false);
     expect(result.errors.some((e) => e.includes("precisa de ancora"))).toBe(true);
   });
+
+  it("reporta (sem crashar) quando camadas vem com tipo errado", () => {
+    const p = { ...prov(), camadas: "nope" } as unknown as Proveniencia;
+    const result = validarProveniencia([dec({ proveniencia: p })]);
+    expect(result.ok).toBe(false);
+    expect(result.errors.some((e) => e.includes("camadas precisa ser um array"))).toBe(true);
+  });
+
+  it("reporta (sem crashar) quando humano_revisou presente vem com tipo errado", () => {
+    const p = { ...prov(), humano_revisou: 1 } as unknown as Proveniencia;
+    const result = validarProveniencia([dec({ proveniencia: p })]);
+    expect(result.ok).toBe(false);
+    expect(result.errors.some((e) => e.includes("humano_revisou precisa ser um array"))).toBe(true);
+  });
 });
