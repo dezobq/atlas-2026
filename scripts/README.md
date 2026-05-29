@@ -10,6 +10,7 @@ arquivar, transcrever e exportar declarações de candidatos.
 3. `.env` criado a partir de `.env.example`:
    - `OPENAI_API_KEY` — necessário para `pnpm transcribe`.
    - `FIRECRAWL_API_KEY` — necessário para `pnpm scrape:url`.
+   - `ARCHIVE_ORG_ACCESS_KEY` e `ARCHIVE_ORG_SECRET_KEY` — necessários para `pnpm archive` (Save Page Now 2). Gere as chaves S3 em https://archive.org/account/s3.php. Sem elas, o Wayback responde HTTP 401 (passou a exigir autenticação em 2026).
 4. `yt-dlp` é auto-instalado pelo `youtube-dl-exec` na primeira execução.
 
 ## Workflow operacional típico
