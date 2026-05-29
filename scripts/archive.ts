@@ -18,24 +18,6 @@ export function buildArchiveUrl(timestamp: string, originalUrl: string): string 
   return `https://web.archive.org/web/${timestamp}/${originalUrl}`;
 }
 
-export function buildSaveUrl(url: string): string {
-  return `https://web.archive.org/save/${url}`;
-}
-
-export function extractArchiveUrl(headers: Headers): string | null {
-  const contentLocation = headers.get("Content-Location");
-  if (contentLocation) {
-    return contentLocation.startsWith("http")
-      ? contentLocation
-      : `https://web.archive.org${contentLocation}`;
-  }
-  const location = headers.get("Location");
-  if (location) {
-    return location.startsWith("http") ? location : `https://web.archive.org${location}`;
-  }
-  return null;
-}
-
 export function hashUrl(url: string): string {
   return createHash("sha256").update(url).digest("hex").slice(0, 8);
 }
