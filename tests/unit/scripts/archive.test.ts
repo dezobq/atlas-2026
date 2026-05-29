@@ -8,6 +8,9 @@ import {
   buildArchiveUrl,
   parseJobId,
   parseStatus,
+  requestSnapshot,
+  type FetchLike,
+  type FetchResponseLike,
 } from "../../../scripts/archive";
 
 describe("buildSaveUrl", () => {
@@ -129,5 +132,119 @@ describe("parseStatus", () => {
 
   it("trata resposta sem campo status como erro", () => {
     expect(parseStatus({}).state).toBe("error");
+  });
+
+  it("trata success sem timestamp/original_url como erro", () => {
+    expect(parseStatus({ status: "success" }).state).toBe("error");
+  });
+});
+
+function jsonResponse(body: unknown): FetchResponseLike {
+  return {
+    ok: true,
+    status: 200,
+    json: () => Promise.resolve(body),
+    text: () => Promise.resolve(""),
+  };
+}
+
+describe("requestSnapshot", () => {
+  it("retorna o archive_url no caminho feliz (pending → success)", async () => {
+    const queue: FetchResponseLike[] = [
+      jsonResponse({ url: "http://x/", job_id: "job1" }), // POST /save
+      jsonResponse({ status: "pending", job_id: "job1" }), // status 1
+      jsonResponse({ status: "success", timestamp: "20260101000000", original_url: "http://x/" }),
+    ];
+    const fetchFn: FetchLike = () => {
+      const next = queue.shift();
+      if (!next) throw new Error("mock de fetch esgotado");
+      return Promise.resolve(next);
+    };
+    const sleeps: number[] = [];
+    const sleep = (ms: number): Promise<void> => {
+      sleeps.push(ms);
+      return Promise.resolve();
+    };
+
+    const result = await requestSnapshot("http://x/", {
+      fetchFn,
+      sleep,
+      accessKey: "K",
+      secret: "S",
+      pollIntervalMs: 10,
+      maxAttempts: 5,
+    });
+
+    expect(result).toBe("https://web.archive.org/web/20260101000000/http://x/");
+    expect(sleeps).toEqual([10]); // dormiu 1× entre o pending e o success
+  });
+
+  it("lança quando o SPN2 retorna status error", async () => {
+    const queue: FetchResponseLike[] = [
+      jsonResponse({ url: "http://x/", job_id: "job1" }),
+      jsonResponse({ status: "error", message: "host bloqueado" }),
+    ];
+    const fetchFn: FetchLike = () => {
+      const next = queue.shift();
+      if (!next) throw new Error("mock de fetch esgotado");
+      return Promise.resolve(next);
+    };
+
+    await expect(
+      requestSnapshot("http://x/", {
+        fetchFn,
+        sleep: () => Promise.resolve(),
+        accessKey: "K",
+        secret: "S",
+        maxAttempts: 5,
+      }),
+    ).rejects.toThrow(/host bloqueado/);
+  });
+
+  it("lança timeout quando nunca sai de pending", async () => {
+    const fetchFn: FetchLike = (u) =>
+      Promise.resolve(
+        u.includes("/status/")
+          ? jsonResponse({ status: "pending", job_id: "job1" })
+          : jsonResponse({ url: "http://x/", job_id: "job1" }),
+      );
+
+    await expect(
+      requestSnapshot("http://x/", {
+        fetchFn,
+        sleep: () => Promise.resolve(),
+        accessKey: "K",
+        secret: "S",
+        pollIntervalMs: 1,
+        maxAttempts: 3,
+      }),
+    ).rejects.toThrow(/timeout/i);
+  });
+
+  it("lança mensagem diagnóstica quando o status poll retorna não-JSON", async () => {
+    const queue: FetchResponseLike[] = [
+      jsonResponse({ url: "http://x/", job_id: "job1" }), // POST /save OK
+      {
+        ok: false,
+        status: 503,
+        json: () => Promise.reject(new SyntaxError("Unexpected token <")),
+        text: () => Promise.resolve("<html>503</html>"),
+      },
+    ];
+    const fetchFn: FetchLike = () => {
+      const next = queue.shift();
+      if (!next) throw new Error("mock de fetch esgotado");
+      return Promise.resolve(next);
+    };
+
+    await expect(
+      requestSnapshot("http://x/", {
+        fetchFn,
+        sleep: () => Promise.resolve(),
+        accessKey: "K",
+        secret: "S",
+        maxAttempts: 5,
+      }),
+    ).rejects.toThrow(/não-JSON|503/);
   });
 });

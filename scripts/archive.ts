@@ -77,6 +77,83 @@ export function parseStatus(body: unknown): SnapshotStatus {
   return { state: "error", message };
 }
 
+export interface FetchResponseLike {
+  ok: boolean;
+  status: number;
+  json(): Promise<unknown>;
+  text(): Promise<string>;
+}
+
+export type FetchLike = (
+  url: string,
+  init?: { method?: string; headers?: Record<string, string>; body?: string },
+) => Promise<FetchResponseLike>;
+
+export interface SnapshotDeps {
+  fetchFn: FetchLike;
+  sleep: (ms: number) => Promise<void>;
+  accessKey: string;
+  secret: string;
+  pollIntervalMs?: number;
+  maxAttempts?: number;
+}
+
+const SPN2_SAVE_ENDPOINT = "https://web.archive.org/save";
+const DEFAULT_POLL_INTERVAL_MS = 5000;
+const DEFAULT_MAX_ATTEMPTS = 24; // ~2 min a 5s/poll
+
+export async function requestSnapshot(url: string, deps: SnapshotDeps): Promise<string> {
+  const auth = buildAuthHeader(deps.accessKey, deps.secret);
+  const pollInterval = deps.pollIntervalMs ?? DEFAULT_POLL_INTERVAL_MS;
+  const maxAttempts = deps.maxAttempts ?? DEFAULT_MAX_ATTEMPTS;
+
+  const saveRes = await deps.fetchFn(SPN2_SAVE_ENDPOINT, {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      Authorization: auth,
+      "Content-Type": "application/x-www-form-urlencoded",
+    },
+    body: new URLSearchParams({ url }).toString(),
+  });
+
+  let saveBody: unknown;
+  try {
+    saveBody = await saveRes.json();
+  } catch {
+    throw new Error(
+      `SPN2 /save respondeu conteúdo não-JSON (status ${saveRes.status}). Credencial ausente/inválida?`,
+    );
+  }
+  const jobId = parseJobId(saveBody);
+
+  for (let attempt = 0; attempt < maxAttempts; attempt++) {
+    const statusRes = await deps.fetchFn(buildStatusUrl(jobId), {
+      headers: { Accept: "application/json", Authorization: auth },
+    });
+    let statusBody: unknown;
+    try {
+      statusBody = await statusRes.json();
+    } catch {
+      throw new Error(
+        `SPN2 /save/status respondeu conteúdo não-JSON (status ${statusRes.status}) na tentativa ${attempt + 1}.`,
+      );
+    }
+    const parsed = parseStatus(statusBody);
+    if (parsed.state === "success") {
+      return buildArchiveUrl(parsed.timestamp, parsed.originalUrl);
+    }
+    if (parsed.state === "error") {
+      throw new Error(`SPN2 falhou ao arquivar: ${parsed.message}`);
+    }
+    await deps.sleep(pollInterval);
+  }
+
+  throw new Error(
+    `SPN2 não concluiu o snapshot em ${maxAttempts} tentativas (timeout). Tente novamente mais tarde.`,
+  );
+}
+
 async function run(): Promise<void> {
   const url = process.argv[2];
   if (!url) {
