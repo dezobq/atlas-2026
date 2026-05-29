@@ -17,6 +17,10 @@ Registro de bugs com causa raiz e fix. Protocolo anti-regressão: antes de tocar
 - [[Astro-Zod3-vs-Zod4]] — `astro:content` re-exporta Zod 3, sintaxe Zod 4 quebra
 - [[pnpm-CI-vs-Local]] — diferenças Windows/Ubuntu, mitigadas por `.gitattributes`
 
+### Qualidade de dados / editorial
+
+- [[Auditoria-Dados-2026-05-29]] — auditoria via workflow read-only: neutralidade editorial + coerência de fonte (cross-field, não pega por schema)
+
 ## Como adicionar novo bug
 
 1. Copiar [[../Templates/Template-Bug]] para esta pasta
