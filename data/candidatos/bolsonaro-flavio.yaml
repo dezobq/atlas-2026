@@ -10,7 +10,7 @@ biografia_minima: >
 contas_oficiais:
   - plataforma: "youtube"
     handle: "@flaviobolsonaro"
-    url: "https://www.youtube.com/flaviobolsonaro"
+    url: "https://www.youtube.com/@flaviobolsonaro"
     verificada: true
   - plataforma: "x"
     handle: "@FlavioBolsonaro"
