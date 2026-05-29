@@ -111,5 +111,23 @@ try {
   process.exit(1);
 }
 
+// Validação semântica de proveniência (AI Policy P1)
+console.log(`\n${"=".repeat(60)}`);
+console.log(`Validando proveniência...`);
+try {
+  const { validarProveniencia } = await import("./validate-proveniencia.js");
+  const { loadDeclaracoes } = await import("./lib/data-loaders.js");
+  const result = validarProveniencia(loadDeclaracoes());
+  if (!result.ok) {
+    console.error(`❌ proveniencia tem ${result.errors.length} problema(s):`);
+    for (const e of result.errors) console.error(`  - ${e}`);
+    process.exit(1);
+  }
+  console.log(`✅ proveniencia: validada.`);
+} catch (e) {
+  console.error(`❌ Erro ao validar proveniência: ${(e as Error).message}`);
+  process.exit(1);
+}
+
 console.log(`\n✅ Todos os dados são válidos.`);
 process.exit(0);
