@@ -26,9 +26,7 @@ export function validarProveniencia(declaracoes: DeclaracaoFrontmatter[]): Valid
         if (vistos.has(c.id)) duplicados.add(c.id);
         vistos.add(c.id);
       }
-      errors.push(
-        `${d.id}: proveniencia.camadas tem id duplicado: ${[...duplicados].join(", ")}`,
-      );
+      errors.push(`${d.id}: proveniencia.camadas tem id duplicado: ${[...duplicados].join(", ")}`);
     }
     if (!p.camadas.some((c) => c.camada === 0)) {
       errors.push(`${d.id}: proveniencia precisa de ao menos uma camada factual (camada 0)`);

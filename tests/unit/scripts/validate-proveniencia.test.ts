@@ -1,6 +1,10 @@
 import { describe, it, expect } from "vitest";
 import { validarProveniencia } from "@/../scripts/validate-proveniencia";
-import type { CamadaProv, Proveniencia, DeclaracaoFrontmatter } from "@/../scripts/lib/data-loaders";
+import type {
+  CamadaProv,
+  Proveniencia,
+  DeclaracaoFrontmatter,
+} from "@/../scripts/lib/data-loaders";
 
 const cam = (over: Partial<CamadaProv> = {}): CamadaProv => ({
   id: "C0_texto",
@@ -42,7 +46,13 @@ describe("validarProveniencia", () => {
     const p = prov({
       camadas: [
         cam(),
-        cam({ id: "C1_contexto", camada: 1, origem: "claude-opus-4-8", ancora: ["C0_texto"], verificacao: "adversarial-2/3" }),
+        cam({
+          id: "C1_contexto",
+          camada: 1,
+          origem: "claude-opus-4-8",
+          ancora: ["C0_texto"],
+          verificacao: "adversarial-2/3",
+        }),
       ],
     });
     const result = validarProveniencia([dec({ proveniencia: p })]);
