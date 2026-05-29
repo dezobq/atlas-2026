@@ -97,6 +97,23 @@ const eventos = defineCollection({
   }),
 });
 
+const camadaProvSchema = z.object({
+  id: z.string().min(1),
+  camada: z.union([z.literal(0), z.literal(1), z.literal(2)]),
+  origem: z.string().min(1),
+  ancora: z.array(z.string()).default([]),
+  verificacao: z.string().regex(/^(adversarial|humano)-\d+\/\d+$/),
+  confianca: z.number().min(0).max(1).optional(),
+});
+
+const provenienciaSchema = z.object({
+  metodo: z.string().regex(/^[a-z0-9-]+@\d+\.\d+\.\d+$/),
+  fonte_ancora: z.string().min(1),
+  camadas: z.array(camadaProvSchema).min(1),
+  humano_revisou: z.array(z.string()).default([]),
+  gerado_em: z.string().datetime(),
+});
+
 const declaracoes = defineCollection({
   loader: glob({ base: "./data/declaracoes", pattern: "*.md" }),
   schema: z.object({
@@ -153,6 +170,7 @@ const declaracoes = defineCollection({
     versao: z.number().int().positive(),
     criado_em: z.string().datetime(),
     atualizado_em: z.string().datetime(),
+    proveniencia: provenienciaSchema,
   }),
 });
 
