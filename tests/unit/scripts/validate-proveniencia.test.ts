@@ -137,6 +137,19 @@ describe("validarProveniencia", () => {
     expect(result.errors.some((e) => e.includes("si mesma"))).toBe(true);
   });
 
+  it("rejeita ancora entre camadas de mesmo nível (C1 ancora em outro C1)", () => {
+    const p = prov({
+      camadas: [
+        cam(),
+        cam({ id: "C1_a", camada: 1, ancora: ["C0_texto"] }),
+        cam({ id: "C1_b", camada: 1, ancora: ["C1_a"] }),
+      ],
+    });
+    const result = validarProveniencia([dec({ proveniencia: p })]);
+    expect(result.ok).toBe(false);
+    expect(result.errors.some((e) => e.includes("mesma camada"))).toBe(true);
+  });
+
   it("não crasha quando arrays do bloco vêm ausentes no frontmatter cru", () => {
     const c1 = cam({ id: "C1_x", camada: 1 });
     delete (c1 as Partial<CamadaProv>).ancora;

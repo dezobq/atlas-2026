@@ -69,6 +69,10 @@ export function validarProveniencia(declaracoes: DeclaracaoFrontmatter[]): Valid
           errors.push(
             `${d.id}: camada ${c.id} (C${c.camada}) ancora em C${alvo.camada} (camada superior) — proibido`,
           );
+        } else if (alvo.camada === c.camada) {
+          errors.push(
+            `${d.id}: camada ${c.id} (C${c.camada}) ancora em C${alvo.camada} (mesma camada) — derivadas só ancoram em camada mais factual`,
+          );
         }
       }
     }
