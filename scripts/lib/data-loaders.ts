@@ -4,6 +4,23 @@ import { parse as parseYaml } from "yaml";
 import matter from "gray-matter";
 import Papa from "papaparse";
 
+export interface CamadaProv {
+  id: string;
+  camada: 0 | 1 | 2;
+  origem: string;
+  ancora: string[];
+  verificacao: string;
+  confianca?: number;
+}
+
+export interface Proveniencia {
+  metodo: string;
+  fonte_ancora: string;
+  camadas: CamadaProv[];
+  humano_revisou: string[];
+  gerado_em: string;
+}
+
 export interface DeclaracaoFrontmatter {
   id: string;
   candidato_id: string;
@@ -12,6 +29,7 @@ export interface DeclaracaoFrontmatter {
   fonte_primaria_tipo: string;
   archive_url: string;
   vereditos_externos?: Array<{ veiculo: string }>;
+  proveniencia?: Proveniencia;
 }
 
 export interface LogLine {
